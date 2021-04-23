@@ -8,17 +8,16 @@ pkgVer <- function(pkg) {
 c(
 
     bibentry(bibtype="manual",
-        title = "",
+        title = "Curated Metagenomic Analyses",
         author = personList(
             as.person("Author Name")
         ),
         year = format(Sys.Date(), "%Y"),
-        url = "",
-        note = pkgVer('curatedMetagenomicAnalyses'),
-        doi = ''
+        url = "waldronlab.io/curatedMetagenomicAnalyses",
+        note = pkgVer('curatedMetagenomicAnalyses')
     ),
     bibentry(bibtype="article",
-        title = "",
+        title = "Curated Metagenomic Analyses",
         author = personList(
             as.person("waldronlab")
         ),
