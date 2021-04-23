@@ -1,0 +1,30 @@
+pkgVer <- function(pkg) {
+    if (!exists("meta") || is.null(meta)) meta <- packageDescription(pkg)
+    ver <- meta$Version
+    paste0('https://github.com/waldronlab/curatedMetagenomicAnalyses/', pkg, ' - R package version ', ver)
+}
+
+## replace this with a real BibTeX entry
+c(
+
+    bibentry(bibtype="manual",
+        title = "",
+        author = personList(
+            as.person("Author Name")
+        ),
+        year = format(Sys.Date(), "%Y"),
+        url = "",
+        note = pkgVer('curatedMetagenomicAnalyses'),
+        doi = ''
+    ),
+    bibentry(bibtype="article",
+        title = "",
+        author = personList(
+            as.person("waldronlab")
+        ),
+        year = format(Sys.Date(), "%Y"),
+        journal = "bioRxiv",
+        doi = "10.1101/TODO",
+        url = "https://www.biorxiv.org/content/10.1101/TODO"
+    )
+)
