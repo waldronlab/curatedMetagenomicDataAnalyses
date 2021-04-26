@@ -3,6 +3,7 @@
 import argparse as ap
 import numpy as np
 import pandas as pd
+from skbio.stats import composition as cps
 
 def read_params():
     p = ap.ArgumentParser(description=\
