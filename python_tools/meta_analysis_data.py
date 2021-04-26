@@ -126,7 +126,7 @@ def select(args):
     for name in metadata_dict:
         tabtab = metadata_dict[name] #pd.read_csv(table, sep="\t", header=0, index_col=0, low_memory=False, engine="c").fillna("NA")
         tabtab.index.name = "sampleID"
-        tabtab.columns = [ (dt + "_" + c) for c,dt in zip(tabtab.columns.tolist(), tabtab.loc[args.study_identifier].tolist()) ]
+        ###tabtab.columns = [ (dt + "_" + c) for c,dt in zip(tabtab.columns.tolist(), tabtab.loc[args.study_identifier].tolist()) ]
         study = tabtab.loc[args.study_identifier].tolist()[0]
         
         if args.min and (not isinstance(tabtab, np.ndarray)):
