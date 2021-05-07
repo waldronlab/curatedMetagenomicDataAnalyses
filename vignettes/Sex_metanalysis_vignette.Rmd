@@ -1,0 +1,515 @@
+---
+title: "Meta-analysis of sex-related microbial species using cMD3.0"
+author: 
+  - name: Davide Golzato, Paolo Manghi
+    affiliation:
+    - Università degli studi di Trento
+    email: davide.golzato@unitn.it
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+date: "`r doc_date()`"
+package: "`r pkg_ver('curatedMetagenomicData')`"
+vignette: >
+  %\VignetteIndexEntry{Put an analysis here}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+
+<style>
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+  max-width: 1000px
+}
+</style>
+
+```{r setup, include = FALSE}
+library("knitr")
+library(kableExtra)
+
+options(width = 120)
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    crop = NULL, ## Related to https://stat.ethz.ch/pipermail/bioc-devel/2020-April/016656.html,
+    tidy.opts=list(width.cutoff=120)
+)
+```
+
+
+```{r vignetteSetup, echo=FALSE, message=FALSE, warning = FALSE}
+## Track time spent on making the vignette
+startTime <- Sys.time()
+
+## Bib setup
+library("RefManageR")
+
+## Write bibliography information
+bib <- c(
+    R = citation(),
+    BiocStyle = citation("BiocStyle")[1],
+    knitr = citation("knitr")[1],
+    RefManageR = citation("RefManageR")[1],
+    rmarkdown = citation("rmarkdown")[1],
+    sessioninfo = citation("sessioninfo")[1],
+    testthat = citation("testthat")[1],
+    curatedMetagenomicData = citation("curatedMetagenomicData")[1]
+)
+```
+
+# Basics
+
+## Install `curatedMetagenomicData`
+
+`R` is an open-source statistical environment which can be easily modified to enhance its functionality via packages. `r Biocpkg("curatedMetagenomicData")` is a `R` package available via the [Bioconductor](http://bioconductor.org) repository for packages. `R` can be installed on any operating system from [CRAN](https://cran.r-project.org/) after which you can install `r Biocpkg("curatedMetagenomicData")` by using the following commands in your `R` session:
+
+```{r "install", eval = FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+      install.packages("BiocManager")
+  }
+
+BiocManager::install("curatedMetagenomicData")
+
+## Check that you have a valid Bioconductor installation
+BiocManager::valid()
+```
+
+## Required knowledge
+
+`r Biocpkg("curatedMetagenomicData")` is based on many other packages and in particular in those that have implemented the infrastructure needed for dealing with RNA-seq data. That is, packages like `r Biocpkg("SummarizedExperiment")`.
+
+If you are asking yourself the question "Where do I start using Bioconductor?" you might be interested in [this blog post](http://lcolladotor.github.io/2014/10/16/startbioc/#.VkOKbq6rRuU).
+
+## Asking for help
+
+As package developers, we try to explain clearly how to use our packages and in which order to use the functions. But `R` and `Bioconductor` have a steep learning curve so it is critical to learn where to ask for help. The blog post quoted above mentions some but we would like to highlight the [Bioconductor support site](https://support.bioconductor.org/) as the main resource for getting help: remember to use the `curatedMetagenomicData` tag and check [the older posts](https://support.bioconductor.org/t/curatedMetagenomicData/). Other alternatives are available such as creating GitHub issues and tweeting. However, please note that if you want to receive help you should adhere to the [posting guidelines](http://www.bioconductor.org/help/support/posting-guide/). It is particularly critical that you provide a small reproducible example and your session information so package developers can track down the source of the error.
+
+## Citing `curatedMetagenomicData`
+
+We hope that `r Biocpkg("curatedMetagenomicData")` will be useful for your research. Please use the following information to cite the package and the overall approach. Thank you!
+
+```{r "citation"}
+## Citation info
+citation("curatedMetagenomicData")
+```
+
+# Quick start to using to `curatedMetagenomicData`
+
+```{r "start", message=FALSE}
+library("curatedMetagenomicData")
+```
+
+
+
+## Meta-analysis of sex-related microbial species using data from curatedMetagenomicData
+
+```{r, message=FALSE}
+library(tidyverse)
+library(SummarizedExperiment)
+```
+
+
+
+### Retrieval of datasets from the cMD3.0 meeting a series of requirements
+```{r}
+#Filter on Age, body_site, study_condition and remove samples missing BMI
+metadata <- curatedMetagenomicData::sampleMetadata %>% 
+  filter(age >= 16 &
+           body_site == "stool" &
+           study_condition == "control" & 
+           is.na(BMI) != TRUE &
+           is.na(gender) != TRUE &
+           days_from_first_collection %in% c(0,NA))
+
+metadata <- metadata %>% 
+  group_by(subjectID) %>% 
+  filter(row_number() == 1) %>% 
+  ungroup()
+
+  
+#Apply function to grouped selected dataset
+datasets_tokeep <- metadata %>%
+    select(studyName, gender) %>%
+    group_by(studyName) %>% 
+    summarise(M = sum(gender=="male"), 
+              F= sum(gender=="female"), 
+              N=n()) %>%  
+    mutate(keep = (pmin(M,F) >= 40) & (F/N >= 0.25) & (M/N >= 0.25)) %>% 
+    filter(keep == TRUE)
+
+datasets_tokeep <- datasets_tokeep$studyName
+  
+metadata <- metadata %>% 
+    filter(studyName %in% datasets_tokeep)
+
+```
+
+
+### Download of datasets and data wrangling to structure them in a format suitable for this meta-analysis
+
+```{r, message=FALSE}
+
+#Retrieve bug list for each of the selected datasets
+bugs_stool <- paste0(datasets_tokeep,".relative_abundance")
+
+se_list <- lapply(bugs_stool, FUN = function(x){
+  curatedMetagenomicData(x, dryrun = FALSE)
+  })
+
+names(se_list) <- datasets_tokeep
+
+subset_level <- function(dataframe, taxon_level){
+  #Take the row names of the dataframe
+  taxon_ids <- c(kingdom="k__",
+                 phylum="p__", 
+                 class="c__", 
+                 order="o__", 
+                 family="f__", 
+                 genus="g__",
+                 species="s__",
+                 strain="t__")
+  
+  level_pattern <- paste0(taxon_ids[taxon_level][[1]],"(?!.*\\|)")
+  
+  #Grep those referring to the selected level (species,phylum,family...)
+  level_indexes <- grep(level_pattern, rownames(dataframe), perl=TRUE)
+  
+  #Select rows
+  level_dataframe <- dataframe[level_indexes,]
+  rownames(level_dataframe) <- str_replace(rownames(level_dataframe), 
+                                           paste0(".*\\|(",
+                                                  taxon_ids[taxon_level][[1]],
+                                                  ".*)"),"\\1")
+  return(level_dataframe)
+}
+  
+
+relabsList <- lapply(se_list, FUN = function(x){
+  se_exprs <- assay(x)
+  se_exprs_filtered <- se_exprs[,which(colnames(se_exprs) %in% metadata$sampleID)]
+  se_exprs_filtered <- subset_level(se_exprs_filtered, "species")
+
+  return(as.data.frame(se_exprs_filtered))
+})
+
+metaList <- split(metadata,metadata$studyName)
+metaList <- lapply(metaList, function(x) {
+    x <- t(x)
+    colnames(x) <- x["sampleID",]
+    x <- x[c("BMI","age","gender"),]
+    return(as.data.frame(x))
+  })
+
+
+#Dividing AsnicarF_2021 samples into two separated datasets, according to 
+#country of origin: AsnicarF_2021 for GBR samples and USA_AsnicarF_2021 for
+#USA samples
+
+#Retrieve sample names of USA samples from AsnicarF_2021
+USA_AsnicarF_2021_samples <- metadata[which(metadata$studyName == "AsnicarF_2021" 
+                                            & metadata$country == "USA"),]$sampleID
+
+#Pick species relative abundance profiles from AsnicarF_2021 and place them in a
+#separate dataset ("USA_AsnicarF_2021") 
+relabsList$USA_AsnicarF_2021 <- relabsList$AsnicarF_2021[,USA_AsnicarF_2021_samples] 
+metaList$USA_AsnicarF_2021 <- metaList$AsnicarF_2021[,USA_AsnicarF_2021_samples]
+
+#Remove the USA samples from the original AsnicarF_2021 dataset, so to have only
+#"GBR" samples here
+relabsList$AsnicarF_2021 <-relabsList$AsnicarF_2021[,!names(relabsList$AsnicarF_2021) %in% USA_AsnicarF_2021_samples]
+metaList$AsnicarF_2021 <-metaList$AsnicarF_2021[,!names(metaList$AsnicarF_2021) %in% USA_AsnicarF_2021_samples]
+
+```
+
+## Analysis of microbial species by a linear model and computation of an effect size for each species in each dataset
+
+### Defining functions used to perform the meta-analysis
+These functions will be used to compute the standardized difference (d) from the t-value of linear models, the respective Standard Error ($SE_d$)
+and transform relative abundance data.
+
+```{r}
+#Compute Standardized Difference (d) from t-value
+d_fromlm <- function(n1,n2,t) {
+  d <- (t*(n1+n2)/(sqrt(n1*n2)*sqrt(n1+n2-2)))
+  return(d)
+}
+#Compute Std. error of d
+SE_d <- function(n1,n2,d) {
+  se_d <- sqrt(((n1+n2-1)/(n1+n2-3))*((4/(n1+n2))*(1+((d**2)/8))))
+  return(se_d)
+}
+```
+
+This function is used to transform species relative abundances according to the $arcsin(\sqrt{\frac{RelAb}{100}})$ function to correct for compositionality-related issues
+```{r}
+#Transform relative abundances
+asin_trans <- function(rel_ab){
+  return(asin(sqrt(rel_ab/100)))
+}
+```
+
+Then we defined a function operating on the single dataset: In order to correct out meta-analysis on sex by age & BMI, we use an OLS model containing the main and accessory predictors (in which the microbial species transformed abundance is the response) and we extract the effect size for sex from its beta:
+
+Indeed, from a linear model of the type:
+$$ species \sim  1 + sex + age + BMI$$
+
+
+
+We compute the effect-size of "sex" with respect to "species" (corrected for "age" & "BMI") via the formula:
+
+
+$$\text{effect-size} = \frac{t\cdot (n1+n2)}{\sqrt{n1\cdot n2}\cdot \sqrt{df}}$$
+
+where:
+ - $n1$ is the total number of controls (females) in the corresponding dataset
+ - $n2$ is the total number of cases (males) in the corresponding dataset
+ - $df$ are the degrees of freedom, computed as $df=n1 + n2 - 2$ are the degrees of freedom of the linear model built
+ - $t$ is the T-statistics for sex returned by the software  
+
+
+The so computed Effect-size (corrected by covariates) has Standard Error and Variance:
+
+$$SE =\sqrt{\frac{n1+n2-1}{n1+n2-3}\cdot\frac{4}{n1+n2}\cdot(1+\frac{\text{effect-size}^2}{8})}$$
+
+According to our choice of correcting each single effect included in the meta-analysis by 2 covariates, the easiest way to compute the Random-Effect model is to use the function Metagen, passing to it the precomputed Std.Errors and E.Sizes
+
+```{r}
+#Main analysis function on single dataset
+single_dataset_analyze <- function(exprs_df, meta_df,dataset_name){
+  
+  #Tidy dataframe of species relative abundances (Species abundances on columns)
+    #Transform relative abundances with arcsin transformation
+  exprs_df <- as.data.frame(t(exprs_df))
+  exprs_df <- exprs_df %>% 
+    mutate_if(is.character,as.numeric) %>% 
+    mutate_all(asin_trans)
+  
+  #Tidy dataframe with metadata of samples
+    #Change datatype of metadata
+  
+  meta_df <- as.data.frame(t(meta_df))
+  meta_df <- meta_df %>% mutate(age = as.numeric(age), 
+                                BMI=as.numeric(BMI), 
+                                gender=as.factor(gender))
+
+  meta_df <- meta_df[match(rownames(exprs_df),rownames(meta_df)),]
+  
+  #OLS regression of Relative abundance of each species vs BMI, age and gender.
+  #t-value for "gender" variable has been extracted and used to compute the 
+  #random effect size (d) and the respective standard error
+  
+  lmResults <- t(apply(exprs_df,
+                       MARGIN = 2, 
+                       FUN = function(x) 
+                         coef(
+                           summary(
+                             lm(x ~ meta_df$BMI + meta_df$age + meta_df$gender +1)))[c('meta_df$gendermale'),c('t value','Pr(>|t|)')]))
+  
+  #Retrieve sample size of the two groups ("male" and "female")
+  n_gender <- c(table(meta_df$gender)["male"][[1]],
+                table(meta_df$gender)["female"][[1]])
+  
+  #Compute effect size and respective standard error for each species in single
+  #dataset
+  d_List <- as.vector(sapply(lmResults[,1], function(x) d_fromlm(n_gender[1],
+                                                                 n_gender[2], 
+                                                                 x)))
+  
+  SE_d_List <- as.vector(sapply(d_List, function(x) SE_d(n_gender[1],
+                                                         n_gender[2],
+                                                         x )))
+  
+  #Wal test for relative abundance of species between males and females
+  female_idx <- which(meta_df$gender == "female") 
+  male_idx <- which(meta_df$gender == "male")
+  wald_list <- as.vector(lmResults[,2])
+  
+  #FDR-correction with Benjamini-Hochberg method for Wal p-values
+  final_df <- as.data.frame(cbind(d_List,
+                                  SE_d_List,
+                                  wald_list,
+                                  p.adjust(wald_list,method = "BH")))
+  
+  #Finalize results for the single dataset
+  colnames(final_df) <- c(paste0(dataset_name,"_CohenD"),
+                          paste0(dataset_name,"_SE_D"),
+                          paste0(dataset_name,"_pvalue"),
+                          paste0(dataset_name,"_Qvalue"))
+  rownames(final_df) <- colnames(exprs_df)
+  
+  return(final_df)
+}
+
+```
+
+This function uses the function "metagen" from package "meta" to perform the metanalysis
+```{r}
+runMetaanalysis <- function(d_vector, SE_d_vector) {
+  a <- meta::metagen(TE=d_vector,
+                     seTE=SE_d_vector,
+                     studlab=rownames(d_vector),
+                     method.tau="PM",
+                     sm="SMD")
+  
+  final_vector <-c(a$TE.random,
+                   a$seTE.random,
+                   paste(a$lower.random,a$upper.random,sep=";"),
+                   a$zval.random,
+                   a$pval.random,
+                   a$tau2,
+                   a$I2)
+  
+  names(final_vector) <- c("RE","SE_RE","CI_RE","Zscore","p-value","tau2","I^2")
+  return(final_vector)
+}
+```
+
+
+
+### Application of previously defined function to perform meta-analysis of sex related microbial species
+
+```{r}
+dList <- mapply(function(x,y,n) {single_dataset_analyze(x,y,n)},
+                relabsList,
+                metaList,
+                n=names(relabsList),
+                SIMPLIFY = FALSE)
+
+final_df <- Reduce(function(x, y) merge(x, y, all=TRUE), 
+                   lapply(dList, function(x) data.frame(x, rn = row.names(x))))
+
+final_df <- final_df  %>% column_to_rownames(var="rn")
+
+#Dataframes with random effect and respective standard error for all species across all datasets
+d_matrix <- final_df %>% 
+  select(contains("CohenD"))
+d_matrix <- as.data.frame(t(d_matrix))
+se_matrix <- final_df %>% 
+  select(contains("SE_D"))
+se_matrix <- as.data.frame(t(se_matrix))
+
+
+meta_analysis_regression <- t(as.data.frame(mapply(function(x,y) {runMetaanalysis(x,y)},
+                                                   d_matrix,
+                                                   se_matrix)))
+
+final_df <- cbind(final_df, meta_analysis_regression)
+
+#Correct p-values of random effect with FDR Benjamini-Hochberg
+final_df$FDR_Qvalue <- p.adjust(final_df$`p-value`,method = "BH")
+```
+
+```{r, echo=FALSE, message=FALSE}
+filter_sort <- function(df_to_sort, na_filter){
+  cols_cohenD <- grep("CohenD|Correlation",colnames(df_to_sort))
+  cols_cohenD <- cols_cohenD[which(cols_cohenD >= 9)]
+  df_to_sort$na_n <- apply(df_to_sort[,cols_cohenD], MARGIN = 1, FUN = function(x){
+     na_n <- sum(!is.na(x))
+   })
+  
+  df_to_sort <- df_to_sort[which(df_to_sort$na_n >= na_filter),]
+  df_to_sort$RE_correlation_ABS <- abs(as.double(df_to_sort[,1]))
+  df_to_sort$lower_than_fdr <- ifelse(df_to_sort$FDR_Qvalue < 0.2, 1, 0)
+  
+  #Split the dataset
+  df_to_sort_lower_fdr <- df_to_sort[which(df_to_sort$lower_than_fdr == 1),]
+  df_to_sort_upper_fdr <- df_to_sort[which(df_to_sort$lower_than_fdr == 0),]
+
+  #Sort according to ABS.re
+  df_to_sort_lower_fdr <- df_to_sort_lower_fdr %>% 
+    arrange(-RE_correlation_ABS)
+  
+  df_to_sort_upper_fdr <- df_to_sort_upper_fdr %>% 
+    arrange( -RE_correlation_ABS)
+  
+  df_to_sort <- rbind(df_to_sort_lower_fdr, df_to_sort_upper_fdr)
+  df_to_sort <- df_to_sort %>% 
+    select(-c(na_n, lower_than_fdr,RE_correlation_ABS))
+  
+  return(df_to_sort)
+}
+
+final_df <- final_df[,c(seq(ncol(final_df) - 7, ncol(final_df)), 1:(ncol(final_df)-8))]
+final_df <- filter_sort(final_df, 4)
+```
+
+
+```{r, echo=FALSE}
+kable(final_df[,1:7], "html") %>%
+    kable_styling() %>%
+    scroll_box(width = "1000px", height = "500px")
+```
+
+
+# Reproducibility
+
+The `r Biocpkg("curatedMetagenomicData")` package `r Citep(bib[["curatedMetagenomicData"]])` was made possible thanks to:
+
+* R `r Citep(bib[["R"]])`
+* `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
+* `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])`
+* `r CRANpkg("RefManageR")` `r Citep(bib[["RefManageR"]])`
+* `r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])`
+* `r CRANpkg("sessioninfo")` `r Citep(bib[["sessioninfo"]])`
+* `r CRANpkg("testthat")` `r Citep(bib[["testthat"]])`
+
+This package was developed using `r BiocStyle::Biocpkg("biocthis")`.
+
+
+Code for creating the vignette
+
+```{r createVignette, eval=FALSE}
+## Create the vignette
+library("rmarkdown")
+system.time(render("analysis1.Rmd", "BiocStyle::html_document"))
+
+## Extract the R code
+library("knitr")
+knit("analysis1.Rmd", tangle = TRUE)
+```
+
+Date the vignette was generated.
+
+```{r reproduce1, echo=FALSE}
+## Date the vignette was generated
+Sys.time()
+```
+
+Wallclock time spent generating the vignette.
+
+```{r reproduce2, echo=FALSE}
+## Processing time in seconds
+totalTime <- diff(c(startTime, Sys.time()))
+round(totalTime, digits = 3)
+```
+
+`R` session information.
+
+```{r reproduce3, echo=FALSE}
+## Session info
+library("sessioninfo")
+options(width = 120)
+```
+
+
+
+# Bibliography
+
+This vignette was generated using `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
+with `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])` and `r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])` running behind the scenes.
+
+Citations made with `r CRANpkg("RefManageR")` `r Citep(bib[["RefManageR"]])`.
+
+```{r vignetteBiblio, results = "asis", echo = FALSE, warning = FALSE, message = FALSE}
+## Print bibliography
+PrintBibliography(bib, .opts = list(hyperlink = "to.doc", style = "html"))
+```
