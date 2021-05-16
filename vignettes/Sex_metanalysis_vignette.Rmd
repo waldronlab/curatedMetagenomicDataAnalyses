@@ -1,10 +1,16 @@
 ---
 title: "Meta-analysis of sex-related microbial species using cMD 3"
 author: 
-  - name: Davide Golzato, Paolo Manghi
+  - name: Davide Golzato
     affiliation:
     - Università degli Studi di Trento
-    email: davide.golzato@unitn.it, paolo.manghi@unitn.it
+    email:
+    - davide.golzato@unitn.it
+  - name: Paolo Manghi
+    affiliation:
+    - Università degli Studi di Trento
+    email:
+    - paolo.manghi@unitn.it
 output: 
   BiocStyle::html_document:
     self_contained: yes
@@ -114,7 +120,7 @@ This function, besides, trims the taxonomic-entry-name (this is done for purely 
 
 ```{r message=FALSE}
 #Aggregate relative abundances at the desired taxonomic level
-AggregateByTaxon <- function(tse_object, taxon){
+AggregateByTaxonomicLevel <- function(tse_object, taxon){
   
   #Change rowTree from phylogenetic tree to taxonomic tree
   taxa <- rowData(tse_object)
@@ -127,7 +133,6 @@ AggregateByTaxon <- function(tse_object, taxon){
   rownames(taxa_tse) <- paste0("species:",rowLinks(taxa_tse)$nodeLab)
   
   if(taxon == "species"){
-    
     return(taxa_tse) # No need to aggregate at species level
     
 } else {
@@ -146,7 +151,7 @@ AggregateByTaxon <- function(tse_object, taxon){
 
 We are interested in species only, so we modify the TSE object accordingly
 ```{r message=FALSE}
-species_tse <- AggregateByTaxon(tse, "species")
+species_tse <- AggregateByTaxonomicLevel(tse, "species")
 ```
 
 # Single-dataset sex-related microbial species differential-abundance-analyses, via a linear modelling controlling for age & BMI
@@ -161,6 +166,7 @@ d_fromlm <- function(n1,n2,t) {
   d <- (t*(n1+n2)/(sqrt(n1*n2)*sqrt(n1+n2-2)))
   return(d)
 }
+
 #Compute Std. error of d
 SE_d <- function(n1,n2,d) {
   se_d <- sqrt(((n1+n2-1)/(n1+n2-3))*((4/(n1+n2))*(1+((d**2)/8))))
@@ -190,10 +196,11 @@ Weighted effect-size of sex in this model is computed as:
 $$\text{effect-size} = \frac{t\cdot (n1+n2)}{\sqrt{n1\cdot n2}\cdot \sqrt{df}}$$
 
 where:
- - $n1$ is the total number of controls (females) in the corresponding dataset
- - $n2$ is the total number of cases (males) in the corresponding dataset
- - $df$ are the degrees of freedom, computed as $df=n1 + n2 - 2$ are the degrees of freedom of the linear model built
- - $t$ is the T-statistics for sex returned by the software  
+
+  - $n1$ is the total number of controls (females) in the corresponding dataset
+  - $n2$ is the total number of cases (males) in the corresponding dataset
+  - $df$ are the degrees of freedom, computed as $df=n1 + n2 - 2$ are the degrees of freedom of the linear model built
+  - $t$ is the T-statistics for sex returned by the software  
 
 
 The so computed Effect-size (corrected by covariates) has Standard Error and Variance:
@@ -219,8 +226,8 @@ computeStandardizedMeanDifference <- function(tse_object){
 
     species <- rownames(exprs_df)
     
-    age <- as.double(colData(single_dataset_tse)$age)
-    bmi <- as.double(colData(single_dataset_tse)$BMI)
+    age <- colData(single_dataset_tse)$age
+    bmi <- colData(single_dataset_tse)$BMI
     gender <- as.factor(colData(single_dataset_tse)$gender)
     
     compute_lm <- function(exprs_row){
