@@ -29,14 +29,14 @@ def aggregate_table(table_name, level):
     N = table.shape[1]
 
     species = [j for j in table.index.tolist() if ("s__" in j)]
-    aggregated_table = table.copy().loc[~species]
+    aggregated_table = table.copy().drop(species)
 
-    desired_level = list(  set(  [ i for i in species if (len(i.split("|"))==(aggregation_levels_dic[ level ]+1))  ]  ) )
-    desired_level_ab = dict([(taxon, np.zeros(N)  ) for taxon in desired_level])
+    desired_level = list(  set(  [ "|".join( i.split("|")[:(aggregation_levels_dic[ level ] + 1)] ) for i in species  ]  ) )
+    desired_level_ab = dict( [ (  taxon, np.zeros(N)  ) for taxon in desired_level  ]  )
 
     for taxon in species:
         if len( taxon.split( "|" ) ) > ( aggregation_levels_dic[ level ] +1 ):
-            desired_level_ab[ taxon.split( "|" )[ aggregation_levels_dic[ level ] ] ] += table.loc[ taxon  ].values.astype( float )
+            desired_level_ab[ "|".join( taxon.split( "|" )[ :(aggregation_levels_dic[ level ] + 1) ] ) ] += table.loc[ taxon  ].values.astype( float )
 
     for aggregated_taxon in desired_level_ab:
         aggregated_table.loc[ aggregated_taxon ] = desired_level_ab[ aggregated_taxon ]
