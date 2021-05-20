@@ -114,7 +114,7 @@ def hierarchical_analysis(args, a_certain_response): ## le pravelcen le possiamo
             np.isfnite( get( args["ANALYSES"][i], a_certain_response, args["ESIZE-COL"][i] ) ) ]
  
             re = RE_meta_binary( Effects, None, Nms, None, None, a_certain_response, \
-                EFF="precomputed", variances_from_outside=Variances CI=False, HET=args["H"]  )
+                EFF="precomputed", variances_from_outside=Variances, CI=False, HET=args["H"]  )
 
             sys.stdout.write("%s (%i associtaions found) Random Effect = %.3f [H: %.3f %.3f  %.3f]   (  %.4f  )\n" \
                 %( a_certain_response, len(Nms), re.RE, re.t2_DL, re.t2_PM, re.I2, re.Pval) )
@@ -160,7 +160,7 @@ def main():
     meta_of_meta = []
 
     ## qui definisci le feature
-    Features = set(list( it.chain.from_iterable(  [ a.index.tolist() for a in hier_args["ANALYSES"]  ]  ) ) )
+    Features = set( list( it.chain.from_iterable(  [ a.index.tolist() for a in hier_args["ANALYSES"]  ]  ) ) )
 
     ## qui filtei per pravelcne
     
@@ -174,13 +174,22 @@ def main():
             if mean_prevalence >= hier_args["MIN-P"]:
  
                 res = hierarchical_analysis(hier_args, a_certain_response)
+
+                if hier_args["prevalence"][0]:
+                    setattr(res, "mean-prevalence", mean_prevalence)
                 
                 if np.isfinite(res):
                     if len(meta_of_meta) == 0.:
                         meta_of_meta = res
                     else:
                         meta_of_meta = meta_of_meta.append(res)
-                         
+                    
+
+    if isinstance(meta_of_meta, list):
+
+        raise ("No feats meet youre reqeuirementes... Check manually if these meta-analyses have something in common "
+            "or relax the min_prevalence and the min-studies argument.")
+
     _, fdr = fdrcorrection(meta_of_meta["RE_Pvalue"].values.astype(float), alpha=0.05)
 
     meta_of_meta.insert((len( hier_args["NAMES"] )*2)+2, "RE_Qvalue", fdr)
