@@ -3,6 +3,7 @@
 import sys, os
 import pandas as pd
 import numpy as np
+import itertools as it
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 from statsmodels.stats.multitest import fdrcorrection
@@ -27,19 +28,25 @@ class singleStudyEffect(object):
 class meta_analysis_with_linear_model(object):
     def __init__(self, dataTable, formula, studyid, feats, outfile, cls_or_reg, heterogeneity, pos=None, neg=None):
 
+        #if not (("study_name" in dataTable.columns) or ("dataset_name" in dataTable.columns)):
         self.data = dataTable.T
+        #else:
+        #    self.data = dataTable
+
         self.feats = feats
         self.studyid = studyid
         fm_covs = formula.split("+")
         self.predictor = fm_covs[0].strip()
         self.pos, self.neg = pos, neg
-        self.covariates = [ c.strip()   for c in fm_covs[1:]]
+        self.covariates = [ c.strip() for c in fm_covs[1:]]
 
         for cv in self.covariates:
             if not cv.startswith("Q"):
                 self.data[cv] = self.data[cv].astype(float)
-             
-        self.formula = formula + " + 1 "
+        
+        if self.neg:
+            self.formula = formula.replace(self.predictor, "C(%s), Treatment('%s')" %(self.predictor, self.neg))
+
         self.outfile = outfile
         self.het = heterogeneity
         self.studies = list(self.data[self.studyid].unique())
@@ -49,13 +56,18 @@ class meta_analysis_with_linear_model(object):
 
     def correlation_of_study(self, study, feature):
 
+        #print(self.data, " quesrui sono i miei dati")
+        #print(study in self.data["dataset_name"].tolist())
+        #print(feature, self.predictor, self.covariates, self.studyid)
+
         data_here = self.data.loc[self.data[self.studyid].isin([study]), [feature, self.predictor] + self.covariates]
         data_here[feature] = data_here[feature].astype(float)
         formula = ('Q("%s") ~ ' %feature) + self.formula
 
         md = smf.ols(formula, data=data_here)
         model_fit = md.fit()
-        ##print(model_fit.summary())
+        #print(model_fit.summary())
+        #print(self.predictor , self.pos, self.neg, "self ghye")
 
         if self.cls_or_reg == "CLS":
             #predictor = self.predictor if (not "Treatment" in self.predictor) else (self.predictor.split(",")[0].replace("C(", "")) + ("[T.%s]" %self.pos)
@@ -134,7 +146,7 @@ class meta_analysis_with_linear_model(object):
                     else:
                         result = result.append(re.result)
  
-        _, FDR = fdrcorrection(result["RE_Pvalue"].values.astype(float), alpha=0.05)
+        _, FDR = fdrcorrection(result["RE_Pvalue"].values.astype(float), alpha=.05)
         result.insert((len(self.studies)*2)+1, "RE_%s_Qvalue" %("Effect" if (self.cls_or_reg == "CLS") else "Correlation"), FDR)
         result.fillna("NA", inplace=True)
 
@@ -153,10 +165,10 @@ class meta_analysis_with_linear_model(object):
 
         result.insert(0, "Feature", result.index.tolist())
         result = result[["Feature"] + \
-            list(it.chain.from_iterable([[S+"_Correlation",  S+"_Pvalue", S+"_Qvalue"] for S in self.Studies])) + \
+            list(it.chain.from_iterable([[S+"_Correlation",  S+"_Pvalue", S+"_Qvalue"] for S in self.studies])) + \
             ["RE_Correlation", "RE_Pvalue", "RE_Correlation_Qvalue", "RE_stdErr", "RE_conf_int", "Zscore", "Tau2_DL", "Tau2_PM", "I2"] \
         if (self.cls_or_reg=="REG") else \
-            list(it.chain.from_iterable([[S+"_Effect",  S+"_Pvalue", S+"_Qvalue"] for S in self.Studies])) + \
+            list(it.chain.from_iterable([[S+"_Effect",  S+"_Pvalue", S+"_Qvalue"] for S in self.studies])) + \
             ["RE_Effect", "RE_Var", "RE_Pvalue", "RE_Effect_Qvalue", "RE_stdErr", "RE_conf_int", "Zscore", "Tau2_DL", "Tau2_PM", "I2"]]
         result.to_csv(self.outfile, sep="\t", header=True, index=True)
 
@@ -175,7 +187,7 @@ class analysis_with_linear_model(object):
             if not cv.startswith("Q"):
                 self.data[cv] = self.data[cv].astype(float)
 
-        self.formula = formula + " + 1 "
+        self.formula = formula #+ " + 1 "
         self.outfile = outfile
         
         ## main
