@@ -118,6 +118,7 @@ We therefore use the function _splitByRanks_ from the _mia_ package which allows
 
 We are interested in species only, so we modify the TSE object accordingly
 ```{r message=FALSE}
+library(mia)
 species_tse <- splitByRanks(tse, rank = "Species")[[1]]
 ```
 

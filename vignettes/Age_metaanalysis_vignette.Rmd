@@ -66,7 +66,7 @@ library(TreeSummarizedExperiment)
 ## Retrieval of datasets from the cMD3 meeting a series of requirements
 ```{r}
 #Filter on Age, body_site, study_condition and remove samples missing BMI
-  metadata <- curatedMetagenomicData::sampleMetadata %>% 
+  metadata <- curatedMetagenomicData::combined_metadata  %>% 
     filter(age >= 16 &
            body_site == "stool" &
            study_condition == "control" & 
@@ -117,6 +117,7 @@ We therefore use the function _splitByRanks_ from the _mia_ package which allows
 
 We are interested in species only, so we modify the TSE object accordingly
 ```{r message=FALSE}
+library(mia)
 species_tse <- splitByRanks(tse, rank = "Species")[[1]]
 ```
 
@@ -146,7 +147,7 @@ In order to proceed with the meta-analysis, we have to compute an effect-size fo
 Each dataset effect-size is computed with the function we define after. This function estimates a per-feature relationship between age and the arcsin-square-root relative abundance of each species. The estimates is extracted by an Ordinary Least Squares (OLS) model, in which the microbial feature (in this case, the species) is the response, and the age of the subject is the predictor. Using this method we can control our model by age & by gender of the patient. 
 
 The model has indeed the shape:
-$$ species \sim  1 + sex + age + BMI$$
+$$ species \sim  sex + age + BMI$$
 
 
 
@@ -176,9 +177,7 @@ computeStandardizedMeanDifference <- function(tse_object){
     exprs_df <- asin_trans(
       assay(single_dataset_tse))
     
-    exprs_df[which(is.na(exprs_df))] <- 0
-    
-    #exprs_df <- exprs_df[rowSums(is.na(exprs_df)) != ncol(exprs_df), ]
+    exprs_df <- exprs_df[rowSums(is.na(exprs_df)) != ncol(exprs_df), ]
 
     species <- rownames(exprs_df)
     
