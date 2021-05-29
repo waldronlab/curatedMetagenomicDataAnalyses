@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse as ap
+import os, sys
 import numpy as np
 import pandas as pd
 from skbio.stats import composition as cps
@@ -22,14 +23,17 @@ def read_params():
     add("-z", "--feat_id", type=str, default="s__", choices=["k__", "p__", "o__", "c__", \
 	"f__", "g__", "s__", "PWY", "UniRef90", "K"], help="Substring of any type "
 	"uniquely identifing the features with respect to the metadata.")
-    add("-of", "--outfile", type=str, default="", help=)
+    add("-no", "--normalize", action="store_true", help="Normalize the data making them sum to 1 before apply the transform.")
+    add("-of", "--outfile", type=str, default="", help="If not specified, it preseves the name of the input attacching the "
+        "name of the transformation")
     return p.parse_args()
 
 def apply_transform_on_data(dataframe, T):
     samples = dataframe.columns.tolist()
     features = dataframe.index.tolist()
     sums = np.sum(dataframe.values.astype(float), axis=0)
-    if np.isclose(np.sum(sums), 100*len(samples)):
+  
+    if np.isclose(np.sum(sums), 100*len(samples), rtol=0.001):
         sys.stdout.write("\n Relative abundances (summing to 100) detected. Proceeding...")
         if T.lower() == "clr":
             for sample in samples:
@@ -39,7 +43,8 @@ def apply_transform_on_data(dataframe, T):
                 dataframe[sample] = np.arcsin(np.sqrt(dataframe[sample].values.astype(float)/100.))
         else:
             raise NotImplementedError("Sorry: the transformation %s is not available yet." %T)
-    elif np.isclose(np.sum(sums), len(samples)):
+
+    elif np.isclose(np.sum(sums), len(samples), rtol=0.001):
         sys.stdout.write("\n Relative abundances (summing to 1) detected. Proceeding...")
         if T.lower() == "clr":
             for sample in samples:
@@ -49,20 +54,25 @@ def apply_transform_on_data(dataframe, T):
                 dataframe[sample] = np.arcsin(np.sqrt(dataframe[sample].values.astype(float)))
         else:
             raise NotImplementedError("Sorry: the transformation %s is not available yet." %T)
+
     elif np.isclose(np.sum(sums), 0.0):
         raise ValueError("\n Data summing to 0.0 with tol.: CLR already performed? Exiting...")
     elif np.isclose( np.sum([((np.sin(dataframe.loc[:, sample].values.astype(float)))**2)*100 \
         for sample in samples]), 100*len(samples)):
         raise ValueError("\n Data summing to 100 after inverse of arcsin-sqrt. Exiting...")
+
     return dataframe
 
 def main(args):
-    I = pd.read_csv(args.datatable, sep="\t", header=0, index_col=0, low_memory=False, engine="c").fillna("NA")
+    I = pd.read_csv(args.datatable, sep="\t", header=0, index_col=0, low_memory=False, engine="c") #.fillna("NA")
     feats = [i for i in I.index.tolist() if (args.feat_id in i)]
     metadata = [m for m in I.index.tolist() if (not m in feats)]
+    if args.normalize:
+        for s in I.columns.tolist():
+            I.loc[feats, s] = np.nan_to_num( I.loc[feats, s].fillna(0.0).values.astype(float) / np.sum(I.loc[feats, s].fillna(0.0).values.astype(float) ), nan=0. )
     dataframe = apply_transform_on_data(I.loc[feats, :], args.apply_t)
-    metadata_dataframe = I.loc[metadata, :].append(dataframe)
-    metadata_dataframe.index.name = "sampleID"
+    metadata_dataframe = I.loc[metadata, :].fillna("NA").append(dataframe)
+    metadata_dataframe.index.name = "sample_id"
     if not args.outfile:
         args.outfile = args.datatable.replace(".tsv", "_%s.tsv" %args.apply_t)
     metadata_dataframe.to_csv(args.outfile, sep="\t", header=True, index=True)

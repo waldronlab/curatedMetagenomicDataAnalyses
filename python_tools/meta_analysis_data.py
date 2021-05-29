@@ -32,7 +32,7 @@ def read_params():
         " --verbose \n"
         ""
         "\nExample b)"
-        "\n==> return 3384 samples used to "
+        "\n==> return 3385 samples used to "
         "study microbiome relationships with ageing. "
         "\n(Imagine to run this having metadata + data rel.abuns. "
         "previously stored in rel_abundances/):\n "
@@ -96,10 +96,10 @@ def read_params():
     add("-bn", "--binary", type=str, nargs="+", default=[], help="Use ':' (-bn cls:pos:prevpos:neg) ==> under column cls, substitute everything == prevpos with pos,  "
 	"and everything else with neg (useful mixed with ex or cat)")
     add("-mp", "--min_perc", type=str, nargs="+", default=[], help="Use ':' ==> column-name:25 searches at least min 25%% in the less abundance class under column-name")
-    add("-mm", "--minmin", type=str, default="gender:cat:40", help="Can have 2 shapes: gender:40 requires a minimum of 40 individuals in the less abundance sex "
+    add("-mm", "--minmin", type=str, default="0", help="Can have 2 shapes: gender:40 requires a minimum of 40 individuals in the less abundance sex "
 	", while just 40 requires a minimum of 40 individuals in total (This keyword is very important because many dataset are quite small for a meta-analysis)")
-    add("-cf", "--cfd", type=str, nargs="+", default=[], help="Use words: BMI age gender: this will simply exclude samples **without** these confounders")
-    add("-si", "--study_identifier", type=str, default="dataset_name", help="Name of the column identifing Dataset [default: dataset_name]")
+    add("-cf", "--cfd", type=str, nargs="+", default=[], help="Use words, such as: BMI age gender: this will simply exclude samples **without** these confounders")
+    add("-si", "--study_identifier", type=str, default="study_name", help="Name of the column identifing Dataset [default: dataset_name]")
     add("-v", "--verbose", action="store_true", help="Tell you what is adding and how big it is")
     add("--debug", action="store_true", help="Similar to verbose, but prints more stuff")
     return p.parse_args()
@@ -115,7 +115,7 @@ def handle_input(input_argument, studyID, verbose):
             raise FileNotFoundError("Sorry: you input a combinedMetadata.tsv table string which is not present in cur dir")
     else:
         for table in glob.glob(os.path.join(input_argument, "*")):
-            data_2_tables[os.path.basename(table.replace(".tsv", ""))] = pd.read_csv(table, sep="\t", header=0, index_col=0, low_memory=False, engine="c").fillna("NA").T
+            data_2_tables[os.path.basename(table.replace(".tsv", ""))] = pd.read_csv(table, sep="\t", header=0, index_col=0, low_memory=False, engine="c").fillna("NA")
     return data_2_tables
 
 def select(args):
@@ -125,10 +125,11 @@ def select(args):
 
     for name in metadata_dict:
         tabtab = metadata_dict[name] #pd.read_csv(table, sep="\t", header=0, index_col=0, low_memory=False, engine="c").fillna("NA")
-        tabtab.index.name = "sampleID"
-        ###tabtab.columns = [ (dt + "_" + c) for c,dt in zip(tabtab.columns.tolist(), tabtab.loc[args.study_identifier].tolist()) ]
+        tabtab.index.name = "sample_id"
+        tabtab.columns = [ (dt + "_" + c) for c,dt in zip(tabtab.columns.tolist(), tabtab.loc[args.study_identifier].tolist()) ]
         study = tabtab.loc[args.study_identifier].tolist()[0]
-        
+
+
         if args.min and (not isinstance(tabtab, np.ndarray)):
             for ag in args.min:
                 ag = ag.split(":")
@@ -138,10 +139,12 @@ def select(args):
                     tabtab = tabtab.loc[ :, tabtab.loc[col]!="NA" ]
                     tabtab = tabtab.loc[ :, tabtab.loc[col].astype(int)>=min_ ]
                     if args.debug:
-                        sys.stdout.write("\nMin ==> ", tabtab.shape, "[", study, "]") 
+                        sys.stdout.write("\nMin ==> " + str(tabtab.shape) + "[" + study + "]") 
                 else:
                     tabtab = np.array([])
-        
+
+
+
         if args.max and (not isinstance(tabtab, np.ndarray)):
             for ag in args.max:
                 ag = ag.split(":")
@@ -151,80 +154,100 @@ def select(args):
                     tabtab = tabtab.loc[ :, tabtab.loc[col]!="NA" ]
                     tabtab = tabtab.loc[ :, tabtab.loc[col]<=max_ ]
                     if args.debug:
-                        sys.stdout.write("\nMAX ==> ", tabtab.shape, "[", study, "]")
+                        sys.stdout.write("\nMAX ==> " + str(tabtab.shape) + "[" + study + "]")
                 else:
                     tabtab = np.array([])
 
-        if args.iqr and (not isinstance(tabtab, np.ndarray)):
-            for iqr in args.iqr:
-                iqr = iqr.split(":")
-                col = iqr[0]
-                num = float(iqr[1])
-                if col in tabtab.index.tolist():
-                    tabtab = tabtab.loc[ :, tabtab.loc[col]!="NA" ]
-                    tabtab = tabtab if (sts.iqr(tabtab.loc[ col ].values.astype(float)) >= num) else []
-                    if args.debug:
-                        sys.stdout.write("\nIQR ==> ", tabtab.shape, "[", study, "]")
-                else:
-                    tabtab = np.array([])
+
             
         if args.cat and (not isinstance(tabtab, np.ndarray)):
             for ct in args.cat:
                 ct = ct.split(":")
                 col = ct[0]
                 ctg = ct[1]
+
                 if col in tabtab.index.tolist():
                     tabtab = tabtab.loc[ :, tabtab.loc[col]!="NA" ]
                     tabtab = tabtab.loc[ :, tabtab.loc[col]==ctg ]
                     if args.debug:
-                        sys.stdout.write("\nCATG ==> ", tabtab.shape, "[", study, "]")
+                        sys.stdout.write("\nCATG ==> " + str(tabtab.shape) + "[" + study + "]")
                 else:
                     tabtab = np.array([])
- 
+
+
+
         if args.exclude and (not isinstance(tabtab, np.ndarray)):
             for ag in args.exclude:
                 ag = ag.split(":")
                 col = ag[0]
                 exc = ag[1]
-                tabtab = tabtab.loc[ :, ~tabtab.loc[col].isin([exc])]
+                if col in tabtab.index.tolist():
+                    tabtab = tabtab.loc[ :, ~tabtab.loc[col].isin([exc])]
+
+
             
         if args.cfd and (not isinstance(tabtab, np.ndarray)):
             for confounder in args.cfd:
-                if confounder in tabtab.index.tolist():
+                if (not isinstance(tabtab, np.ndarray)) and (confounder in tabtab.index.tolist()):
                     tabtab = tabtab.loc[ :, tabtab.loc[confounder]!="NA" ]
                 else:
                     tabtab = np.array([])
+
+
 
         if args.search and (not isinstance(tabtab, np.ndarray)):
             for ag in args.search:
                 col = ag.split(":")[0]
                 arrgs = ag.split(":")[1:]
                 if col in tabtab.index.tolist():
+                    #if (not "NA" in arrgs): 
                     tabtab = tabtab.loc[ :, tabtab.loc[col]!="NA" ]
                     tabtab = tabtab.loc[ :, tabtab.loc[col].isin(arrgs) ]
                     if args.debug:
-                        sys.stdout.write("\nSEarch ==> ", tabtab.shape, "[", study, "]")
+                        sys.stdout.write("\nSEarch ==> " + str(tabtab.shape) + "[" + study + "]")
                 else:
                     tabtab = np.array([])
+
+
 
         if args.multiple and (not isinstance(tabtab, np.ndarray)):
             if ("days_from_first_collection" in tabtab.index.tolist()) and (len(tabtab.loc["days_from_first_collection"].unique()) >1):
                 if args.multiple < 0.:
                     tabtab.loc["days_from_first_collection"] = [ (0.0 if str(n)=="NA" else float(n)) for n in tabtab.loc["days_from_first_collection"].tolist() ]
                     tabtab = tabtab.loc[ :, tabtab.loc["days_from_first_collection"] == 0.0 ]
+
+                    tabtab = tabtab.T.drop_duplicates(["subject_id"], keep="first").T
                     if args.debug:
-                        sys.stdout.write("\nMULT ==> ", tabtab.shape)
+                        sys.stdout.write("\nDROP ==> " + str(tabtab.shape) + "[" + study + "]")
+                        sys.stdout.write("\nMULT ==> " + str(tabtab.shape) + "[" + study + "]")
+                    
                 else:
                     tabtab = tabtab.loc[ :, tabtab.loc["days_from_first_collection"] <= args.multiple ]
             else:
                 if args.multiple < 0.:
-                    tabtab = tabtab.T.drop_duplicates(["subjectID"], keep="first").T
+                    tabtab = tabtab.T.drop_duplicates(["subject_id"], keep="first").T
                     if args.debug:
-                        sys.stdout.write("\nDROP ==> ", tabtab.shape, "[", study, "]")
+                        sys.stdout.write("\nDROP ==> " + str(tabtab.shape) + "[" + study + "]")
+
                 else:
                     tabtab = np.array([])
+
             if not tabtab.shape[1]:
                 tabtab = np.array([])
+
+
+
+        if args.binary and (not isinstance(tabtab, np.ndarray)):
+            for bn in args.binary:
+                cls, pos, prevpos, neg = bn.split(":")
+                if cls in tabtab.index.tolist():
+                    #if neg != "NA":
+                    #    tabtab = tabtab.loc[ :, tabtab.loc[cls]!="NA" ]
+                    tabtab.loc[ cls ] = [( pos if (nm==prevpos) else neg ) for nm in tabtab.loc[ cls ].tolist() ]
+                else:
+                    tabtab = np.array([])
+
+
 
         if args.min_perc and (not isinstance(tabtab, np.ndarray)):
             for mp in args.min_perc:
@@ -244,29 +267,44 @@ def select(args):
                 else:
                     tabtab = np.array([])
 
-        if args.binary and (not isinstance(tabtab, np.ndarray)):
-            for bn in args.binary:
-                cls, pos, prevpos, neg = bn.split(":")
-                if cls in tabtab.index.tolist():
-                    tabtab = tabtab.loc[ :, tabtab.loc[cls]!="NA" ]
-                    tabtab.loc[ cls ] = [( pos if (nm==prevpos) else neg ) for nm in tabtab.loc[ cls ].tolist() ]
+
+
+        if args.iqr and (not isinstance(tabtab, np.ndarray)):
+            for iqr in args.iqr:
+                iqr = iqr.split(":")
+                col = iqr[0]
+                num = float(iqr[1])
+                if (not isinstance(tabtab, np.ndarray)) and (col in tabtab.index.tolist()):
+                    tabtab = tabtab.loc[ :, tabtab.loc[col]!="NA" ]
+                    tabtab = tabtab if (sts.iqr(tabtab.loc[ col ].values.astype(float)) >= num) else np.array([])
+                    if args.debug:
+                        sys.stdout.write("\nIQR ==> " + str(tabtab.shape) + "[" + study + "]")
                 else:
                     tabtab = np.array([])
+
+
         
         if args.minmin and (not isinstance(tabtab, np.ndarray)):
             if len(args.minmin.split(":")) == 2:
                 minmin = args.minmin.split(":")
                 col = minmin[0]
-                mm = int(minmin[1])
-                tabtab = tabtab \
-                    if (((np.min([ tabtab.loc[col, tabtab.loc[col]==u].shape[0] for u in tabtab.loc[col].unique()]) >= mm)) \
-                        and ( len(tabtab.loc[col].unique())>1  )) \
-                    else np.array([])
+                mm = int(minmin[1]) 
+                if tabtab.shape[1]:
+                    #### print(study, [ tabtab.loc[col, tabtab.loc[col]==u].shape[0] for u in tabtab.loc[col].unique() ] )
+                    tabtab = tabtab \
+                        if (((np.min([ tabtab.loc[col, tabtab.loc[col]==u].shape[0] for u in tabtab.loc[col].unique()]) >= mm)) \
+                            and ( len(tabtab.loc[col].unique())>1  )) \
+                        else np.array([])
+                else:
+                    tabtab = np.array([])
+
                 if args.debug:
-                    sys.stdout.write("\nMIN-MIN ==> ", tabtab.shape, "[", study, "]")
+                    sys.stdout.write("\nMIN-MIN ==> " + str(tabtab.shape) + "[" + study + "]")
             else:
                 mm = int(args.minmin)
                 tabtab = tabtab if (tabtab.shape[1]>=mm) else np.array([])
+
+
 
         if len(tabtab):
             if args.verbose or args.debug:
@@ -275,7 +313,13 @@ def select(args):
                 madata = tabtab
             else:
                 madata = madata.merge( tabtab, left_index=True, right_index=True, how="outer" )
- 
+
+
+    if not isinstance(madata, list):
+        madata.fillna(0.0, inplace=True)
+
+
+
     if len(madata):
         if args.verbose or args.debug:
             sys.stdout.write("\nYour dataset %s has %i samples! Does this make sense?\n" %(args.output_dataset, madata.shape[1]))
@@ -283,9 +327,11 @@ def select(args):
     else:
         raise IndexError("We are sorry: apparently your search is too detailed for this package, and we can't provide any sample with the desired characteristics Exiting")
 
+
 def main():
     args = read_params()
     select(args)
+
 
 if __name__=="__main__": 
     main()
