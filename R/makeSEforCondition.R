@@ -22,6 +22,7 @@ makeSEforCondition <-
            removestudies = NULL,
            dataType = "relative_abundance",
            counts = FALSE) {
+    library(dplyr)
     studies <-
       filter(sampleMetadata, study_condition %in% condition) %>%
       pull(study_name) %>%
