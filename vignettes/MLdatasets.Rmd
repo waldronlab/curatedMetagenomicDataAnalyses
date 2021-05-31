@@ -34,14 +34,20 @@ See [source file on GitHub](https://github.com/waldronlab/curatedMetagenomicAnal
 Do `BiocManager::install("waldronlab/curatedMetagenomicAnalyses")` to install the
 `makeSEforCondition` function and to run this vignette.
 
-# Investigate potential response variables
-
-These are the 10 study conditions most commonly found in curatedMetagenomicData:
+Packages used here:
 
 ```{r, message=FALSE}
 library(curatedMetagenomicData)
 library(curatedMetagenomicAnalyses)
 library(dplyr)
+```
+
+# Investigate potential response variables
+
+These are the 10 study conditions most commonly found in curatedMetagenomicData:
+
+```{r}
+data("sampleMetadata")
 availablediseases <- pull(sampleMetadata, study_condition) %>%
   table() %>%
   sort(decreasing = TRUE)
