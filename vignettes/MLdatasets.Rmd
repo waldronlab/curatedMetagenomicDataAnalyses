@@ -1,9 +1,24 @@
 ---
 title: "Create datasets for machine learning"
-author: "Levi Waldron"
-date: "5/31/2021"
-output: html_document
----
+author: 
+  - name: Levi Waldron
+    affiliation:
+    - CUNY Graduate School of Public Health and Health Policy
+    email: levi.waldron@sph.cuny.edu
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+date: "`r BiocStyle::doc_date()`"
+package: "`r BiocStyle::pkg_ver('curatedMetagenomicAnalyses')`"
+vignette: >
+  %\VignetteIndexEntry{ML datasets from cMD}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+  ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -14,18 +29,25 @@ This vignette identifies and writes to disk datasets for use in multi-dataset ma
 1. A `.rda` file containing a TreeSummarizedExperiment with full colData, rowData, a phylogenetic tree, and assay data containing taxonomic data.
 2. A `.csv.gz` file containing only key sample metadata, and taxonomic data (variables in columns)
 
+See [source file on GitHub](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/MLdatasets.Rmd)
+
+Do `BiocManager::install("waldronlab/curatedMetagenomicAnalyses")` to install the
+`makeSEforCondition` function and to run this vignette.
+
 # Investigate potential response variables
 
 These are the 10 study conditions most commonly found in curatedMetagenomicData:
 
 ```{r, message=FALSE}
 library(curatedMetagenomicData)
+library(curatedMetagenomicAnalyses)
 library(dplyr)
 availablediseases <- pull(sampleMetadata, study_condition) %>%
   table() %>%
   sort(decreasing = TRUE)
 availablediseases
 ```
+
 And the number of studies they are found in:
 ```{r}
 studies <- lapply(names(availablediseases), function(x){
@@ -44,36 +66,22 @@ Each of these datasets has six data types associated with it; for example:
 curatedMetagenomicData("JieZ_2017.+")
 ```
 
-```{r}
-makeSEforCondition <-
-  function(condition,
-           removestudies = NULL,
-           dataType = "relative_abundance",
-           counts = FALSE) {
-    studies <-
-      filter(sampleMetadata, study_condition %in% condition) %>%
-      pull(study_name) %>%
-      unique()
-    studies <- studies[!studies %in% removestudies]
-    filter(sampleMetadata, study_condition %in% c(condition, "control")) %>%
-      filter(study_name %in% studies) %>%
-      select(where(~ !all(is.na(.x)))) %>%
-      returnSamples(dataType = dataType, counts = counts)
-  }
-```
+Write relative abundance datasets to disk:
 
-```{r writefiles}
+```{r writefiles, message=FALSE, cache=TRUE}
 for (i in seq_along(studies)){
   cond <- names(studies)[i]
-  se <- makeSEforCondition(cond, removestudies = "HMP_2019_ibdmdb")
+  se <-
+    curatedMetagenomicAnalyses::makeSEforCondition(cond, removestudies = "HMP_2019_ibdmdb", dataType = "relative_abundance")
   print(paste("Next study condition:", cond, " /// Body site: ", unique(colData(se)$body_site)))
   print(with(colData(se), table(study_name, study_condition)))
-   save(se, file = paste0(cond, ".rda"))
-   flattext <- select(as.data.frame(colData(se)), c("study_name", "study_condition", "subject_id"))
-   rownames(flattext) <- colData(se)$sample_id
-   flattext <- cbind(flattext, data.frame(t(assay(se))))
-   write.csv(flattext, file = paste0(cond, ".csv"))
-   system(paste0("gzip ", cond, ".csv"))
+  cat("\n \n")
+  save(se, file = paste0(cond, ".rda"))
+  flattext <- select(as.data.frame(colData(se)), c("study_name", "study_condition", "subject_id"))
+  rownames(flattext) <- colData(se)$sample_id
+  flattext <- cbind(flattext, data.frame(t(assay(se))))
+  write.csv(flattext, file = paste0(cond, ".csv"))
+  system(paste0("gzip ", cond, ".csv"))
 }
 ```
 
