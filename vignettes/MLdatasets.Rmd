@@ -1,0 +1,79 @@
+---
+title: "Create datasets for machine learning"
+author: "Levi Waldron"
+date: "5/31/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This vignette identifies and writes to disk datasets for use in multi-dataset machine learning. For each relevant study condition, two files are written:
+
+1. A `.rda` file containing a TreeSummarizedExperiment with full colData, rowData, a phylogenetic tree, and assay data containing taxonomic data.
+2. A `.csv.gz` file containing only key sample metadata, and taxonomic data (variables in columns)
+
+# Investigate potential response variables
+
+These are the 10 study conditions most commonly found in curatedMetagenomicData:
+
+```{r, message=FALSE}
+library(curatedMetagenomicData)
+library(dplyr)
+availablediseases <- pull(sampleMetadata, study_condition) %>%
+  table() %>%
+  sort(decreasing = TRUE)
+availablediseases
+```
+And the number of studies they are found in:
+```{r}
+studies <- lapply(names(availablediseases), function(x){
+  filter(sampleMetadata, study_condition %in% x) %>%
+    pull(study_name) %>%
+    unique()
+})
+names(studies) <- names(availablediseases)
+studies <- studies[-grep("control", names(studies))] #get rid of controls
+studies <- studies[sapply(studies, length) > 1] #available in more than one study
+studies
+```
+
+Each of these datasets has six data types associated with it; for example:
+```{r}
+curatedMetagenomicData("JieZ_2017.+")
+```
+
+```{r}
+makeSEforCondition <-
+  function(condition,
+           removestudies = NULL,
+           dataType = "relative_abundance",
+           counts = FALSE) {
+    studies <-
+      filter(sampleMetadata, study_condition %in% condition) %>%
+      pull(study_name) %>%
+      unique()
+    studies <- studies[!studies %in% removestudies]
+    filter(sampleMetadata, study_condition %in% c(condition, "control")) %>%
+      filter(study_name %in% studies) %>%
+      select(where(~ !all(is.na(.x)))) %>%
+      returnSamples(dataType = dataType, counts = counts)
+  }
+```
+
+```{r writefiles}
+for (i in seq_along(studies)){
+  cond <- names(studies)[i]
+  se <- makeSEforCondition(cond, removestudies = "HMP_2019_ibdmdb")
+  print(paste("Next study condition:", cond, " /// Body site: ", unique(colData(se)$body_site)))
+  print(with(colData(se), table(study_name, study_condition)))
+   save(se, file = paste0(cond, ".rda"))
+   flattext <- select(as.data.frame(colData(se)), c("study_name", "study_condition", "subject_id"))
+   rownames(flattext) <- colData(se)$sample_id
+   flattext <- cbind(flattext, data.frame(t(assay(se))))
+   write.csv(flattext, file = paste0(cond, ".csv"))
+   system(paste0("gzip ", cond, ".csv"))
+}
+```
+
