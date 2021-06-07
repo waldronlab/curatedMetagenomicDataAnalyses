@@ -22,14 +22,15 @@ makeSEforCondition <-
            removestudies = NULL,
            dataType = "relative_abundance",
            counts = FALSE) {
-    library(dplyr)
     studies <-
-      filter(sampleMetadata, study_condition %in% condition) %>%
-      pull(study_name) %>%
-      unique()
+      dplyr::filter(curatedMetagenomicData::sampleMetadata,
+                    study_condition %in% condition) |>
+        dplyr::pull(study_name) |>
+        unique()
     studies <- studies[!studies %in% removestudies]
-    filter(sampleMetadata, study_condition %in% c(condition, "control")) %>%
-      filter(study_name %in% studies) %>%
-      select(where( ~ !all(is.na(.x)))) %>%
-      returnSamples(dataType = dataType, counts = counts)
+    dplyr::filter(curatedMetagenomicData::sampleMetadata,
+                  study_condition %in% c(condition, "control")) |>
+      dplyr::filter(study_name %in% studies) |>
+      dplyr::select(where( ~ !all(is.na(.x)))) |>
+      curatedMetagenomicData::returnSamples(dataType = dataType, counts = counts)
   }

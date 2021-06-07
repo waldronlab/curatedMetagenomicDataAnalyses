@@ -48,8 +48,8 @@ These are the 10 study conditions most commonly found in curatedMetagenomicData:
 
 ```{r}
 data("sampleMetadata")
-availablediseases <- pull(sampleMetadata, study_condition) %>%
-  table() %>%
+availablediseases <- pull(sampleMetadata, study_condition) |>
+  table() |>
   sort(decreasing = TRUE)
 availablediseases
 ```
@@ -57,8 +57,8 @@ availablediseases
 And the number of studies they are found in:
 ```{r}
 studies <- lapply(names(availablediseases), function(x){
-  filter(sampleMetadata, study_condition %in% x) %>%
-    pull(study_name) %>%
+  filter(sampleMetadata, study_condition %in% x) |>
+    pull(study_name) |>
     unique()
 })
 names(studies) <- names(availablediseases)
