@@ -8,6 +8,7 @@
 #' by read depth?
 #'
 #' @return a (Tree)SummarizedExperiment containing merged data from 1+ studies
+#' @importFrom dplyr filter pull select `%>%`
 #' @export
 #' @details
 #' This function finds datasets that contain the condition of interest, returns
@@ -22,7 +23,7 @@ makeSEforCondition <-
            removestudies = NULL,
            dataType = "relative_abundance",
            counts = FALSE) {
-    library(dplyr)
+    data("sampleMetadata")
     studies <-
       filter(sampleMetadata, study_condition %in% condition) %>%
       pull(study_name) %>%
