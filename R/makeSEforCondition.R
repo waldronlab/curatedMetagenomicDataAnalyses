@@ -8,7 +8,8 @@
 #' by read depth?
 #'
 #' @return a (Tree)SummarizedExperiment containing merged data from 1+ studies
-#' @importFrom dplyr filter pull select `%>%`
+#' @importFrom curatedMetagenomicData returnSamples
+#' @importFrom dplyr filter pull select %>%
 #' @export
 #' @details
 #' This function finds datasets that contain the condition of interest, returns
@@ -23,14 +24,16 @@ makeSEforCondition <-
            removestudies = NULL,
            dataType = "relative_abundance",
            counts = FALSE) {
-    data("sampleMetadata")
     studies <-
-      filter(sampleMetadata, study_condition %in% condition) %>%
-      pull(study_name) %>%
-      unique()
+      dplyr::filter(curatedMetagenomicData::sampleMetadata,
+                    study_condition %in% condition) %>%
+      dplyr::pull(study_name) %>%
+      base::unique()
     studies <- studies[!studies %in% removestudies]
-    filter(sampleMetadata, study_condition %in% c(condition, "control")) %>%
-      filter(study_name %in% studies) %>%
-      select(where( ~ !all(is.na(.x)))) %>%
-      returnSamples(dataType = dataType, counts = counts)
+    dplyr::filter(curatedMetagenomicData::sampleMetadata,
+                  study_condition %in% c(condition, "control")) %>%
+      dplyr::filter(study_name %in% studies) %>%
+      dplyr::select(where( ~ !all(is.na(.x)))) %>%
+      curatedMetagenomicData::returnSamples(dataType = dataType,
+                                            counts = counts)
   }

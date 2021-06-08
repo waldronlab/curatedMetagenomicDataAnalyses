@@ -18,6 +18,7 @@
 #' @export
 #'
 #' @importFrom curatedMetagenomicData returnSamples
+#' @importFrom utils write.csv
 #'
 #' @examples
 #' \dontrun{
@@ -27,14 +28,17 @@
 #' }
 dataDump <- function(dataType = "relative_abundance", counts = FALSE) {
   dups <-
-    sampleMetadata$study_name == "NielsenHB_2014" &
-    grepl(pattern = "^MH", x = sampleMetadata$sample_id)
+    curatedMetagenomicData::sampleMetadata$study_name == "NielsenHB_2014" &
+    grepl(pattern = "^MH",
+          x = curatedMetagenomicData::sampleMetadata$sample_id)
   x <-
-    returnSamples(sampleMetadata[!dups, ], dataType = dataType, counts = counts)
+    returnSamples(curatedMetagenomicData::sampleMetadata[!dups, ],
+                  dataType = dataType,
+                  counts = counts)
   vn <- se$otherPkgs$curatedMetagenomicData$Version
   metadatafile <- paste0("metadata-", vn, ".csv")
   datafile <- paste0(dtype, "-", vn, ".csv")
-  write.csv(assay(x), file = datafile)
-  write.csv(colData(x), file = metadatafile)
+  utils::write.csv(assay(x), file = datafile)
+  utils::write.csv(colData(x), file = metadatafile)
   return(x)
 }
