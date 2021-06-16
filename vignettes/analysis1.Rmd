@@ -44,7 +44,6 @@ bib <- c(
     RefManageR = citation("RefManageR")[1],
     rmarkdown = citation("rmarkdown")[1],
     sessioninfo = citation("sessioninfo")[1],
-    testthat = citation("testthat")[1],
     curatedMetagenomicAnalyses = citation("curatedMetagenomicAnalyses")[1]
 )
 ```
@@ -60,7 +59,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
       install.packages("BiocManager")
   }
 
-BiocManager::install("curatedMetagenomicAnalyses")
+BiocManager::install("waldronlab/curatedMetagenomicAnalyses")
 
 ## Check that you have a valid Bioconductor installation
 BiocManager::valid()
