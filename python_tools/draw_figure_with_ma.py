@@ -161,8 +161,14 @@ def parse_args_table(args, ij):
  
     results = meta_analysis.loc[ meta_analysis[ take_a_param( args.random_effect_q, ij ) ]<\
             (args.a_random if args.how=="first" else 1.0), : ]
-    results = results.loc[ [ i for i in results.index.tolist() if ( meta_analysis.loc[ i, single_effects ].tolist().count("NA")>= take_a_param( args.min_studies, ij) ) ], :]
+
+    #print(results, "ONE")
+
+    results = results.loc[ [ i for i in results.index.tolist() if ((len(single_effects) - results.loc[ i, single_effects ].tolist().count("NA")) \
+        >= take_a_param( args.min_studies, ij)) ], :]
     
+    #print(results, "TWO")
+
     if filter_on == "PREVALENCE":
         results = results.loc[ [ i for i in results.index.tolist() if (prevalences[i]>=take_a_param( args.min_prevalence, ij))], : ]
     else:
@@ -170,10 +176,14 @@ def parse_args_table(args, ij):
             (not i in abundances.index.tolist()) or (np.mean(abundances.loc[i].values.astype(float))>=take_a_param( args.min_prevalence, ij)) \
             ], : ]
     
+    #print(results, "THREE")
+
     if args.narrowed:
         results = results.loc[[i for i in results.index.tolist() if \
             (float(results.loc[i, take_a_param( args.confint, ij) ].split(";")[0])*float(results.loc[i, take_a_param( args.confint, ij)].split(";")[1])) \
             >0.0], :]
+
+        #print(results, "FOUR")
 
     results["abs"] = np.abs( results[ take_a_param( args.random_effect, ij) ].values.astype(float) )
     results.sort_values( "abs", inplace=True, ascending=False )
@@ -186,6 +196,7 @@ def parse_args_table(args, ij):
     res_pos = results.loc[ positive, : ].sort_values( take_a_param( args.random_effect, ij), ascending=False )
     res_neg = results.loc[ negative, : ].sort_values( take_a_param( args.random_effect, ij), ascending=True )
     results = res_pos.append(res_neg)
+    #print(results, "FIVE")
 
     return [results, prevalences, single_effects, single_effect_Qs, results.index.tolist( ), name]
             
@@ -211,10 +222,6 @@ def build_long_frame(args, analysis, ij, result_features, all_markers):
  
     results, prevalences, single_effects, single_effect_Qs, Feats, name_of_this_one = tuple(analysis)
     take_a_param = lambda param, ij : param[ij] if len(param)>1 else param[0]
-
-    print(name_of_this_one)
-    print(Feats)
-    print(results)
 
     lgf_singles = pd.DataFrame(\
         {
@@ -287,8 +294,6 @@ def draw_figure(args):
 
     ax_arrows = plt.subplot( gs[ 0,0 ])
   
-    ####all_markers = [".", ",", "o", "v", "^", "<", ">", "1", "2", "3", "8", "s", "p", "P", "*", "h", "H", "+", "x", "X", "D", "d", "|"]
- 
 
     for ij,analysis in enumerate( analyses ):
 
