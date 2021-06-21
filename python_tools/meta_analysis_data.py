@@ -126,6 +126,8 @@ def select(args):
 
     import numpy
 
+    print(args)
+
     metadata_dict = handle_input(args["input_folder"], args["study_identifier"], args["verbose"])
 
     for name in metadata_dict:
@@ -133,6 +135,7 @@ def select(args):
         tabtab.index.name = "sample_id"
         tabtab.columns = [ (dt + "_" + c) for c,dt in zip(tabtab.columns.tolist(), tabtab.loc[args["study_identifier"]].tolist()) ]
         study = tabtab.loc[args["study_identifier"]].tolist()[0]
+
 
 
         if args["min"] and (not isinstance(tabtab, np.ndarray)):
@@ -231,7 +234,7 @@ def select(args):
             else:
                 if args["multiple"] < 0.:
                     tabtab = tabtab.T.drop_duplicates(["subject_id"], keep="first").T
-                    if args.debug:
+                    if args["debug"]:
                         sys.stdout.write("\nDROP ==> " + str(tabtab.shape) + "[" + study + "]")
 
                 else:
