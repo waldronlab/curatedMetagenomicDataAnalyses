@@ -104,6 +104,7 @@ def read_params():
     add("--debug", action="store_true", help="Similar to verbose, but prints more stuff")
     return p.parse_args()
 
+
 def handle_input(input_argument, studyID, verbose):
     data_2_tables = {}
     if input_argument.endswith(".tsv"):
@@ -118,9 +119,16 @@ def handle_input(input_argument, studyID, verbose):
             data_2_tables[os.path.basename(table.replace(".tsv", ""))] = pd.read_csv(table, sep="\t", header=0, index_col=0, low_memory=False, engine="c").fillna("NA")
     return data_2_tables
 
+
 def select(args):
     madata = []
+
     import numpy
+
+    if isinstance( args, dict ):
+        from attrdict import AttrDict
+        args = AttrDict(args)
+
     metadata_dict = handle_input(args.input_folder, args.study_identifier, args.verbose)
 
     for name in metadata_dict:
