@@ -6,7 +6,7 @@ import numpy as np
 import os, argparse as ap
 import sys
 import matplotlib
-matplotlib.use('Agg')
+#matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 import matplotlib.patches as mpatches
 import matplotlib.lines as mlines
@@ -306,6 +306,9 @@ def build_long_frame(args, analysis, ij, result_features, all_markers):
 
 
 def draw_figure(args, show):
+
+    if not show:
+        matplotlib.use('Agg')
 
     analyses = [\
         parse_args_table( args, ij ) for ij in range(len( args["random_effect"] ))
