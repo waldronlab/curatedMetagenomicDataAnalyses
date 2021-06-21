@@ -135,7 +135,7 @@ def select(args):
         study = tabtab.loc[args["study_identifier"]].tolist()[0]
 
 
-        if args.min and (not isinstance(tabtab, np.ndarray)):
+        if args["min"] and (not isinstance(tabtab, np.ndarray)):
             for ag in args["min"]:
                 ag = ag.split(":")
                 col = ag[0]
@@ -150,8 +150,8 @@ def select(args):
 
 
 
-        if args.max and (not isinstance(tabtab, np.ndarray)):
-            for ag in args.max:
+        if args["max"] and (not isinstance(tabtab, np.ndarray)):
+            for ag in args["max"]:
                 ag = ag.split(":")
                 col = ag[0]
                 max_ = int(ag[1])
@@ -166,7 +166,7 @@ def select(args):
 
             
         if args["cat"] and (not isinstance(tabtab, np.ndarray)):
-            for ct in args.cat:
+            for ct in args["cat"]:
                 ct = ct.split(":")
                 col = ct[0]
                 ctg = ct[1]
@@ -208,7 +208,7 @@ def select(args):
                     #if (not "NA" in arrgs): 
                     tabtab = tabtab.loc[ :, tabtab.loc[col]!="NA" ]
                     tabtab = tabtab.loc[ :, tabtab.loc[col].isin(arrgs) ]
-                    if args.debug:
+                    if args["debug"]:
                         sys.stdout.write("\nSEarch ==> " + str(tabtab.shape) + "[" + study + "]")
                 else:
                     tabtab = np.array([])
@@ -282,7 +282,7 @@ def select(args):
                 if (not isinstance(tabtab, np.ndarray)) and (col in tabtab.index.tolist()):
                     tabtab = tabtab.loc[ :, tabtab.loc[col]!="NA" ]
                     tabtab = tabtab if (sts.iqr(tabtab.loc[ col ].values.astype(float)) >= num) else np.array([])
-                    if args.debug:
+                    if args["debug"]:
                         sys.stdout.write("\nIQR ==> " + str(tabtab.shape) + "[" + study + "]")
                 else:
                     tabtab = np.array([])
