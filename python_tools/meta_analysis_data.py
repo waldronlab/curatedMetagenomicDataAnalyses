@@ -117,7 +117,7 @@ def handle_input(input_argument, studyID, verbose):
     else:
         if not os.path.isdir(  input_argument  ):
             raise FileNotFoundError("The directory you set as the input folder is not there. Exiting.")
-        elif os.path.isdir(  input_argument  ) and len(os.listdir( input_argument  )):
+        elif os.path.isdir(  input_argument  ) and (not len(os.listdir( input_argument  ))):
             raise IndexError( "The directory you set up as a input folder exists, but is empty. Exiting.")
         else:
             for table in glob.glob(os.path.join(input_argument, "*")):
