@@ -14,7 +14,7 @@ First build the image:
 
 Then run a container based on the image with your password:
 
-    docker run -d -p 80:8888 -e PASSWORD=mypass --name cma \
+    docker run -d -p 80:8888 --name cma \
       waldronlab/curatedmetagenomicanalyses
 
-Visit `localhost` in your browser. The default user and password are `waldronlab`.
+Visit `localhost` in your browser.
