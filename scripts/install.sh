@@ -36,8 +36,12 @@ rm -rf /etc/services.d/rstudio
 cd /home/waldronlab
 su -c "jupyter server --generate-config" waldronlab
 
-# Move script to s6 initialization script path
-mv /tmp/userhashconf.py /etc/cont-init.d/
+# Remove password and token requirement
+cat <<EOT >> /home/waldronlab/.jupyter/jupyter_server_config.py
+c.NotebookApp.password = ""
+c.NotebookApp.token = ""
+c.NotebookApp.ip = "*"
+EOT
 
 # Clone repository and change permissions waldronlab
 git clone https://github.com/waldronlab/$REPOSITORY.git /home/waldronlab/$REPOSITORY
