@@ -39,3 +39,13 @@ vignettes/*.pdf
 .Renviron
 .Rproj.user
 inst/doc
+
+# Jupyter-related files
+.cache/
+.ipynb_checkpoints/
+.ipython/
+.jupyter/
+.local/
+
+# Python
+__cache__/
