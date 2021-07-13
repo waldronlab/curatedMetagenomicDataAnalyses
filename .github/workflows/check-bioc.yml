@@ -261,8 +261,8 @@ jobs:
       - uses: docker/build-push-action@v1
         if: "!contains(github.event.head_commit.message, '/nodocker') && env.run_docker == 'true' && runner.os == 'Linux' "
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: waldronlab/curatedmetagenomicanalyses
           tag_with_ref: true
           tag_with_sha: true
