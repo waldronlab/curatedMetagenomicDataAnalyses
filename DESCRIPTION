@@ -1,6 +1,6 @@
 Package: curatedMetagenomicAnalyses
 Title: Analyses using curatedMetagenomicData
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: 
     person(given = "First",
            family = "Last",
@@ -22,6 +22,8 @@ Suggests:
     RefManageR,
     rmarkdown,
     sessioninfo,
+    SIAMCAT,
+    table1,
     tidyverse
 VignetteBuilder: knitr
 biocViews:

@@ -1,0 +1,100 @@
+---
+title: "Exploration of the liver cirrhosis dataset"
+author: "Levi Waldron"
+date: "July 19, 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+Packages used here:
+
+```{r, message=FALSE}
+library(curatedMetagenomicData)
+library(curatedMetagenomicAnalyses)
+library(dplyr)
+```
+
+# Cirrhosis exploratory analysis
+
+```{r}
+se <-
+    curatedMetagenomicAnalyses::makeSEforCondition("cirrhosis", removestudies = "HMP_2019_ibdmdb", dataType = "relative_abundance")
+```
+
+```{r}
+library(table1)
+df = data.frame(colData(se)[, 1:10])
+label(df$study_name) = "Study Name"
+label(df$body_site) = "Body site"
+label(df$study_condition) = "Study condition"
+label(df$antibiotics_current_use) = "Current Antibiotics Use"
+units(df$age) = "Years"
+```
+
+```{r}
+table1(~ . -  subject_id | study_name, data = df)
+```
+
+There seems to be strong correlation between study condition and current antibiotics use, raising questions of causality direction in these predictions:
+
+```{r}
+table(df$study_condition, df$antibiotics_current_use)
+```
+
+# Compositionality
+
+Many, but not all, columns add up to 100%:
+```{r}
+summary(colSums(assay(se)))
+```
+
+The observation with minimum sum of relative abundances is:
+```{r}
+colData(se)[which.min(colSums(assay(se))), ]
+```
+
+Note, this a result of species where phylogenetic information was unavailable in building of the `TreeSummarizedExperiment`. It would be possible to take data directly from `ExperimentHub` to avoid the data loss, but the data loss is rare and small and probably unimportant for most purposes.
+
+# SIAMCAT analysis
+
+From the [SIAMCAT vignette](https://www.bioconductor.org/packages/release/bioc/vignettes/SIAMCAT/inst/doc/SIAMCAT_vignette.html). 
+
+```{r, message=FALSE}
+if(!requireNamespace("SIAMCAT"))
+  BiocManager::install("SIAMCAT")
+library(SIAMCAT)
+```
+
+```{r}
+labs <-
+  create.label(meta = data.frame(colData(se)),
+               label = 'study_condition',
+               case = 'cirrhosis')
+sc.obj <- siamcat(feat=assay(se)/100,
+    label=labs,
+    meta=data.frame(colData(se)))
+show(sc.obj)
+```
+
+Unsupervised filtering:
+```{r}
+sc.obj <- filter.features(sc.obj,
+    filter.method = 'abundance',
+    cutoff = 0.001)
+```
+
+## Association testing
+
+```{r}
+sc.obj <- check.associations(
+    sc.obj,
+    sort.by = 'fc',
+    alpha = 0.05,
+    mult.corr = "fdr",
+    detect.lim = 10 ^-6,
+    plot.type = "quantile.box",
+    panels = c("fc", "prevalence", "auroc"))
+```
