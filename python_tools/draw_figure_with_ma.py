@@ -129,7 +129,7 @@ def read_params( args ):
 
     add("--legloc", type=str, default="best")
  
-    add("--shrink_names", type=str, default="|", help="Apply .split(\"|\") to the Y-axis (feature) names of the figure")
+    add("--shrink_names", type=str, default="|", help="Apply .split(\"<shrink-names>\") to the Y-axis (feature) names of the figure")
 
     print(vars(p.parse_args()))
 
@@ -485,9 +485,8 @@ def draw_figure(args, show):
 
     ax.set_xticklabels( [("%.2f" %n) for n in ax.get_xticks()], fontsize=24 )
 
-    if args["change_names"]: 
-        expression = eval(args["change_names"])
-        ax.set_yticklabels( [tk.epression for tk in   ax.get_yticklabels()], fontsize=24 )
+    if args["shrink_names"]: 
+        ax.set_yticklabels( [tk.split(args["shrink_names"])[-1] for tk in  ax.get_yticklabels()], fontsize=24 )
 
     if not show:
         [plt.savefig("%s.%s" %(args["outfile"], fmt), dpi=200) for fmt in ["svg", "png"]]
