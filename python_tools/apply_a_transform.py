@@ -26,6 +26,9 @@ def read_params():
     add("-no", "--normalize", action="store_true", help="Normalize the data making them sum to 1 before apply the transform.")
     add("-of", "--outfile", type=str, default="", help="If not specified, it preseves the name of the input attacching the "
         "name of the transformation")
+    add("-nsn", "--non_split_names", action="store_false", help="By default, if the feat-id ends with '__' "
+	"(taxonomic feature) the program will try to subset the feature-name "
+	"to the lowest-level name. Use this flag to de-activate this behaviour.")
     return p.parse_args()
 
 def apply_transform_on_data(dataframe, T):
@@ -71,6 +74,10 @@ def main(args):
         for s in I.columns.tolist():
             I.loc[feats, s] = np.nan_to_num( I.loc[feats, s].fillna(0.0).values.astype(float) / np.sum(I.loc[feats, s].fillna(0.0).values.astype(float) ), nan=0. )
     dataframe = apply_transform_on_data(I.loc[feats, :], args.apply_t)
+
+    if ((not (not args.non_split_names)) and (args.feat_id.endswith("__"))):
+        dataframe.index = [ i.split("|")[-1] for i in dataframe.index.tolist() ]
+
     metadata_dataframe = I.loc[metadata, :].fillna("NA").append(dataframe)
     metadata_dataframe.index.name = "sample_id"
     if not args.outfile:
