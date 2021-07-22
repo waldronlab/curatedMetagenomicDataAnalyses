@@ -22,6 +22,7 @@ matplotlib.rcParams["svg.fonttype"] = "none"
 from scipy import stats as sts
 import itertools as it
 import warnings
+import matplotlib.ticker as mticker
 from num2words import num2words
 
 
@@ -444,8 +445,7 @@ def draw_figure(args, show):
     #print(args["positive_direction"], len(args["positive_direction"]))
     #print(1.0*float(len(args["positive_direction"])))
 
-    ax_arrows.annotate(args["positive_direction"], xy=(args["pos_max_rho"]*0.80, -1.0), fontsize=24)
-        #args.pos_max_rho*0.80-(.2*float(len(args.positive_direction)))), fontsize=24)
+    ax_arrows.annotate(args["positive_direction"], xy=(args["pos_max_rho"]*0.80 - 0.01*len(args["positive_direction"]) - 0.015, -1.0), fontsize=24)
     ax_arrows.annotate(args["negative_direction"], xy=(-args["neg_max_rho"]*0.80, -1.0), fontsize=24)
 
     ax_arrows.axis("off")
@@ -483,10 +483,16 @@ def draw_figure(args, show):
 
     ax_arrows.set_title(args["title"], fontsize=24)
 
-    ax.set_xticklabels( [("%.2f" %n) for n in ax.get_xticks()], fontsize=24 )
+    xticks_loc = ax.get_xticks().tolist()
+    ax.xaxis.set_major_locator(mticker.FixedLocator(xticks_loc))
+    ax.set_xticklabels( [ ("%.2f" %n) for n in xticks_loc ], fontsize=24 )
 
     if args["shrink_names"]: 
-        ax.set_yticklabels( [tk.split(args["shrink_names"])[-1] for tk in  ax.get_yticklabels()], fontsize=24 )
+
+       ax.set_yticklabels([str(x.get_text()).split(args["shrink_names"])[-1] for x in ax.get_yticklabels()], fontsize=24)
+     
+       for lab in ax.get_yticklabels():
+           lab.set_style("italic")
 
     if not show:
         [plt.savefig("%s.%s" %(args["outfile"], fmt), dpi=200) for fmt in ["svg", "png"]]
