@@ -129,9 +129,7 @@ def read_params( args ):
 
     add("--legloc", type=str, default="best")
  
-    add("-cn", "--change_names", type=str, default="", \
-	help="You can pass here a python expression that will be evaluate for any feature name"
-	" (y axis of the final plot)")
+    add("--shrink_names", type=str, default="|", help="Apply .split(\"|\") to the Y-axis (feature) names of the figure")
 
     print(vars(p.parse_args()))
 
