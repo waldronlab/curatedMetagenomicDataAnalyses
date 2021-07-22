@@ -3,6 +3,7 @@
 import sys, os
 import pandas as pd
 import numpy as np
+import itertools as it
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 from statsmodels.stats.multitest import fdrcorrection
@@ -27,46 +28,63 @@ class singleStudyEffect(object):
 class meta_analysis_with_linear_model(object):
     def __init__(self, dataTable, formula, studyid, feats, outfile, cls_or_reg, heterogeneity, pos=None, neg=None):
 
+        #if not (("study_name" in dataTable.columns) or ("dataset_name" in dataTable.columns)):
         self.data = dataTable.T
+        #else:
+        #    self.data = dataTable
+
         self.feats = feats
         self.studyid = studyid
+        self.formula = formula
         fm_covs = formula.split("+")
         self.predictor = fm_covs[0].strip()
         self.pos, self.neg = pos, neg
-        self.covariates = [ c.strip()   for c in fm_covs[1:]]
+        self.covariates = [ c.strip() for c in fm_covs[1:]]
+        self.easy_names_covariates = dict([(c, c[2:-1]) for c in self.covariates if c.startswith("C(") ])
 
         for cv in self.covariates:
-            if not cv.startswith("Q"):
-                self.data[cv] = self.data[cv].astype(float)
-             
-        self.formula = formula + " + 1 "
+            if not cv.startswith("C"):
+                self.data[cv] = self.data[cv].astype(float)        
+ 
+        if self.neg:
+            self.formula = formula.replace(self.predictor, "C(%s, Treatment('%s'))" %(self.predictor, self.neg))
+
         self.outfile = outfile
         self.het = heterogeneity
         self.studies = list(self.data[self.studyid].unique())
         self.N_studies = dict([(study, self.data.loc[self.data[self.studyid].isin([study]), :].shape[0]) for study in self.studies])
         self.cls_or_reg = cls_or_reg
+ 
+        if self.cls_or_reg == "REG":
+            self.data[self.predictor] = self.data[self.predictor].values.astype(float)
+
 
 
     def correlation_of_study(self, study, feature):
-
-        data_here = self.data.loc[self.data[self.studyid].isin([study]), [feature, self.predictor] + self.covariates]
+ 
+        ##print(self.data, " quesrui sono i miei dati")
+        ##print(study in self.data["study_name"].unique().tolist())
+        ##print(feature, self.predictor, self.covariates, self.studyid)
+        
+        data_here = self.data.loc[self.data[self.studyid].isin([study]), [feature, self.predictor] \
+            + [self.easy_names_covariates.get(c, c) for c in self.covariates]]
         data_here[feature] = data_here[feature].astype(float)
         formula = ('Q("%s") ~ ' %feature) + self.formula
 
         md = smf.ols(formula, data=data_here)
         model_fit = md.fit()
-        ##print(model_fit.summary())
+        #### print(model_fit.summary())
 
         if self.cls_or_reg == "CLS":
             #predictor = self.predictor if (not "Treatment" in self.predictor) else (self.predictor.split(",")[0].replace("C(", "")) + ("[T.%s]" %self.pos)
-            t = model_fit.tvalues.loc[self.predictor + ("[T.%s]" %self.pos)]
+            t = model_fit.tvalues.loc[ "C(%s, Treatment('%s'))[T.%s]" %(self.predictor, self.neg, self.pos)]
             n1 = float(len(data_here.loc[(data_here[self.predictor]==self.neg)]))
             n2 = float(len(data_here.loc[(data_here[self.predictor]==self.pos)]))
             d = (t*(n1+n2))/float(np.sqrt(n1*n2)*np.sqrt(n1+n2-2))
             SEd = np.sqrt(((n1+n2-1)/float(n1+n2-3)) * ((4./float(n1+n2))*(1+((d**2.)/8.))))
             d_lw = d-(1.96*SEd)
             d_up = d+(1.96*SEd)
-            return d, model_fit.pvalues.loc[self.predictor + ("[T.%s]" %self.pos)], (n1,n2), False
+            return d, model_fit.pvalues.loc[ "C(%s, Treatment('%s'))[T.%s]" %(self.predictor, self.neg, self.pos) ], (n1,n2), False
 
         elif self.cls_or_reg == "REG":
             t = model_fit.tvalues.loc[self.predictor]
@@ -134,7 +152,7 @@ class meta_analysis_with_linear_model(object):
                     else:
                         result = result.append(re.result)
  
-        _, FDR = fdrcorrection(result["RE_Pvalue"].values.astype(float), alpha=0.05)
+        _, FDR = fdrcorrection(result["RE_Pvalue"].values.astype(float), alpha=.05)
         result.insert((len(self.studies)*2)+1, "RE_%s_Qvalue" %("Effect" if (self.cls_or_reg == "CLS") else "Correlation"), FDR)
         result.fillna("NA", inplace=True)
 
@@ -153,12 +171,13 @@ class meta_analysis_with_linear_model(object):
 
         result.insert(0, "Feature", result.index.tolist())
         result = result[["Feature"] + \
-            list(it.chain.from_iterable([[S+"_Correlation",  S+"_Pvalue", S+"_Qvalue"] for S in self.Studies])) + \
+            list(it.chain.from_iterable([[S+"_Correlation",  S+"_Pvalue", S+"_Qvalue"] for S in self.studies])) + \
             ["RE_Correlation", "RE_Pvalue", "RE_Correlation_Qvalue", "RE_stdErr", "RE_conf_int", "Zscore", "Tau2_DL", "Tau2_PM", "I2"] \
         if (self.cls_or_reg=="REG") else \
-            list(it.chain.from_iterable([[S+"_Effect",  S+"_Pvalue", S+"_Qvalue"] for S in self.Studies])) + \
+            list(it.chain.from_iterable([[S+"_Effect",  S+"_Pvalue", S+"_Qvalue"] for S in self.studies])) + \
             ["RE_Effect", "RE_Var", "RE_Pvalue", "RE_Effect_Qvalue", "RE_stdErr", "RE_conf_int", "Zscore", "Tau2_DL", "Tau2_PM", "I2"]]
         result.to_csv(self.outfile, sep="\t", header=True, index=True)
+
 
 
 class analysis_with_linear_model(object):
@@ -170,26 +189,36 @@ class analysis_with_linear_model(object):
         self.predictor = fm_covs[0].strip()
         self.pos, self.neg = pos, neg
         self.covariates = [c.strip() for c in fm_covs[1:]]
+        ### self.easy_names_covariates = dict([(c, c[2:-1]) for c in self.covariates if c.startswith("C(") ])
 
         for cv in self.covariates:
-            if not cv.startswith("Q"):
+            if not cv.startswith("C"):
                 self.data[cv] = self.data[cv].astype(float)
 
-        self.formula = formula + " + 1 "
+        if self.neg:
+            self.formula = formula.replace(self.predictor, "C(%s, Treatment('%s'))" %(self.predictor, self.neg))
+        else:
+            self.formula = formula #+ " + 1 "
+
         self.outfile = outfile
         
         ## main
         effects = []
         pvals = []
         Vars = []
+        Stderrs = []
+
         for ft in self.feats:
             effect, StdErr, p_value, n1, n2 = self.correlation_of_study(ft)
             effects += [effect]
             pvals += [p_value]
+            Stderrs += [StdErr]
             Vars += [StdErr**2.]
   
-        self.frame = pd.DataFrame({"RE_Effect": effects, "RE_Pvalue": pvals, "RE_Var": Vars}, index=self.feats)
-        _, FDR = fdrcorrection(np.array(pvals, dtype=np.float64), alpha=0.05)
+        self.frame = pd.DataFrame(\
+                {"RE_Effect": effects, "RE_Pvalue": pvals, "RE_stdErr": Stderrs, "RE_Var": Vars}, index=self.feats)
+
+        _, FDR = fdrcorrection(np.nan_to_num( np.array(pvals, dtype=np.float64), nan=1.0), alpha=0.05)
 
         self.frame["Qvalue"] = FDR
         self.frame.index.name = "Feature"
@@ -204,14 +233,15 @@ class analysis_with_linear_model(object):
         formula = ('Q("%s") ~ ' %feature) + self.formula
         md = smf.ols(formula, data=self.data)
         model_fit = md.fit()
-        print(model_fit.summary())
 
-        predictor = self.predictor if (not "Treatment" in self.predictor) else (self.predictor.split(",")[0].replace("C(", "")) + ("[T.%s]" %self.pos)
-        t = model_fit.tvalues.loc[predictor]
-        n1 = float(len(data_here.loc[(data_here[predictor.replace(("[T.%s]" %self.pos),"")]==self.neg)]))
-        n2 = float(len(data_here.loc[(data_here[predictor.replace(("[T.%s]" %self.pos),"")]==self.pos)]))
+        ##print(model_fit.summary())
+        ##predictor = self.predictor if (not "Treatment" in self.predictor) else (self.predictor.split(",")[0].replace("C(", "")) + ("[T.%s]" %self.pos)
+
+        t = model_fit.tvalues.loc[ "C(%s, Treatment('%s'))[T.%s]" %(self.predictor, self.neg, self.pos)]
+        n1 = float(len(self.data.loc[(self.data[ self.predictor ]==self.neg)]))
+        n2 = float(len(self.data.loc[(self.data[ self.predictor ]==self.pos)]))
         d = (t*(n1+n2))/float(np.sqrt(n1*n2)*np.sqrt(n1+n2-2))
         SEd = np.sqrt(((n1+n2-1)/float(n1+n2-3)) * ((4./float(n1+n2))*(1+((d**2.)/8.))))
         d_lw = d-(1.96*SEd)
         d_up = d+(1.96*SEd)
-        return d, SEd, model_fit.pvalues.loc[predictor], n1, n2
+        return d, SEd, model_fit.pvalues.loc[ "C(%s, Treatment('%s'))[T.%s]" %(self.predictor, self.neg, self.pos)  ], n1, n2

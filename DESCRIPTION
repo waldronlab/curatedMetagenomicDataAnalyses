@@ -1,6 +1,6 @@
 Package: curatedMetagenomicAnalyses
 Title: Analyses using curatedMetagenomicData
-Version: 0.0.0.9000
+Version: 0.3.0
 Authors@R: 
     person(given = "First",
            family = "Last",
@@ -13,10 +13,20 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Imports:
+    curatedMetagenomicData,
+    dplyr
 Suggests: 
     BiocStyle,
     knitr,
     RefManageR,
     rmarkdown,
-    sessioninfo
+    sessioninfo,
+    SIAMCAT,
+    table1,
+    tidyverse
 VignetteBuilder: knitr
+biocViews:
+    ExperimentHub,
+    MicrobiomeData,
+    ReproducibleResearch
