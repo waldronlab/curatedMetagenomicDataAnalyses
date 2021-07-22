@@ -192,12 +192,8 @@ def parse_args_table(args, ij):
     results = meta_analysis.loc[ meta_analysis[ take_a_param( args["random_effect_q"], ij ) ]<\
             (args["a_random"] if args["how"]=="first" else 1.0), : ]
 
-    #print(results, "ONE")
-
     results = results.loc[ [ i for i in results.index.tolist() if ((len(single_effects) - results.loc[ i, single_effects ].tolist().count("NA")) \
         >= take_a_param( args["min_studies"], ij)) ], :]
-    
-    #print(results, "TWO")
 
     if filter_on != "NO_FILTER":
         if filter_on == "PREVALENCE":
@@ -207,14 +203,11 @@ def parse_args_table(args, ij):
                 (not i in abundances.index.tolist()) or (np.mean(abundances.loc[i].values.astype(float))>=take_a_param( args["min_prevalence"], ij)) \
                 ], : ]
     
-    #print(results, "THREE")
-
     if args["narrowed"]:
         results = results.loc[[i for i in results.index.tolist() if \
             (float(results.loc[i, take_a_param( args["confint"], ij) ].split(";")[0])*float(results.loc[i, take_a_param( args["confint"], ij)].split(";")[1])) \
             >0.0], :]
 
-        #print(results, "FOUR")
 
     results["abs"] = np.abs( results[ take_a_param( args["random_effect"], ij) ].values.astype(float) )
     results.sort_values( "abs", inplace=True, ascending=False )
@@ -255,23 +248,20 @@ def build_long_frame(args, analysis, ij, result_features, all_markers):
 
     Feats = result_features
 
-    print(single_effects, len(single_effects), "questi sono gli effetti singoli")
-
-    print(single_effect_Qs, len(single_effect_Qs), " questi sono i Qvalue singoli")
 
     take_a_param = lambda param, ij : param[ij] if len(param)>1 else param[0]
 
     get = lambda df, index, column : 0.0 if (not index in df.index.tolist()) else df.loc[index, column]
 
-    print( len(list( it.chain.from_iterable( [ [ feature for e in range(len(single_effects)) if \
-            str(get( results, feature, single_effects[e] ))!="NA"] for feature in Feats ] ) )) )
+    #print( len(list( it.chain.from_iterable( [ [ feature for e in range(len(single_effects)) if \
+    #        str(get( results, feature, single_effects[e] ))!="NA"] for feature in Feats ] ) )) )
 
-    print(len(  list( it.chain.from_iterable( [ [ float(get(results, feature, e ))  for e in single_effects if \
-            str(get(results, feature, e))!="NA"] for feature in Feats ] ) )    ))
-    print(len(  list( it.chain.from_iterable( [ [ e.replace(take_a_param( args["e_suff"], ij), "")  for e in single_effects if \
-            str(get(results, feature, e))!="NA"] for feature in Feats ] ) )    ))
-    print(len(  list( it.chain.from_iterable( [ [ float(get(results, feature, e ))  for e in single_effect_Qs if \
-            str(get(results, feature, e))!="NA"] for feature in Feats ] ) )    ))
+    #print(len(  list( it.chain.from_iterable( [ [ float(get(results, feature, e ))  for e in single_effects if \
+    #        str(get(results, feature, e))!="NA"] for feature in Feats ] ) )    ))
+    #print(len(  list( it.chain.from_iterable( [ [ e.replace(take_a_param( args["e_suff"], ij), "")  for e in single_effects if \
+    #        str(get(results, feature, e))!="NA"] for feature in Feats ] ) )    ))
+    #print(len(  list( it.chain.from_iterable( [ [ float(get(results, feature, e ))  for e in single_effect_Qs if \
+    #        str(get(results, feature, e))!="NA"] for feature in Feats ] ) )    ))
 
     lgf_singles = pd.DataFrame(\
         {
@@ -360,9 +350,6 @@ def draw_figure(args, show):
         else:
             long_form_frame_singles, long_form_frame_effect, name_of, remaining_markers = build_long_frame(args, analysis, ij, result_features, remaining_markers )
     
-        print(name_of, " E il nome")
-        print(long_form_frame_effect, " E il frame degli effetti sto cazzo")
-        
  
         if not args["markers"]:
 
@@ -388,10 +375,6 @@ def draw_figure(args, show):
                 labels += [ p ]
                 markers += [ m ]
                 colors += [ "darkgrey" ]
-
-           # print( long_form_frame_singles["marker_of_population"].unique() )
-            #print( marker_of_this_population )
-            #long_form_frame_singles.to_csv("trial.tsv", sep="\t", header=True, index=True)
 
             strip_one = sns.scatterplot(\
                 x="effect-size", y="Feature", \
@@ -456,8 +439,8 @@ def draw_figure(args, show):
         head_width=0.5, head_length=0.07)
 
 
-    print(args["positive_direction"], len(args["positive_direction"]))
-    print(1.0*float(len(args["positive_direction"])))
+    #print(args["positive_direction"], len(args["positive_direction"]))
+    #print(1.0*float(len(args["positive_direction"])))
 
     ax_arrows.annotate(args["positive_direction"], xy=(args["pos_max_rho"]*0.80, -1.0), fontsize=24)
         #args.pos_max_rho*0.80-(.2*float(len(args.positive_direction)))), fontsize=24)
@@ -470,16 +453,16 @@ def draw_figure(args, show):
     for label,color,marker in zip(labels, colors, markers):
         if not (label,color,marker) in duplicates_question:
             duplicates_question += [tuple((label,color,marker))]
-    print(duplicates_question, "duplicated")
+    #print(duplicates_question, "duplicated")
 
     for ob in duplicates_question:
         labels_ += [ob[0]]
         colors_ += [ob[1]]
         markers_ += [ob[2]]
 
-    print(labels_)
-    print(colors_)
-    print(markers_)
+    #print(labels_)
+    #print(colors_)
+    #print(markers_)
 
     leg_handles = [(mlines.Line2D([], [], color=color, marker=marker, linestyle='None', alpha=1.0, \
         markersize=args["dotsize"], label=label)) for label,color,marker in zip(labels_, colors_, markers_) ]

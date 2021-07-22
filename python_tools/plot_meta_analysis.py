@@ -78,10 +78,6 @@ def readinput(args):
     table.fillna(np.nan, inplace=True)
     table = table.astype(float, errors="ignore")
 
-    #print(table, " quest e alla inizio di read input merda")
-    #exit(1)
-
-    ## FICCA IL TUO CODICE QUA:
 
     if args.REC:
         disease_columns = [c for c in table.columns if c.endswith(args.single_data_suffs)]
@@ -95,36 +91,18 @@ def readinput(args):
  
     if (not args.REC) and args.PWY:
         disease_columns = [c for c in table.columns if c.endswith(args.single_data_suffs)]
-        #print(disease_columns, " sei un ghey")
         acceptable = lambda spc : [effect for effect in table.loc[spc, disease_columns].tolist() if (float(effect) == float(effect))]
-        #print(acceptable,  " sei due ghey")
-        #for spc in table.index.tolist():
-        #    print(spc, acceptable(spc), len(acceptable(spc))>=4)
-        #print()
         table = table.loc[[spc for spc in table.index.tolist() if len(acceptable(spc))>=4]]
 
-    ### DIO MAIALE
-    #table.fillna(np.nan, inplace=True)
-    #table = table.astype(float, errors="ignore")
    
     usables = pd.read_csv(args.usabledata, sep="\t", header=0, index_col=0, low_memory=False).fillna("NA")
     if args.stack_usable:
         usables = usables.append(pd.read_csv(args.stack_usable, sep="\t", header=0, index_col=0, low_memory=False).fillna("NA"))
  
-    #if not args.REC:
-    #features_to_exclude = []
-    #else:
     features_to_exclude = [j for j in [i for i in usables.index.tolist() if \
 	    (("s__" in i) or ("g__" in i) or ("K" in i) or ("PWY" in i))] if \
             (np.count_nonzero( usables.loc[j].values.astype(float))/float(usables.shape[1]))< args.min_prev ]
     
-    #[pd.read_csv(us, sep="\t", header=0, index_col=0, low_memory=False).fillna("NA") for us in \
-    #    [args.usabledata] + ([] if not args.stack_usable else [args.stack_usable])]
-    #for i in
-
-    #print(table, "rima di staccare")
-    #for f in features_to_exclude:
-    #    print(f, f in table.index.tolist())
     table.drop([ft for ft in features_to_exclude if ft in table.index.tolist()], inplace=True)
 
     if args.stack_metaanalysis:
@@ -171,29 +149,23 @@ def readinput(args):
         #[table.loc[i, args.random_effect] ]
         #result_features = sorted([i for i in table.index.tolist() if (table.loc[i, args.random_effect_FDR]<args.qvalue)])
 
-    print(table[args.random_effect].tolist(), " Ma vaffanculo")
 
     positive_correlated = [f for f in result_features if (table.loc[f, args.random_effect]>0.)]
     negative_correlated = [f for f in result_features if (table.loc[f, args.random_effect]<0.)]
     sorted_table = table.loc[negative_correlated].sort_values(args.random_effect, ascending=True).append(\
         table.loc[positive_correlated].sort_values(args.random_effect, ascending=True))
 
-    print(positive_correlated, " positive")
-    print(negative_correlated, " negative")
 
     result_features = sorted_table.index.tolist()
     Dataset_Names = []
 
     for e,x in enumerate(sorted_table.columns.tolist()):
         if x.endswith(args.single_data_FDR_suffs) and (not x.startswith("RE_")):
-            print(x, sorted_table.loc[:, x].tolist())
             Dataset_Names += [x.replace(args.single_data_FDR_suffs, "")]
             sorted_table.insert(e+1, x.replace(args.single_data_FDR_suffs, "") + "_color", \
                 [(args.color_red if (float(sorted_table.loc[i, x] if \
                 str(sorted_table.loc[i, x])[0].isdigit() else 1000)<0.2) else args.color_blue) \
                 for i in sorted_table.index.tolist()])
-            print(x, sorted_table[x].tolist(), " Puo essere che questo ... ")
-            #print(sorted_table[x.replace(args.single_data_FDR_suffs, "")+"_color"].tolist())
 
     return sorted_table, result_features, positive_correlated, negative_correlated, Dataset_Names
 
@@ -204,14 +176,7 @@ def plot_meta_analysis(args):
     sorted_table, result_features, positive_correlated, negative_correlated, Dataset_Names = readinput(args)
     sorted_table.index = result_features
 
-
-   # print(Dataset_Names, " SONO IO")
-    #exit(1)
-    #print(sorted_table)
-
     cardinalities = dataset_cardinality(args.usabledata)
-
-    #print(result_features, negative_correlated)
 
     REframe = pd.DataFrame({"Microbial Species": [(x[3:].replace("_"," ") if (args.feature_id=="s__") else x) for x in result_features], \
         args.effectname: [sorted_table.loc[feat, args.random_effect] for feat in result_features], \
@@ -220,15 +185,11 @@ def plot_meta_analysis(args):
         "lower": [float( sorted_table.loc[ x, "CI_RE" ].split(";")[0]) for x in result_features], \
         "upper": [float( sorted_table.loc[ x, "CI_RE" ].split(";")[1]) for x in result_features] })
 
-    print(REframe)
-
     fig = plt.figure(figsize=(16 if (args.feature_id=="s__") else 22, 16))
     gs = gridspec.GridSpec(2,1,height_ratios=[1]+[len(result_features)])
     ax = plt.subplot(gs[1,0])
     ax_legend = plt.subplot(gs[0,0])
 
-    print(Dataset_Names)
- 
     FRAME = pd.DataFrame({\
             "Microbial Species": [ (x[3:].replace("_"," ") if (args.feature_id=="s__") else x) for x in \
             list(it.chain.from_iterable([[feat for t in range(len(Dataset_Names))] for feat in result_features]))],\
@@ -242,22 +203,11 @@ def plot_meta_analysis(args):
             list(it.chain.from_iterable([Dataset_Names for feat in result_features]))})
 
     FRAME["Num-Species"] = np.arange(0.0, len(FRAME), 1.0)
-    #FRAME["Cardinality"] = list(it.chain.from_iterable([[cardinalities[d] for d in Dataset_Names] for feat in result_features]))
-
-
-    #FRAME["RESG"] = [("yes" if (FRAME.loc[FRAME[""], "FDR-Rho-Pvalue"]<args.qvalue) else "no") for x in FRAME["Microbial Species"].tolist()]
 
     FRAME.dropna(inplace=True)
-    #print(FRAME, " YUUUUUUU")
-    #FRAME.to_csv("SEX_univariate_analysis_short_result.tsv", sep="\t", header=True, index=False)
-    #REframe.to_csv("SEX_meta_analysis_short_result.tsv", sep="\t", header=True, index=False)
  
     FRAME.to_csv("%s_dataframe.tsv" %args.outfile, sep="\t", header=True, index=False)
 
-    print(FRAME, "SEI UNO STRONZO")
-
-    #strip_one =
-	#sns.stripplot(\ hue="Significance"
     strip_one = sns.scatterplot(\
             x=args.effectname, y="Microbial Species", data=FRAME, size="Significance", sizes={args.color_blue: args.dotsize*8, args.color_red: args.dotsize*16}, \
         palette={args.color_red: args.color_red, args.color_blue: args.color_blue}, edgecolor="black", ax=ax, hue="Significance") ## size="Cardinality"
@@ -266,32 +216,20 @@ def plot_meta_analysis(args):
         x=args.effectname, y="Microbial Species", data=FRAME, saturation=0.25, \
         color="palegoldenrod", ax=ax, width=0.45)
 
-    #strip_RE = sns.stripplot(\
-    #    x=args.effectname, y="Microbial Species", data=REframe, hue="RESG", \
-    #    marker="D", ax=ax, palette={"no": "goldenrod", "yes": "black"}, size=args.diamsize)
- 
     strip_RE = sns.stripplot(\
         x=args.effectname, y="Microbial Species", data=REframe, \
         marker="D", ax=ax, color=args.color_black, size=args.diamsize) #palette={"no": "goldenrod", "yes": "black"}, size=args.diamsize)
 
     REframe.index = REframe["Microbial Species"]
 
-    print(REframe)
- 
     for e,feat in enumerate(REframe["Microbial Species"].tolist()):
-        print(e,feat)
         lw, upp = float(REframe.loc[feat, "lower"]), float(REframe.loc[feat, "upper"])
         ax.plot([ lw, lw, lw, upp, upp, upp ], [ e-0.01, e+0.01, e, e, e+0.01, e-0.01 ], c=args.color_red, linewidth=3.6)
-
-    #strip_one.legend_.remove() ## strip
-    #box_one.legend_.remove() ## box
-    #strip_RE.legend_.remove() ## diam
 
     ax.set_xlim([-args.neg_max_rho, args.pos_max_rho])
     #ax.set_yticklabels([item.get_text()[4:].replace("_"," ") for item in ax.get_xticklabels()])
     #ax.set_yticklabels([x[4:].replace("_"," ") for x in ax.get_yticks()])
 
-    print(ax.get_yticklabels(), "  QUANTI SONO QUESTI ???  ")
 
     red_line = ax.axvline(ymin=ax.get_ylim()[0], ymax=ax.get_ylim()[1], linewidth=3.5, color=args.color_blue, linestyle="--", alpha=1.0)
     cyan_linem2 = ax.axvline(x=-0.1, ymin=ax.get_ylim()[0], ymax=ax.get_ylim()[1], linewidth=2.0, color=args.color_red, linestyle="--", \
@@ -336,12 +274,9 @@ def plot_meta_analysis(args):
     #print(axQ.get_yticks())
     #axQ.set_yticks(np.arange(0.5, 10., 1.225))#len(ax.get_yticks()+1)))#ax.get_yticks()[::-1])
 
-    print(REframe,  "QUESTI LI CONTIENE ANCORA?")
-    #axQ.set_yticklabels([(q if (str(q)!="0.0000") else "< 0.0001") for q in REframe["Q-Value"].tolist()])
     ax.tick_params(bottom=True, top=False, left=True, right=True)
     plt.subplots_adjust(left=0.32 if args.feature_id=="s__" else 0.48)
     for lab in ax.get_yticklabels():
-        print("E poi, quando li metto in italico: ", lab, " COME SOMNO?? ")
         lab.set_style('italic')
 
     plt.suptitle(args.suptitle, fontsize=18)
@@ -355,10 +290,6 @@ def plot_meta_analysis_of_meta_analysis(args, mma="diseases"):
     sns.set_style("whitegrid")
     sorted_table, result_features, positive_correlated, negative_correlated, Dataset_Names = readinput(args)
  
-    print(Dataset_Names, " SONO IO")
-    #exit(1)
-
-
     #REframe = pd.DataFrame({"Microbial Species": \
     #    [(x[3:].replace("_"," ") if (not args.KO) else x) for x in result_features], \
     #    args.effectname: [sorted_table.loc[feat, args.random_effect] for feat in result_features], \
@@ -382,26 +313,10 @@ def plot_meta_analysis_of_meta_analysis(args, mma="diseases"):
     if mma=="diseases":
         markers = ["X", "h", "p", "P", "*", "v", "8", "<", ">", "^", "s", "o"]
         colors = ["darkgrey"] * 12
-	#["goldenrod", "red", "violet", "blue", "darkorange", "forestgreen", \
-	#"grey", "deepskyblue", "coral"]
-
-    print(Dataset_Names, " QUesti sono i fottuti dataset names... ")
 
     d2markers = dict([(n,m) for n,m in zip(Dataset_Names, markers)])
     d2colors = dict([(n,c) for n,c in zip(Dataset_Names, colors)])
  
-    print(d2markers, d2colors, "  sei un miSCREDENTE")
-
-    for feat in result_features:
-        for d in Dataset_Names:
-            print(feat in sorted_table.index)
-            print(d + args.single_data_FDR_suffs, d + args.single_data_FDR_suffs in sorted_table.columns)
-            print("FOTTITI ")
-
-
-    print( sorted_table.loc[ result_features, [d + args.single_data_FDR_suffs for d in Dataset_Names ] ] )
-    print("SIETE TUTTI DEI FROCI")
-    ##exit(1)
 
     FRAME = pd.DataFrame({\
         "Microbial Species": [(x[3:].replace("_"," ") if (not args.KO) else x) for x in \
@@ -421,9 +336,7 @@ def plot_meta_analysis_of_meta_analysis(args, mma="diseases"):
 
     FRAME["Num-Species"] = np.arange(0.0, len(FRAME), 1.0)
 
-    print(FRAME, " SEI UN SODOMITA")
     FRAME.dropna(inplace=True)
-    FRAME.to_csv("metaAnalysisOfMetaAnalysis.tsv" if (not args.KO) else "metaAnalysisOfMetaAnalysis_KO.tsv", sep="\t", header=True, index=True)
 
     strip_one = sns.scatterplot(\
         x=args.effectname, y="Microbial Species", data=FRAME, s=args.diamsize*15, \
@@ -440,10 +353,7 @@ def plot_meta_analysis_of_meta_analysis(args, mma="diseases"):
 
     REframe.index = REframe["Microbial Species"]
 
-    print(REframe,  "QUESTI LI CONTIENE ANCORA?")
-
     for e,feat in enumerate(REframe["Microbial Species"].tolist()):
-        print(e,feat)
         lw, upp = float(REframe.loc[feat, "lower"]), float(REframe.loc[feat, "upper"])
         ax.plot([ lw, lw, lw, upp, upp, upp ], [ e-0.01, e+0.01, e, e, e+0.01, e-0.01 ], c=args.color_red, linewidth=3.6)
 
@@ -484,8 +394,6 @@ def plot_meta_analysis_of_meta_analysis(args, mma="diseases"):
     ax.set_xlabel(ax.get_xlabel(), fontsize=16)
     ax.tick_params(bottom=True, top=False, left=True, right=True)
 
-
-    #if (not args.KO):
     plt.subplots_adjust(left=(0.3 if (not args.KO) else 0.45))
 
     if (not args.KO):
@@ -496,11 +404,6 @@ def plot_meta_analysis_of_meta_analysis(args, mma="diseases"):
 
 
 
-#def prevalence(frame, usab, Class="gender", class0="female", class1="male", title="sex", featid="s__", fancy_name="Biological sex"):
-#    one = usab.loc[:, usab.loc[Class].isin(["1.0"])]
-#    zero = usab.loc[:, usab.loc[Class].isin(["0.0"])]
-
-
 
 
 def abundances(frame, usab, usab2=False, Class="gender", class0="female", class1="male", title="sex", featid="s__", fancy_name="Biological sex", PREVALENCE=False):
@@ -508,40 +411,23 @@ def abundances(frame, usab, usab2=False, Class="gender", class0="female", class1
     if(not isinstance(usab2, bool)):
         usab = usab.append(usab2.loc[[i for i in usab2.index if i.startswith("g__")]]) #, left_index=True, right_index=True, how="outer")
         usab.fillna("NA", inplace=True)
-        usab.to_csv("mobbastaveramente.tsv", sep="\t", header=True, index=True)
 
     males = usab.loc[:, usab.loc[Class].isin(["1.0"])]
     females = usab.loc[:, usab.loc[Class].isin(["0.0"])]
-
-    print("LEN CLASS 1 = ", males.shape )
-    print("LEN CLASS 0 = ", females.shape )
 
     classes = []
     values = []
     species = []
     pvalues = []
     species_level = []
-    print(usab, usab.loc[Class])
    
-
-
-    print("Siamo in un bel puttanaio ")
-    print(frame, " questo e frame, non ho capito cosa stai chiendedo alla colonna microbial species")
-
 
     for en,microbe in enumerate(frame["Microbial Species"].tolist()):
         if featid!="PWY":
             Microbe = [x for x in usab.index.tolist() if x.endswith(microbe.replace(" ","_"))][0]
         else: ##if featid=="PWY":
             Microbe = microbe #[x for x in usab.index.tolist() if x.endswith(microbe)]
-        #featid + microbe.replace(" ","_")
 
-        print(Microbe)
-
-        #wilcox_p = stats.ranksums(males.loc[Microbe].values.astype(float), females.loc[Microbe].values.astype(float))
-        #print(wilcox_p)
-        #pvalues += [wilcox_p[1]]
-        #print(Microbe, males.loc[Microbe].values.astype(float))
 
         if(not PREVALENCE):
             mean_in_males = [np.mean([y for y in list(((np.sin(males.loc[Microbe, \
@@ -549,18 +435,8 @@ def abundances(frame, usab, usab2=False, Class="gender", class0="female", class1
             mean_in_females = [np.mean([x for x in list(((np.sin(females.loc[Microbe, \
                 females.loc["study_name"].isin([d])].values.astype(float)))**2.0)*100)]) for d in females.loc["study_name"].unique()]
 
-            #log_xp1 = lambda x : np.log2(x+1.)
-
-            #mean_in_males = list(map(log_xp1, mean_in_males))
-            #mean_in_females = list(map(log_xp1, mean_in_females))
 
         else:
-  
-            #for d in males.loc["dataset_name"].unique():
-                #print(d, \
-                #    np.count_nonzero( males.loc[Microbe, males.loc["dataset_name"].isin([d])].values.astype(float) ), \
-                #    float(males.loc[Microbe, males.loc["dataset_name"].isin([d])].shape[0])  )
-                #    #float(males.loc[Microbe, males.loc["dataset_name"].isin([d])].shape[1]) )
 
             mean_in_males = [(np.count_nonzero( males.loc[Microbe, males.loc["study_name"].isin([d])].values.astype(float))\
                 /float( males.loc[Microbe, males.loc["study_name"].isin([d])].shape[0] ))*100. \
@@ -569,10 +445,6 @@ def abundances(frame, usab, usab2=False, Class="gender", class0="female", class1
                 /float( females.loc[Microbe, females.loc["study_name"].isin([d])].shape[0] ))*100. \
                 for d in females.loc["study_name"].unique()]
 
-            #log_xp1 = lambda x : np.log2(x+1.)
-
-            #mean_in_males = list(map(log_xp1, mean_in_males))
-            #mean_in_females = list(map(log_xp1, mean_in_females))
 
         classes += [class0 for i in range(len(mean_in_females))]
         classes += [class1 for i in range(len(mean_in_males))]
@@ -587,10 +459,8 @@ def abundances(frame, usab, usab2=False, Class="gender", class0="female", class1
         "Microbial Species": species, "species_level": species_level})
 
     fig,ax = plt.subplots(figsize=[8 if featid=="s__" else 12 ,13])
-    print(frame)
 
     if(not PREVALENCE):
-        frame.to_csv("seiunghey.tsv", sep="\t", header=True, index=True)
 
         boxes = sns.boxplot(x="Relative Abundance" if (not PREVALENCE) else "Prevalence", y="Microbial Species", \
             data=frame, hue=fancy_name, ax=ax, dodge=True, \
@@ -607,18 +477,7 @@ def abundances(frame, usab, usab2=False, Class="gender", class0="female", class1
             y="Microbial Species", data=frame, hue=fancy_name, ax=ax, dodge=True, inner="stick", \
             palette={class0: "goldenrod", class1: "steelblue"}, scale="area", scale_hue=True, split=True)
 
-    #bars = sns.scatterplot(x="Relative Abundance", y="species_level", data=frame, hue="Biological Sex", ax=ax, \
-    #    palette={"female": "goldenrod", "male": "steelblue"})
-
-    #swarm = sns.swarmplot(x="Relative Abundance", y="Microbial Species", data=frame, hue="Biological Sex", dodge=True, ax=ax, color="black", size=2)
-    #for x,y,P in zip(ax.get_xticks(), [0.018 for i in range(len(ax.get_xticks()))], pvalues):
-    #    ax.text(x,y,str(P), rotation="vertical")
-
-    #ax.set_xlim([0.0, 0.5])
-    ###########################
-    ##ax.set_xticklabels([ ("%.3f%%" %((2.**float(tk))-1.0)) for tk in ax.get_xticks( ) ], fontsize=16)
     ax.set_title(("%s Bugs" %fancy_name) + ("Relative Abundances" if (not PREVALENCE) else "Prevalence"), fontsize=16)
-    #ax.set_xticklabels(ax.get_rotation=45)
     plt.subplots_adjust(left=0.32 if featid=="s__" else 0.45)
 
     [plt.savefig("%s_relative_abundances.%s" %(title, fmt), dpi=300) for fmt in ["svg", "png"]]    
@@ -634,5 +493,3 @@ if __name__ == "__main__":
                 Class="gender", featid=Args.feature_id)
     else:
         REFrame = plot_meta_analysis_of_meta_analysis(Args)
-        #if (not Args.REC):
-
