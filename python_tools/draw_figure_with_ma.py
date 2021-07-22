@@ -21,6 +21,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 matplotlib.rcParams["svg.fonttype"] = "none"
 from scipy import stats as sts
 import itertools as it
+import warnings
 from num2words import num2words
 
 
@@ -36,12 +37,16 @@ def read_params( args ):
     add = p.add_argument
  
     add("metaanalysis", type=str, nargs="+", help="A meta-analysis with features as rows and fields as columns")
+
+    add("--names", type=str, nargs="+", default=[""], help="Toy can use this to specify names that will be used in the legend."
+	"Is useful when p.otting multiple analyses together. Default [None] will switch automatically to naming "
+        "analyses with an ordinal number")
  
     add("-n", "--narrowed", action="store_true", help="Only considers confidence intervals which don't go over zero.")
 
     add("-b", "--boxes", action="store_true", help="Draws also boxplots, of the distribution of the populations.")
 
-    add("-a", "--relative_abundances", type=str, nargs="+", help="A file with features as rows and samples as columns")
+    add("-a", "--relative_abundances", type=str, default=[""], nargs="+", help="A file with features as rows and samples as columns")
 
     add("-i", "--imp", type=int, default=30, help="Tries to plot the first *imp*ortant features. ")
 
@@ -99,6 +104,9 @@ def read_params( args ):
     add("-cbl", "--color_black", type=str, nargs="+", default=["black"], help=\
         "Color of the random/fixed effect diamond ")
 
+    add("-pmr", "--pop_marker", type=str, nargs="+", default=["o"], help=\
+        "Marker of the single population-effect [default=Circle]")
+
     add("-dmr", "--diam_marker", type=str, nargs="+", default=["D"], help=\
         "Marker of the random/fixed effect [default=Diamond]")
 
@@ -130,10 +138,15 @@ def read_params( args ):
 
 
 def parse_args_table(args, ij):
-
-    name = num2words(ij, ordinal=True)
-
+ 
     take_a_param = lambda param, ij : param[ij] if len(param)>1 else param[0]
+
+    if args["names"][0] and (len(args["names"])!=len(args["metaanalysis"])):
+        warnings.warn("You specify names of the analysis (which is used for the legend), "
+	    "but the number of names specified don't match the number of analysis. "
+	    "Switching to ordinal names.")
+    
+    name = num2words(ij, ordinal=True) if (not take_a_param( args["names"], ij )) else take_a_param( args["names"], ij )
 
     #if isinstance( args, dict ):
     #    from attrdict import AttrDict
@@ -144,14 +157,14 @@ def parse_args_table(args, ij):
     meta_analysis.fillna( "NA", inplace=True )
 
     if (not take_a_param( args["relative_abundances"], ij)) and (not take_a_param( args["prevalence"], ij )):
-        raise Warning("You must specifiy one of prevalence OR relative_abundances (to now the minimum prevalence)")
-
-    if take_a_param( args["relative_abundances"], ij) and take_a_param( args["prevalence"], ij ):
-        filter_on = "PREVALENCE"
-        raise Warning("You set both prevalence AND relative_abundances: the first one will be used")
-
+        warnings.warn("You didn't specifiy neither abundances tables nor prevalence. This means that all the feats found will be retained.")
+        filter_on = "NO_FILTER"
     else:
-        filter_on = "PREVALENCE" if take_a_param( args["prevalence"], ij ) else "ABUNDANCE"
+        if take_a_param( args["relative_abundances"], ij) and take_a_param( args["prevalence"], ij ):
+            filter_on = "PREVALENCE"
+            warnings.warn("You set both prevalence AND relative_abundances: the first one will be used")
+        else:
+            filter_on = "PREVALENCE" if take_a_param( args["prevalence"], ij ) else "ABUNDANCE"
 
     min_prevalence = dict( )
     features = meta_analysis.index.tolist( )
@@ -186,12 +199,13 @@ def parse_args_table(args, ij):
     
     #print(results, "TWO")
 
-    if filter_on == "PREVALENCE":
-        results = results.loc[ [ i for i in results.index.tolist() if (prevalences[i]>=take_a_param( args["min_prevalence"], ij))], : ]
-    else:
-        results = results.loc[ [ i for i in results.index.tolist() if \
-            (not i in abundances.index.tolist()) or (np.mean(abundances.loc[i].values.astype(float))>=take_a_param( args["min_prevalence"], ij)) \
-            ], : ]
+    if filter_on != "NO_FILTER":
+        if filter_on == "PREVALENCE":
+            results = results.loc[ [ i for i in results.index.tolist() if (prevalences[i]>=take_a_param( args["min_prevalence"], ij))], : ]
+        else:
+            results = results.loc[ [ i for i in results.index.tolist() if \
+                (not i in abundances.index.tolist()) or (np.mean(abundances.loc[i].values.astype(float))>=take_a_param( args["min_prevalence"], ij)) \
+                ], : ]
     
     #print(results, "THREE")
 
@@ -215,7 +229,7 @@ def parse_args_table(args, ij):
     results = res_pos.append(res_neg)
     #print(results, "FIVE")
 
-    return [results, prevalences, single_effects, single_effect_Qs, results.index.tolist( ), name]
+    return [results, single_effects, single_effect_Qs, results.index.tolist( ), name]
             
 
 
@@ -237,7 +251,9 @@ def select_features(how, results):
  
 def build_long_frame(args, analysis, ij, result_features, all_markers):
  
-    results, prevalences, single_effects, single_effect_Qs, Feats, name_of_this_one = tuple(analysis)
+    results, single_effects, single_effect_Qs, Feats__, name_of_this_one = tuple(analysis)
+
+    Feats = result_features
 
     print(single_effects, len(single_effects), "questi sono gli effetti singoli")
 
@@ -245,26 +261,28 @@ def build_long_frame(args, analysis, ij, result_features, all_markers):
 
     take_a_param = lambda param, ij : param[ij] if len(param)>1 else param[0]
 
-    print( len(list( it.chain.from_iterable( [ [ feature for e in range(len(single_effects)) if \
-            str(results.loc[feature, single_effects[e]])!="NA"] for feature in Feats ] ) )) )
+    get = lambda df, index, column : 0.0 if (not index in df.index.tolist()) else df.loc[index, column]
 
-    print(len(  list( it.chain.from_iterable( [ [ float(results.loc[ feature, e ])  for e in single_effects if \
-            str(results.loc[feature, e])!="NA"] for feature in Feats ] ) )    ))
+    print( len(list( it.chain.from_iterable( [ [ feature for e in range(len(single_effects)) if \
+            str(get( results, feature, single_effects[e] ))!="NA"] for feature in Feats ] ) )) )
+
+    print(len(  list( it.chain.from_iterable( [ [ float(get(results, feature, e ))  for e in single_effects if \
+            str(get(results, feature, e))!="NA"] for feature in Feats ] ) )    ))
     print(len(  list( it.chain.from_iterable( [ [ e.replace(take_a_param( args["e_suff"], ij), "")  for e in single_effects if \
-            str(results.loc[feature, e])!="NA"] for feature in Feats ] ) )    ))
-    print(len(  list( it.chain.from_iterable( [ [ float(results.loc[ feature, e ])  for e in single_effect_Qs if \
-            str(results.loc[feature, e])!="NA"] for feature in Feats ] ) )    ))
+            str(get(results, feature, e))!="NA"] for feature in Feats ] ) )    ))
+    print(len(  list( it.chain.from_iterable( [ [ float(get(results, feature, e ))  for e in single_effect_Qs if \
+            str(get(results, feature, e))!="NA"] for feature in Feats ] ) )    ))
 
     lgf_singles = pd.DataFrame(\
         {
         "Feature": list( it.chain.from_iterable( [ [ feature for e in range(len(single_effects)) if \
-            str(results.loc[feature, single_effects[e]])!="NA"] for feature in Feats ] ) ) , \
-        "effect-size": list( it.chain.from_iterable( [ [ float(results.loc[ feature, e ])  for e in single_effects if \
-            str(results.loc[feature, e])!="NA"] for feature in Feats ] ) ), \
+            str(get(results, feature, single_effects[e]))!="NA"] for feature in Feats ] ) ) , \
+        "effect-size": list( it.chain.from_iterable( [ [ float(get(results, feature, e ))  for e in single_effects if \
+            str(get(results, feature, e))!="NA"] for feature in Feats ] ) ), \
         "population": list( it.chain.from_iterable( [ [ e.replace(take_a_param( args["e_suff"], ij), "")  for e in single_effects if \
-            str(results.loc[feature, e])!="NA"] for feature in Feats ] ) ),
-        "q-values": list( it.chain.from_iterable( [ [ float(results.loc[ feature, e ])  for e in single_effect_Qs if \
-            str(results.loc[feature, e])!="NA"] for feature in Feats ] ) ),
+            str(get(results, feature, e))!="NA"] for feature in Feats ] ) ),
+        "q-values": list( it.chain.from_iterable( [ [ float(get( results, feature, e ))  for e in single_effect_Qs if \
+            str(get(results, feature, e))!="NA"] for feature in Feats ] ) ),
         } \
         )
     
@@ -285,12 +303,16 @@ def build_long_frame(args, analysis, ij, result_features, all_markers):
     lgf_singles.index = lgf_singles["Feature"].tolist()
     lgf_singles["SG"] = [ ("yes" if (q<args["a_single"]) else "no") for q in lgf_singles["q-values"].tolist() ]
  
-    confint = [ results.loc[ feature, take_a_param( args["confint"], ij) ].split(";") for feature in Feats ]
+    ## confint = [ get(results, feature, take_a_param( args["confint"], ij) ).split(";") for feature in Feats ]
+  
+    confint = [ (["0.0", "0.0"] if (not feature in results.index.tolist()) else \
+	results.loc[feature, take_a_param( args["confint"], ij)].split(";")) \
+	for feature in Feats ]
 
     lgf_effect = pd.DataFrame(\
         { "Feature": Feats, \
-          "random-effect": [ float(results.loc[ feature, take_a_param( args["random_effect"], ij) ]) for feature in Feats ], \
-          "Q-values": [ float(results.loc[ feature, take_a_param( args["random_effect_q"], ij) ]) for feature in Feats ], \
+          "random-effect": [ float(get(results, feature, take_a_param( args["random_effect"], ij) )) for feature in Feats ], \
+          "Q-values": [ float(get( results, feature, take_a_param( args["random_effect_q"], ij) )) for feature in Feats ], \
           "CI_low":  [ float(ci[0]) for ci in confint ], \
           "CI_upp":  [ float(ci[1]) for ci in confint ], \
         } \
@@ -311,7 +333,7 @@ def draw_figure(args, show):
         matplotlib.use('Agg')
 
     analyses = [\
-        parse_args_table( args, ij ) for ij in range(len( args["random_effect"] ))
+        parse_args_table( args, ij ) for ij in range(len( args["metaanalysis"] ))
         ]
 
     result_features = select_features( args["how"], [ an[0] for an in analyses ] )
@@ -337,15 +359,23 @@ def draw_figure(args, show):
             long_form_frame_singles, long_form_frame_effect, name_of, remaining_markers = build_long_frame(args, analysis, ij, result_features, -1 )
         else:
             long_form_frame_singles, long_form_frame_effect, name_of, remaining_markers = build_long_frame(args, analysis, ij, result_features, remaining_markers )
-     
+    
+        print(name_of, " E il nome")
+        print(long_form_frame_effect, " E il frame degli effetti sto cazzo")
+        
+ 
         if not args["markers"]:
+
+            long_form_frame_singles["dot_is"] = "the_population_marker" #take_a_param(args["pop_marker"], ij)
             strip_one = sns.scatterplot(\
                 x="effect-size", y="Feature", \
                 data=long_form_frame_singles, size="SG", \
                 sizes={"no": args["dotsize"]*8, "yes": args["dotsize"]*16}, \
                 palette={"yes": take_a_param(args["color_red"], ij), \
                 "no": take_a_param(args["color_blue"], ij)}, \
-                edgecolor="black", ax=ax, hue="SG")
+                edgecolor="black", ax=ax, hue="SG", \
+                style="dot_is", \
+                markers={"the_population_marker": take_a_param(args["pop_marker"], ij)})
 
         else:
             marker_of_this_population = dict([(p,m)\
@@ -409,8 +439,8 @@ def draw_figure(args, show):
             markers += [ take_a_param(args["diam_marker"], ij) ]
             colors += [ take_a_param(args["color_black"], ij) ]
  
-        labels += [ "Non significant", "Significant" ]
-        markers += [ "o", "o" ]
+        labels += [ ("%s-pop non sign." %name_of), ("%s-pop Sign." %name_of) ]
+        markers += [ take_a_param(args["pop_marker"], ij), take_a_param(args["pop_marker"], ij) ]
         colors += take_a_param(args["color_blue"], ij), take_a_param(args["color_red"], ij)
 
 
@@ -434,9 +464,25 @@ def draw_figure(args, show):
     ax_arrows.annotate(args["negative_direction"], xy=(-args["neg_max_rho"]*0.80, -1.0), fontsize=24)
 
     ax_arrows.axis("off")
+ 
+    labels_, colors_, markers_ = [], [], []
+    duplicates_question = [] 
+    for label,color,marker in zip(labels, colors, markers):
+        if not (label,color,marker) in duplicates_question:
+            duplicates_question += [tuple((label,color,marker))]
+    print(duplicates_question, "duplicated")
+
+    for ob in duplicates_question:
+        labels_ += [ob[0]]
+        colors_ += [ob[1]]
+        markers_ += [ob[2]]
+
+    print(labels_)
+    print(colors_)
+    print(markers_)
 
     leg_handles = [(mlines.Line2D([], [], color=color, marker=marker, linestyle='None', alpha=1.0, \
-        markersize=args["dotsize"], label=label)) for label,color,marker in zip(labels, colors, markers)]
+        markersize=args["dotsize"], label=label)) for label,color,marker in zip(labels_, colors_, markers_) ]
  
     legend = ax.legend(handles=leg_handles, fontsize=24, loc=args["legloc"], \
         frameon=True, markerfirst=True, ncol=1)
@@ -452,7 +498,7 @@ def draw_figure(args, show):
 
     ax_arrows.set_title(args["title"], fontsize=24)
 
-    ax.set_xticklabels( ax.get_xticks(), fontsize=24 )
+    ax.set_xticklabels( [("%.2f" %n) for n in ax.get_xticks()], fontsize=24 )
 
     ax.set_yticklabels( ax.get_yticklabels(), fontsize=24 )
 

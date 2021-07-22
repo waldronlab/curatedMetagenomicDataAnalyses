@@ -139,13 +139,23 @@ def hierarchical_analysis(args, a_certain_response): ## le pravelcen le possiamo
         Qvls = [ get( args["ANALYSES"][i], a_certain_response, args["Q-COL"][i] ) for i in range(N) if \
             np.isfinite( get( args["ANALYSES"][i], a_certain_response, args["Q-COL"][i] ) ) ]
 
+        Pvls = [ get( args["ANALYSES"][i], a_certain_response, args["P-COL"][i] ) for i in range(N) if \
+            np.isfinite( get( args["ANALYSES"][i], a_certain_response, args["P-COL"][i] ) ) ]
+
+        SEs = [ get( args["ANALYSES"][i], a_certain_response, args["SE-COL"][i] ) for i in range(N) if \
+            np.isfinite( get( args["ANALYSES"][i], a_certain_response, args["SE-COL"][i] ) ) ]
+
         if len(Effects)>=args["MIN-STUDIES"]:
             Variances = [ get( args["ANALYSES"][i], a_certain_response, args["SE-COL"][i] )**\
 	        (2. if (not args["Var"]) else 1.) for i in range(N) if \
                 np.isfinite( get( args["ANALYSES"][i], a_certain_response, args["ESIZE-COL"][i] ) ) ]
  
-            re = RE_meta_binary( Effects, Qvls, Nms, [None]*len(Effects), [None]*len(Effects), \
+            re = RE_meta_binary( Effects, Pvls, Nms, [None]*len(Effects), [None]*len(Effects), \
 		a_certain_response, EFF="precomputed", variances_from_outside=Variances, CI=False, HET=args["H"]  )
+
+            for nm,qv,se in zip(Nms, Qvls, SEs):
+                re.result[nm + "_Qvalue"] = qv
+                re.result[nm + "_SE_RE"] = se
 
             sys.stdout.write("%s (%i associtaions found) Random Effect = %.3f [H: %.3f %.3f  %.3f]   (  %.4f  )\n" \
                 %( a_certain_response, len(Nms), re.RE, re.t2_DL, re.t2_PM, re.I2, re.Pval) )
@@ -171,9 +181,19 @@ def hierarchical_analysis(args, a_certain_response): ## le pravelcen le possiamo
         Qvls = [ get( args["ANALYSES"][i], a_certain_response, args["Q-COL"][i] ) for i in range(N) if \
             np.isfinite( get( args["ANALYSES"][i], a_certain_response, args["Q-COL"][i] ) ) ]
 
+        Pvls = [ get( args["ANALYSES"][i], a_certain_response, args["P-COL"][i] ) for i in range(N) if \
+            np.isfinite( get( args["ANALYSES"][i], a_certain_response, args["P-COL"][i] ) ) ]
+
+        SEs = [ get( args["ANALYSES"][i], a_certain_response, args["SE-COL"][i] ) for i in range(N) if \
+            np.isfinite( get( args["ANALYSES"][i], a_certain_response, args["SE-COL"][i] ) ) ]
+
         if len(Effects)>=args["MIN-STUDIES"]:
-            re = RE_meta( Effects, Qvls, Nms, Nns, a_certain_response, het=args["H"], REG=True )
+            re = RE_meta( Effects, Pvls, Nms, Nns, a_certain_response, het=args["H"], REG=True )
    
+            for nm,qv,se in zip(Nms, Qvls, SEs):
+                re.result[nm + "_Qvalue"] = qv
+                re.result[nm + "_SE_RE"] = se
+                        
             sys.stdout.write("%s (%i associtaions found) Random Effect = %.3f [H: %.3f %.3f  %.3f]   (  %.4f  )\n" \
                 %( a_certain_response, len(Nms), re.RE, re.t2_DL, re.t2_PM, re.I2, re.Pval) )
 
