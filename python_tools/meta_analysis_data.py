@@ -113,10 +113,15 @@ def handle_input(input_argument, studyID, verbose):
             for study in metmet[studyID].unique().tolist():
                 data_2_tables[study] = metmet.loc[metmet[studyID]==study, :].T
         else:
-            raise FileNotFoundError("Sorry: you input a combinedMetadata.tsv table string which is not present in cur dir")
+            raise FileNotFoundError("Sorry: you input a combinedMetadata.tsv table string which is not present in cur dir. Exiting")
     else:
-        for table in glob.glob(os.path.join(input_argument, "*")):
-            data_2_tables[os.path.basename(table.replace(".tsv", ""))] = pd.read_csv(table, sep="\t", header=0, index_col=0, low_memory=False, engine="c").fillna("NA")
+        if not os.path.isdir(  input_argument  ):
+            raise FileNotFoundError("The directory you set as the input folder is not there. Exiting.")
+        elif os.path.isdir(  input_argument  ) and (not len(os.listdir( input_argument  ))):
+            raise IndexError( "The directory you set up as a input folder exists, but is empty. Exiting.")
+        else:
+            for table in glob.glob(os.path.join(input_argument, "*")):
+                data_2_tables[os.path.basename(table.replace(".tsv", ""))] = pd.read_csv(table, sep="\t", header=0, index_col=0, low_memory=False, engine="c").fillna("NA")
     return data_2_tables
 
 
