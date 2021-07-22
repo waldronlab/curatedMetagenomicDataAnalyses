@@ -128,6 +128,10 @@ def read_params( args ):
     add("--pos_max_rho", type=float, default=0.80)
 
     add("--legloc", type=str, default="best")
+ 
+    add("-cn", "--change_names", type=str, default="", \
+	help="You can pass here a python expression that will be evaluate for any feature name"
+	" (y axis of the final plot)")
 
     print(vars(p.parse_args()))
 
@@ -483,7 +487,9 @@ def draw_figure(args, show):
 
     ax.set_xticklabels( [("%.2f" %n) for n in ax.get_xticks()], fontsize=24 )
 
-    ax.set_yticklabels( ax.get_yticklabels(), fontsize=24 )
+    if args["change_names"]: 
+        expression = eval(args["change_names"])
+        ax.set_yticklabels( [tk.epression for tk in   ax.get_yticklabels()], fontsize=24 )
 
     if not show:
         [plt.savefig("%s.%s" %(args["outfile"], fmt), dpi=200) for fmt in ["svg", "png"]]
