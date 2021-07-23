@@ -2,9 +2,13 @@
 
 export(dataDump)
 export(makeSEforCondition)
+export(runMetaanalysis_categorical)
+export(runMetaanalysis_quantitative)
 importFrom(curatedMetagenomicData,returnSamples)
 importFrom(dplyr,"%>%")
+importFrom(dplyr,arrange)
 importFrom(dplyr,filter)
 importFrom(dplyr,pull)
 importFrom(dplyr,select)
+importFrom(meta,metagen)
 importFrom(utils,write.csv)
