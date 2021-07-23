@@ -18,7 +18,10 @@ Imports:
     dplyr
 Suggests: 
     BiocStyle,
+    kableExtra,
     knitr,
+    meta,
+    mia,
     RefManageR,
     rmarkdown,
     sessioninfo,
