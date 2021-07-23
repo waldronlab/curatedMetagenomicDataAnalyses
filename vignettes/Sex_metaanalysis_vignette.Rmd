@@ -65,7 +65,7 @@ library(TreeSummarizedExperiment)
 ## Retrieval of datasets from the cMD3 meeting a series of requirements
 ```{r}
 #Filter on Age, body_site, study_condition and remove samples missing BMI
-metadata <- curatedMetagenomicData::combined_metadata %>% 
+metadata <- curatedMetagenomicData::sampleMetadata %>% 
   filter(age >= 16 &
            body_site == "stool" &
            study_condition == "control" & 
