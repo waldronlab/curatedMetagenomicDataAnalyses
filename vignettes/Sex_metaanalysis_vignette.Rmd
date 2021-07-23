@@ -171,7 +171,7 @@ where:
   - $t$ is the T-statistics for sex returned by the software  
 
 
-The so computed Effect-size (corrected by covariates) has Standard Error and Variance:
+The computed Effect-size (corrected by covariates) has Standard Error and Variance:
 
 $$SE =\sqrt{\frac{n1+n2-1}{n1+n2-3}\cdot\frac{4}{n1+n2}\cdot(1+\frac{\text{effect-size}^2}{8})}$$
 
