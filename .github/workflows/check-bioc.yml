@@ -40,6 +40,7 @@ env:
   has_RUnit: 'false'
   cache-version: 'cache-v1'
   run_docker: 'true'
+  run_cmdcheck: 'false'
 
 jobs:
   build-check:
@@ -207,6 +208,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Run CMD check
+        if: env.run_cmdcheck == 'true'
         env:
           _R_CHECK_CRAN_INCOMING_: false
         run: |
