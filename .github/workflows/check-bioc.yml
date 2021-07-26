@@ -61,8 +61,8 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       NOT_CRAN: true
       TZ: UTC
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
 
     steps:
 
@@ -262,9 +262,10 @@ jobs:
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
+        if: "!contains(github.event.head_commit.message, '/nodocker') && env.run_docker == 'true' && runner.os == 'Linux' "
         with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ env.DOCKERHUB_USER }}
+          password: ${{ env.DOCKERHUB_TOKEN }}
 
       - name: Build and push to DockerHub
         uses: docker/build-push-action@v2
