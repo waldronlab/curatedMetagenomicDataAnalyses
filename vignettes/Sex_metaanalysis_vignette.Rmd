@@ -21,7 +21,7 @@ output:
 date: "`r doc_date()`"
 package: "`r pkg_ver('curatedMetagenomicData')`"
 vignette: >
-  %\VignetteIndexEntry{Put an analysis here}
+  %\VignetteIndexEntry{Sex metaanalysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}  
 ---

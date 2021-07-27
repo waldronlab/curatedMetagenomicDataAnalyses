@@ -2,7 +2,18 @@
 title: "Exploration of the liver cirrhosis dataset"
 author: "Levi Waldron"
 date: "July 19, 2021"
-output: html_document
+output:
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+package: "`r BiocStyle::pkg_ver('curatedMetagenomicAnalyses')`"
+vignette: >
+  %\VignetteIndexEntry{Cirrhosis exploratory analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
 ---
 
 ```{r setup, include=FALSE}
