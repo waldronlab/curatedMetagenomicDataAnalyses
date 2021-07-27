@@ -9,10 +9,9 @@ output:
     toc_float: true
     toc_depth: 2
     code_folding: show
-date: "`r BiocStyle::doc_date()`"
 package: "`r BiocStyle::pkg_ver('curatedMetagenomicAnalyses')`"
 vignette: >
-  %\VignetteIndexEntry{Liver cirrhosis dataset}
+  %\VignetteIndexEntry{Cirrhosis exploratory analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}  
 ---
