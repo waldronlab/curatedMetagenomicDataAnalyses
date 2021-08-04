@@ -1,0 +1,10 @@
+pandoc: 2.11.4
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  Age_metaanalysis_vignette: Age_metaanalysis_vignette.html
+  MLdatasets: MLdatasets.html
+  Sex_metaanalysis_vignette: Sex_metaanalysis_vignette.html
+  explorecirrhosis: explorecirrhosis.html
+last_built: 2021-08-04T18:12Z
+
