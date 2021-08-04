@@ -49,4 +49,6 @@ inst/doc
 
 # Python
 __cache__/
+
+# Pkgdown
 docs
