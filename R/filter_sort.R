@@ -1,5 +1,6 @@
 #' Filter and Sort Features in Meta-analysis final data-frame 
-#' This function allows to remove from the dataframe with the meta-analysis 
+#'
+#' This function allows removal from the dataframe with the meta-analysis 
 #' results those features for which the Standardized Mean Difference couldn't
 #' be computed in at least a user-specified number of cohorts (na_filter).
 #' 
@@ -8,19 +9,11 @@
 #' 
 #' @param df_to_sort The dataframe containing the meta-analysis results (final_df
 #' in this vignette).
-#' 
 #' @param na_filter Maximum number of cohorts for which the SDM difference couldn't
 #' be computed to allow for a feature to be included.
-#'  
-#'
 #' @return The dataframe with the meta-analysis results, filtered for prevalent
 #' features and ordered by adj.p-value and effect size.
 #' @importFrom dplyr %>% arrange select
-
-
-
-
-
 filter_sort <- function(df_to_sort, na_filter){
   cols_cohenD <- grep("CohenD|Correlation",colnames(df_to_sort))
   cols_cohenD <- cols_cohenD[which(cols_cohenD >= 9)]

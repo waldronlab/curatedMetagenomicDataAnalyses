@@ -2,11 +2,7 @@
 % Please edit documentation in R/runMetaanalysis_categorical.R
 \name{runMetaanalysis_categorical}
 \alias{runMetaanalysis_categorical}
-\title{Title Single Species Meta-analysis (Categorical Variables)
-Wrapping function to perform a meta-analysis using function \emph{metagen}
-from package \emph{meta} for a single Species. Between-study variance is
-computed with Paule-Mandel estimator (method.tau = PM). The summary measure
-is the Standardize Mean Difference (sm = SMD)}
+\title{Single Species Meta-analysis (Categorical Variables)}
 \usage{
 runMetaanalysis_categorical(d_vector, SE_d_vector)
 }
@@ -23,7 +19,6 @@ implicitly described by d_vector and SE_d_vector.
 RE","SE_RE","CI_RE","Zscore","p-value","tau2","I^2"
 }
 \description{
-Title Single Species Meta-analysis (Categorical Variables)
 Wrapping function to perform a meta-analysis using function \emph{metagen}
 from package \emph{meta} for a single Species. Between-study variance is
 computed with Paule-Mandel estimator (method.tau = PM). The summary measure

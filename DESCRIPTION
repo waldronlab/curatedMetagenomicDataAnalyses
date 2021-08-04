@@ -1,12 +1,12 @@
 Package: curatedMetagenomicAnalyses
 Title: Analyses using curatedMetagenomicData
 Version: 0.3.0
-Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+Authors@R:
+  c(person(given = "Levi", family = "Waldron", role = "aut"),
+    person(given = "Paolo", family = "Manghi", role = "aut"),
+    person(given = "Davide", family = "Galzato", role = "aut"),
+    person(given = "Jennifer", family = "Wokaty", role = c("ctb", "cre"),
+           email = "jennifer.wokaty@sph.cuny.edu"))
 Description: This package is a home for significant analyses using curatedMetagenomicData.
 License: CC BY 4.0
 Encoding: UTF-8

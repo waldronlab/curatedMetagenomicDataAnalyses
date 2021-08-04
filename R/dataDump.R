@@ -2,7 +2,6 @@
 #'
 #' @param dataType (default: "relative_abundance")
 #' Data type, passed on to \code{\link[curatedMetagenomicData]{returnSamples}}.
-#'
 #' @param counts (Default: FALSE)
 #' Whether to convert to count-like data by multiplying through by read depth.
 #' Passed on to \code{\link[curatedMetagenomicData]{returnSamples}}.

@@ -1,4 +1,4 @@
-#' Title Make a dataset for a condition of interest.
+#' Make a dataset for a condition of interest.
 #'
 #' @param condition Condition of study for which to build a case-control dataset.
 #'  See "study_condition" column of the `sampleMetadata` object.

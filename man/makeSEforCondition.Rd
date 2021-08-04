@@ -2,7 +2,7 @@
 % Please edit documentation in R/makeSEforCondition.R
 \name{makeSEforCondition}
 \alias{makeSEforCondition}
-\title{Title Make a dataset for a condition of interest.}
+\title{Make a dataset for a condition of interest.}
 \usage{
 makeSEforCondition(
   condition,
@@ -26,7 +26,7 @@ by read depth?}
 a (Tree)SummarizedExperiment containing merged data from 1+ studies
 }
 \description{
-Title Make a dataset for a condition of interest.
+Make a dataset for a condition of interest.
 }
 \details{
 This function finds datasets that contain the condition of interest, returns
