@@ -1,0 +1,29 @@
+pkgdown:
+  as_is: false
+
+navbar:
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Reference"
+      href: reference/index.html
+    - text: Analyses
+      menu:
+        - text: Analyses in R
+        - text: Create datasets for machine learning
+          href: articles/MLdatasets.html
+        - text: Exploration of the liver cirrhosis dataset
+          href: articles/explorecirrhosis.html
+        - text: Meta-analysis of age-related microbial species using cMD3
+          href: articles/Age_metaanalysis_vignette.html
+        - text: Meta-analysis of sex-related microbial species using cMD3
+          href: articles/Sex_metaanalysis_vignette.html
+        - text: Analyses in Python
+        - text: Sex-related differences in the human microbiome using cMD3 and Python3
+          href: https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/curatedMetagenomicData%203%20CLI%20interface%2C%20sex-contrast%20microbiome%20meta-analysis.ipynb 
+        - text: Supplementary Articles
+        - text: Installing Python dependencies in Linux 
+          href: https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/installation.ipynb
+  right:
+    - icon: fab fa-github fa-lg
+      href: https://github.com/waldronlab/curatedMetagenomicAnalyses
