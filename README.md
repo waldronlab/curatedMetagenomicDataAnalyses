@@ -24,3 +24,20 @@ Then run a container based on the image with your password:
       waldronlab/curatedmetagenomicanalyses
 
 Visit `localhost` in your browser.
+
+## Analyses
+
+### R Vignettes
+
+* [Create datasets for machine learning](vignettes/MLdatasets.Rmd)
+* [Exploration of the liver cirrhosis dataset](vignettes/explorecirrhosis.Rmd)
+* [Meta-analysis of age-related microbial species using cMD3](vignette/Age_metaanalysis_vigette.Rmd)
+* [Meta-analysis of sex-related microbial species using cMD3](vignette/Sex_metaanalysis_vigette.Rmd)
+
+### Python Notebooks
+
+* [Sex-related differences in the human microbiome using cMD3 and Python3](vignettes/sexContrastMicrobiomeAnalysis.ipynb)
+
+### Supplementary Materials 
+
+* [Installing Python dependencies in Linux](vignettes/installation.ipynb) (Python notebook)
