@@ -31,8 +31,8 @@ Visit `localhost` in your browser.
 
 * [Create datasets for machine learning](vignettes/MLdatasets.Rmd)
 * [Exploration of the liver cirrhosis dataset](vignettes/explorecirrhosis.Rmd)
-* [Meta-analysis of age-related microbial species using cMD3](vignette/Age_metaanalysis_vigette.Rmd)
-* [Meta-analysis of sex-related microbial species using cMD3](vignette/Sex_metaanalysis_vigette.Rmd)
+* [Meta-analysis of age-related microbial species using cMD3](vignettes/Age_metaanalysis_vignette.Rmd)
+* [Meta-analysis of sex-related microbial species using cMD3](vignettes/Sex_metaanalysis_vignette.Rmd)
 
 ### Python Notebooks
 
