@@ -50,7 +50,7 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li class="dropdown-header">Analyses in R</li>
+<li class="dropdown-header">R Vignettes</li>
     <li>
       <a href="../articles/MLdatasets.html">Create datasets for machine learning</a>
     </li>
@@ -63,13 +63,13 @@
     <li>
       <a href="../articles/Sex_metaanalysis_vignette.html">Meta-analysis of sex-related microbial species using cMD3</a>
     </li>
-    <li class="dropdown-header">Analyses in Python</li>
+    <li class="dropdown-header">Python Notebooks</li>
     <li>
       <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/curatedMetagenomicData%203%20CLI%20interface%2C%20sex-contrast%20microbiome%20meta-analysis.ipynb">Sex-related differences in the human microbiome using cMD3 and Python3</a>
     </li>
-    <li class="dropdown-header">Supplementary Articles</li>
+    <li class="dropdown-header">Supplementary Materials</li>
     <li>
-      <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/installation.ipynb">Installing Python dependencies in Linux</a>
+      <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/installation.ipynb">Installing Python dependencies in Linux (Python Notebook)</a>
     </li>
   </ul>
 </li>
@@ -100,7 +100,7 @@
             
             <h4 class="date">July 19, 2021</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/master/vignettes/explorecirrhosis.Rmd"><code>vignettes/explorecirrhosis.Rmd</code></a></small>
       <div class="hidden name"><code>explorecirrhosis.Rmd</code></div>
 
     </div>
@@ -110,7 +110,7 @@
 <p>Packages used here:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicData">curatedMetagenomicData</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">curatedMetagenomicAnalyses</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicAnalyses">curatedMetagenomicAnalyses</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></code></pre></div>
 <div id="cirrhosis-exploratory-analysis" class="section level1">
 <h1 class="hasAnchor">
@@ -442,7 +442,7 @@
 ##    cirrhosis
 ## Label used as control:
 ##    control</code></pre>
-<pre><code>## + finished create.label.from.metadata in 0.017 s</code></pre>
+<pre><code>## + finished create.label.from.metadata in 0.013 s</code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sc.obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/siamcat.html">siamcat</a></span><span class="op">(</span>feat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span>,
     label<span class="op">=</span><span class="va">labs</span>,
@@ -452,7 +452,7 @@
 <pre><code>## + Keeping labels of 282 sample(s).</code></pre>
 <pre><code>## +++ checking sample number per class</code></pre>
 <pre><code>## +++ checking overlap between samples and metadata</code></pre>
-<pre><code>## + finished validate.data in 0.067 s</code></pre>
+<pre><code>## + finished validate.data in 0.07 s</code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">show</span><span class="op">(</span><span class="va">sc.obj</span><span class="op">)</span></code></pre></div>
 <pre><code>## siamcat-class object
