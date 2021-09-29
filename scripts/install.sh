@@ -11,7 +11,7 @@ rm -rf ~/.npm
 python3 -m pip install jupyterlab jupyter-server-proxy jupyter-rsession-proxy
 
 # Install Python analysis dependencies
-apt-get -y --no-install-recommends python3-skbio python-skbio-doc
+apt-get install -y --no-install-recommends python3-skbio python-skbio-doc
 python3 -m pip install pandas \
   setuptools \
   numpy \
