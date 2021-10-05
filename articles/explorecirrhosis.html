@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">curatedMetagenomicAnalyses</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -442,7 +442,7 @@
 ##    cirrhosis
 ## Label used as control:
 ##    control</code></pre>
-<pre><code>## + finished create.label.from.metadata in 0.01 s</code></pre>
+<pre><code>## + finished create.label.from.metadata in 0.011 s</code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sc.obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/siamcat.html">siamcat</a></span><span class="op">(</span>feat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span>,
     label<span class="op">=</span><span class="va">labs</span>,
@@ -452,7 +452,7 @@
 <pre><code>## + Keeping labels of 282 sample(s).</code></pre>
 <pre><code>## +++ checking sample number per class</code></pre>
 <pre><code>## +++ checking overlap between samples and metadata</code></pre>
-<pre><code>## + finished validate.data in 0.05 s</code></pre>
+<pre><code>## + finished validate.data in 0.053 s</code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">show</span><span class="op">(</span><span class="va">sc.obj</span><span class="op">)</span></code></pre></div>
 <pre><code>## siamcat-class object
@@ -500,7 +500,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Jennifer Wokaty.</p>
+  <p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
 </div>
 
 <div class="pkgdown">

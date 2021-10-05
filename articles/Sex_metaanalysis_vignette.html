@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">curatedMetagenomicAnalyses</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
       Università degli Studi di Trento<br><a class="author_email" href="mailto:#"></a><a href="mailto:paolo.manghi@unitn.it" class="email">paolo.manghi@unitn.it</a>
       </address>
                   
-            <h4 class="date">30 September 2021</h4>
+            <h4 class="date">5 October 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/master/vignettes/Sex_metaanalysis_vignette.Rmd"><code>vignettes/Sex_metaanalysis_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>Sex_metaanalysis_vignette.Rmd</code></div>
@@ -244,7 +244,7 @@ pre code {
     
     <span class="va">exprs_df</span> <span class="op">&lt;-</span> <span class="va">exprs_df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">exprs_df</span><span class="op">)</span><span class="op">)</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">exprs_df</span><span class="op">)</span>, <span class="op">]</span>
 
-    <span class="va">species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">exprs_df</span><span class="op">)</span>
+    <span class="va">species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames</a></span><span class="op">(</span><span class="va">exprs_df</span><span class="op">)</span>
     
     <span class="va">age</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">single_dataset_tse</span><span class="op">)</span><span class="op">$</span><span class="va">age</span>
     <span class="va">bmi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">single_dataset_tse</span><span class="op">)</span><span class="op">$</span><span class="va">BMI</span>
@@ -252,7 +252,7 @@ pre code {
     
     <span class="va">compute_lm</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">exprs_row</span><span class="op">)</span><span class="op">{</span>
       <span class="va">lm_res</span> <span class="op">&lt;-</span>  <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">exprs_row</span> <span class="op">~</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span>
-      <span class="va">lm_res</span> <span class="op">&lt;-</span> <span class="fu">column_to_rownames</span><span class="op">(</span><span class="va">lm_res</span>, var <span class="op">=</span> <span class="st">"term"</span><span class="op">)</span>
+      <span class="va">lm_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">column_to_rownames</a></span><span class="op">(</span><span class="va">lm_res</span>, var <span class="op">=</span> <span class="st">"term"</span><span class="op">)</span>
       <span class="va">res</span> <span class="op">&lt;-</span> <span class="va">lm_res</span><span class="op">[</span><span class="st">"gendermale"</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"statistic"</span>,<span class="st">"p.value"</span><span class="op">)</span>,drop<span class="op">=</span><span class="cn">TRUE</span><span class="op">]</span>
       <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
     <span class="op">}</span>
@@ -298,7 +298,7 @@ pre code {
                             <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dataset</span>,<span class="st">"_pvalue"</span><span class="op">)</span>,
                             <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dataset</span>,<span class="st">"_Qvalue"</span><span class="op">)</span><span class="op">)</span>
     
-    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">final_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">species</span>
+    <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames</a></span><span class="op">(</span><span class="va">final_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">species</span>
 
     <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">final_df</span><span class="op">)</span>
   
@@ -315,7 +315,7 @@ pre code {
 <code class="sourceCode R"><span class="va">runMetaanalysis</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">d_vector</span>, <span class="va">SE_d_vector</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">meta</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/meta/man/metagen.html">metagen</a></span><span class="op">(</span>TE<span class="op">=</span><span class="va">d_vector</span>,
                      seTE<span class="op">=</span><span class="va">SE_d_vector</span>,
-                     studlab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">d_vector</span><span class="op">)</span>,
+                     studlab<span class="op">=</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames</a></span><span class="op">(</span><span class="va">d_vector</span><span class="op">)</span>,
                      method.tau<span class="op">=</span><span class="st">"PM"</span>,          
                      sm<span class="op">=</span><span class="st">"SMD"</span><span class="op">)</span>
   
@@ -344,7 +344,7 @@ pre code {
 <span class="va">final_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Reduce</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, all<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>, 
                    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">SDM</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">x</span>, rn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">final_df</span> <span class="op">&lt;-</span> <span class="va">final_df</span>  <span class="op">%&gt;%</span> <span class="fu">column_to_rownames</span><span class="op">(</span>var<span class="op">=</span><span class="st">"rn"</span><span class="op">)</span>
+<span class="va">final_df</span> <span class="op">&lt;-</span> <span class="va">final_df</span>  <span class="op">%&gt;%</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">column_to_rownames</a></span><span class="op">(</span>var<span class="op">=</span><span class="st">"rn"</span><span class="op">)</span>
 
 <span class="co">#Subsetting from SDM dataframe only the columns we actually need to perform </span>
 <span class="co">#the meta-analysis into two separated dataframes (one for the standardized mean</span>
@@ -16299,7 +16299,7 @@ Pseudomonas aeruginosa group
 
 
       <footer><div class="copyright">
-  <p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Jennifer Wokaty.</p>
+  <p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
 </div>
 
 <div class="pkgdown">
