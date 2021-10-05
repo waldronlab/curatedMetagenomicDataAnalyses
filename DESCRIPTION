@@ -1,10 +1,11 @@
 Package: curatedMetagenomicAnalyses
 Title: Analyses using curatedMetagenomicData
-Version: 0.3.0
+Version: 0.4.0
 Authors@R:
   c(person(given = "Levi", family = "Waldron", role = "aut"),
     person(given = "Paolo", family = "Manghi", role = "aut"),
     person(given = "Davide", family = "Galzato", role = "aut"),
+    person(given = "Lucas", family = "Schiffer", role = "aut"),
     person(given = "Jennifer", family = "Wokaty", role = c("ctb", "cre"),
            email = "jennifer.wokaty@sph.cuny.edu"))
 Description: This package is a home for significant analyses using curatedMetagenomicData.
@@ -16,18 +17,33 @@ RoxygenNote: 7.1.1
 Imports:
     curatedMetagenomicData,
     dplyr
-Suggests: 
+Suggests:
+    ANCOMBC,
     BiocStyle,
+    RefManageR,
+    SIAMCAT,
+    forcats,
+    ggplot2,
+    ggrepel,
+    ggsignif,
+    gtsummary,
+    hrbrthemes,
     kableExtra,
+    knitr,
     knitr,
     meta,
     mia,
-    RefManageR,
     rmarkdown,
+    scater,
     sessioninfo,
-    SIAMCAT,
+    snakecase,
+    stringr,
     table1,
-    tidyverse
+    tibble,
+    tidyr,
+    tidyverse,
+    uwot,
+    vegan
 VignetteBuilder: knitr
 biocViews:
     ExperimentHub,
