@@ -1,0 +1,232 @@
+---
+title: "NUI Galway Metagenomics Workshop"
+author:
+- name: Lucas Schiffer, MPH
+  affiliation:
+  - Section of Computational Biomedicine, Boston University School of Medicine,
+    Boston, MA, U.S.A.
+  email: schifferl@bu.edu
+date: "October 6, 2021"
+output:
+  BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{NUI Galway Metagenomics Workshop}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# R Packages for This Tutorial
+
+```{r, message = FALSE}
+library(curatedMetagenomicData)
+library(dplyr)
+library(stringr)
+library(scater)
+library(snakecase)
+library(forcats)
+library(gtsummary)
+library(mia)
+library(ggplot2)
+library(ggsignif)
+library(hrbrthemes)
+library(vegan)
+library(uwot)
+library(ANCOMBC)
+library(tibble)
+library(tidyr)
+library(knitr)
+library(ggrepel)
+```
+
+# Using curatedMetagenomicData
+
+## Sample Metadata Exploration
+```{r, message = FALSE}
+sampleMetadata |>
+  slice_sample(n = 10) |>
+  select(where(~ !any(is.na(.x)))) |>
+  select(1:10) |>
+  arrange(study_name)
+```
+
+## Finding Available Resources
+```{r}
+curatedMetagenomicData("AsnicarF")
+```
+
+```{r}
+curatedMetagenomicData("AsnicarF.+.relative_abundance")
+```
+
+## Downloading Study Resources
+
+```{r, message = FALSE}
+curatedMetagenomicData("AsnicarF.+.relative_abundance", dryrun = FALSE)
+```
+
+## Merging Data Across Studies
+
+```{r, message = FALSE}
+curatedMetagenomicData("AsnicarF.+.relative_abundance", dryrun = FALSE) |>
+  mergeData()
+```
+
+## Returning Data from Samples
+
+```{r, message = FALSE}
+countryData <-
+  filter(sampleMetadata, body_site == "stool") |>
+  filter(disease == "healthy") |>
+  filter(age >= 18) |>
+  filter(str_detect(country, "IRL|ITA")) |>
+  select(where(~ !all(is.na(.x)))) |>
+  returnSamples("relative_abundance", counts = TRUE)
+```
+
+```{r, message = FALSE}
+assayNames(countryData) <-
+  "counts"
+```
+
+```{r, message = FALSE}
+countryData <-
+  logNormCounts(countryData)
+```
+
+```{r, message = FALSE}
+colData(countryData) |>
+  as.data.frame() |>
+  select(study_name, age, gender, country, sequencing_platform, curator, diet) |>
+  mutate(gender = to_title_case(gender)) |>
+  mutate(gender = fct_explicit_na(gender)) |>
+  mutate(curator = str_replace_all(curator, "_", " ")) |>
+  mutate(curator = str_replace_all(curator, ";", ", ")) |>
+  mutate(diet = to_title_case(diet)) |>
+  mutate(diet = fct_explicit_na(diet)) |>
+  rename_with(to_title_case) |>
+  tbl_summary()
+```
+
+# Estimating Alpha Diversity
+
+```{r, fig.width=8, fig.height=8}
+countryData |>
+  estimateDiversity(abund_values = "logcounts", index = "shannon") |>
+  plotColData(x = "country", y = "shannon", colour_by = "country", shape_by = "country") +
+  geom_signif(comparisons = list(c("IRL", "ITA")), test = "t.test", map_signif_level = TRUE) +
+  labs(
+    title = "Alpha Diversity by Country, Shannon Index (H')",
+    subtitle = "Stool Samples of Healthy Adults",
+    x = "Country",
+    y = "Alpha Diversity (H')"
+  ) +
+  guides(color = guide_none(), shape = guide_none()) +
+  theme_ipsum_rc()
+```
+
+# Analysis of Beta Diversity
+
+```{r, fig.width=8, fig.height=8}
+countryData |>
+  runMDS(FUN = vegdist, method = "bray", exprs_values = "logcounts", name = "BrayCurtis") |>
+  plotReducedDim("BrayCurtis", colour_by = "country", shape_by = "country", text_by = "country") +
+  labs(
+    title = "Beta Diversity by Country, Bray-Curtis PCoA",
+    subtitle = "Stool Samples of Healthy Adults",
+    x = "PCo 1",
+    y = "PCo 2"
+  ) +
+  guides(color = guide_none(), shape = guide_none()) +
+  theme_ipsum_rc()
+```
+
+```{r, fig.width=8, fig.height=8}
+countryData |>
+  runUMAP(exprs_values = "logcounts", name = "UMAP") |>
+  plotReducedDim("UMAP", colour_by = "country", shape_by = "country", text_by = "country") +
+  labs(
+    title = "Beta Diversity by Country, UMAP Embedding",
+    subtitle = "Stool Samples of Healthy Adults",
+    x = "UMAP 1",
+    y = "UMAP 2"
+  ) +
+  guides(color = guide_none(), shape = guide_none()) +
+  theme_ipsum_rc()
+```
+
+# Modeling Bacteria by Country
+
+```{r, message = FALSE, warning = FALSE}
+ancombcResults <-
+  makePhyloseqFromTreeSummarizedExperiment(countryData) |>
+  ancombc("country")
+```
+
+```{r, message = FALSE}
+ancombcTable <-
+  bind_cols(ancombcResults[["res"]])
+```
+
+```{r, message = FALSE}
+colnames(ancombcTable) <-
+  names(ancombcResults[["res"]])
+```
+
+```{r, message = FALSE}
+ancombcTable <-
+  rownames_to_column(ancombcTable)
+```
+
+```{r, message = FALSE}
+rankNames <-
+  c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+
+```
+
+```{r, message = FALSE}
+ancombcTable[["rowname"]] <-
+  separate(ancombcTable, rowname, rankNames, sep = "\\|") |>
+  select(all_of(rankNames)) |>
+  mutate(across(.fns = ~ str_remove_all(.x, ".__"))) |>
+  mutate(across(.fns = ~ str_replace_all(.x, "_", " "))) |>
+  mutate(label = Species) |>
+  pull(label)
+```
+
+```{r, message = FALSE}
+filter(ancombcTable, abs(beta) > 1) |>
+  filter(-log10(q_val) > 5) |>
+  select(rowname, beta, se, p_val, q_val) |>
+  arrange(-abs(beta)) |>
+  column_to_rownames() |>
+  mutate(across(.fns = ~ round(.x, digits = 3))) |>
+  mutate(beta = format(beta)) |>
+  mutate(beta = str_replace(beta, " ", "&nbsp;")) |>
+  mutate(p_val = if_else(p_val == 0, "< 0.001", format(p_val, nsmall = 3))) |>
+  mutate(q_val = if_else(q_val == 0, "< 0.001", format(q_val, nsmall = 3))) |>
+  kable(col.names = c("β", "SE", "P", "Q"), align = "cccc", escape = FALSE)
+```
+
+```{r, fig.width=9.5, fig.height=16}
+ancombcTable |>
+  mutate(rowname = str_replace(rowname, "^([A-Z])([a-z])+ ", "\\1. ")) |>
+  mutate(q_val = -log10(q_val)) |>
+  mutate(label = if_else(abs(beta) > 1, rowname, NA_character_)) |>
+  mutate(label = if_else(q_val > 5, label, NA_character_)) |>
+  mutate(color = if_else(beta > 0, "#FF9E4A", "#729ECE")) |>
+  mutate(color = if_else(is.na(label), "#000000", color)) |>
+  ggplot(mapping = aes(beta, q_val, color = I(color), label = label, shape = I(1))) +
+  geom_point() +
+  geom_hline(linetype = "dotted", yintercept = 5) +
+  geom_vline(linetype = "dotted", xintercept = 1) +
+  geom_vline(linetype = "dotted", xintercept = -1) +
+  geom_label_repel(min.segment.length = 0, force = 10, max.overlaps = 20, na.rm = TRUE) +
+  labs(
+    title = "Significance vs. Effect Size, ANCOM-BC",
+    subtitle = "Stool Samples of Healthy Adults",
+    x = expression(beta),
+    y = expression(-~log[10]~Q)
+  ) +
+  guides(color = guide_none(), shape = guide_none()) +
+  theme_ipsum_rc()
+```
