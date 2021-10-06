@@ -218,7 +218,7 @@ ancombcResults <-
   ancombc("country")
 ```
 
-The results of the `r BiocStyle::Biocpkg("ANCOMBC")` model are in a strange `list` structure and have to be coereced into a `data.frame` before they can be displayed; the `bind_cols()` function from the `r BiocStyle::CRANpkg("dplyr")` package is used below.
+The results of the `r BiocStyle::Biocpkg("ANCOMBC")` model are in a strange `list` structure and have to be coerced into a `data.frame` before they can be displayed; the `bind_cols()` function from the `r BiocStyle::CRANpkg("dplyr")` package is used below.
 
 ```{r, message = FALSE}
 ancombcTable <-
