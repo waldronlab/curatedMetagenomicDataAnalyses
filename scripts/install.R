@@ -9,5 +9,5 @@ IRkernel::installspec(user = FALSE);
 
 # Install dependencies for curatedMetagenomicAnalyses
 BiocManager::install("waldronlab/curatedMetagenomicAnalyses", dependencies = TRUE)
-BiocManager::install("waldronlab/curatedMetagenomicDataCLI", dependencies = TRUE)
-curatedMetagenomicDataCLI::install()
+BiocManager::install("waldronlab/curatedMetagenomicDataTerminal", dependencies = TRUE)
+curatedMetagenomicDataTerminal::install()
