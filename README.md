@@ -33,6 +33,7 @@ Visit `localhost` in your browser.
 * [Exploration of the liver cirrhosis dataset](vignettes/explorecirrhosis.Rmd)
 * [Meta-analysis of age-related microbial species using cMD3](vignettes/Age_metaanalysis_vignette.Rmd)
 * [Meta-analysis of sex-related microbial species using cMD3](vignettes/Sex_metaanalysis_vignette.Rmd)
+* [NUI Galway Metagenomics Workshop](vignettes/NUI-Galway-Metagenomics-Workshop.Rmd)
 
 ### Python Notebooks
 
