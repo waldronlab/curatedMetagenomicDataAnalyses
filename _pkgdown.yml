@@ -24,7 +24,7 @@ navbar:
           href: articles/NUI-Galway-Metagenomics-Workshop.html
         - text: Python Notebooks
         - text: Sex-related differences in the human microbiome using cMD3 and Python3
-          href: https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/curatedMetagenomicData%203%20CLI%20interface%2C%20sex-contrast%20microbiome%20meta-analysis.ipynb 
+          href: https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/sexContrastMicrobiomeAnalysis.ipynb
         - text: Supplementary Materials 
         - text: Installing Python dependencies in Linux (Python Notebook)
           href: https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/installation.ipynb
