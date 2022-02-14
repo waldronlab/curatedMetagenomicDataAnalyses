@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/index.html</loc>
+    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/404.html</loc>
   </url>
   <url>
-    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/reference/dataDump.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/reference/filter_sort.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/reference/makeSEforCondition.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/reference/runMetaanalysis_categorical.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/reference/runMetaanalysis_quantitative.html</loc>
+    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/LICENSE.html</loc>
   </url>
   <url>
     <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/articles/Age_metaanalysis_vignette.html</loc>
@@ -32,5 +20,32 @@
   </url>
   <url>
     <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/articles/explorecirrhosis.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/authors.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/index.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/reference/dataDump.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/reference/filter_sort.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/reference/makeSEforCondition.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/reference/runMetaanalysis_categorical.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/waldronlab/curatedMetagenomicAnalyses/reference/runMetaanalysis_quantitative.html</loc>
   </url>
 </urlset>

@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">curatedMetagenomicAnalyses</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -96,26 +98,26 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="curated-metagenomic-analyses" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#curated-metagenomic-analyses" class="anchor"></a>Curated Metagenomic Analyses</h1></div>
-<p>This repository provides biologically relevant analyses using the <a href="https://bioconductor.org/packages/curatedMetagenomicData/">curatedMetagenomicData</a> package, both using R/Bioconductor and using Python. You can run both R and Python analyses locally in the provided Docker container, or on the Cloud for free.</p>
-<div id="running-on-the-cloud-for-free" class="section level2">
-<h2 class="hasAnchor">
-<a href="#running-on-the-cloud-for-free" class="anchor"></a>Running on the Cloud for free</h2>
-<p>A machine with all dependencies, code from this repository, and Jupyterlab (with R and Python3) and RStudio running is available at <a href="http://app.orchestra.cancerdatasci.org/" class="uri">http://app.orchestra.cancerdatasci.org/</a> (search for the Curated Metagenomic Analyses workshop). You can use these machines for up to 8 hours at a time.</p>
+<div class="section level1">
+<div class="page-header"><h1 id="curated-metagenomic-analyses">Curated Metagenomic Analyses<a class="anchor" aria-label="anchor" href="#curated-metagenomic-analyses"></a>
+</h1></div>
+<p>This repository provides biologically relevant analyses using the <a href="https://bioconductor.org/packages/curatedMetagenomicData/" class="external-link">curatedMetagenomicData</a> package, both using R/Bioconductor and using Python. You can run both R and Python analyses locally in the provided Docker container, or on the Cloud for free.</p>
+<div class="section level2">
+<h2 id="running-on-the-cloud-for-free">Running on the Cloud for free<a class="anchor" aria-label="anchor" href="#running-on-the-cloud-for-free"></a>
+</h2>
+<p>A machine with all dependencies, code from this repository, and Jupyterlab (with R and Python3) and RStudio running is available at <a href="http://app.orchestra.cancerdatasci.org/" class="external-link uri">http://app.orchestra.cancerdatasci.org/</a> (search for the Curated Metagenomic Analyses workshop). You can use these machines for up to 8 hours at a time.</p>
 </div>
-<div id="running-locally-using-docker" class="section level2">
-<h2 class="hasAnchor">
-<a href="#running-locally-using-docker" class="anchor"></a>Running locally using Docker</h2>
-<div id="requirements" class="section level3">
-<h3 class="hasAnchor">
-<a href="#requirements" class="anchor"></a>Requirements</h3>
-<p>You need <a href="https://docs.docker.com/get-docker/">Docker</a>.</p>
+<div class="section level2">
+<h2 id="running-locally-using-docker">Running locally using Docker<a class="anchor" aria-label="anchor" href="#running-locally-using-docker"></a>
+</h2>
+<div class="section level3">
+<h3 id="requirements">Requirements<a class="anchor" aria-label="anchor" href="#requirements"></a>
+</h3>
+<p>You need <a href="https://docs.docker.com/get-docker/" class="external-link">Docker</a>.</p>
 </div>
-<div id="getting-started" class="section level3">
-<h3 class="hasAnchor">
-<a href="#getting-started" class="anchor"></a>Getting Started</h3>
+<div class="section level3">
+<h3 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h3>
 <p>First build the image:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>docker build <span class="sc">-</span>t <span class="st">"waldronlab/curatedmetagenomicanalyses"</span> .</span></code></pre></div>
 <p>Then run a container based on the image with your password:</p>
@@ -124,12 +126,12 @@
 <p>Visit <code>localhost</code> in your browser.</p>
 </div>
 </div>
-<div id="analyses" class="section level2">
-<h2 class="hasAnchor">
-<a href="#analyses" class="anchor"></a>Analyses</h2>
-<div id="r-vignettes" class="section level3">
-<h3 class="hasAnchor">
-<a href="#r-vignettes" class="anchor"></a>R Vignettes</h3>
+<div class="section level2">
+<h2 id="analyses">Analyses<a class="anchor" aria-label="anchor" href="#analyses"></a>
+</h2>
+<div class="section level3">
+<h3 id="r-vignettes">R Vignettes<a class="anchor" aria-label="anchor" href="#r-vignettes"></a>
+</h3>
 <ul>
 <li><a href="vignettes/MLdatasets.Rmd">Create datasets for machine learning</a></li>
 <li><a href="vignettes/explorecirrhosis.Rmd">Exploration of the liver cirrhosis dataset</a></li>
@@ -138,16 +140,16 @@
 <li><a href="vignettes/NUI-Galway-Metagenomics-Workshop.Rmd">NUI Galway Metagenomics Workshop</a></li>
 </ul>
 </div>
-<div id="python-notebooks" class="section level3">
-<h3 class="hasAnchor">
-<a href="#python-notebooks" class="anchor"></a>Python Notebooks</h3>
+<div class="section level3">
+<h3 id="python-notebooks">Python Notebooks<a class="anchor" aria-label="anchor" href="#python-notebooks"></a>
+</h3>
 <ul>
 <li><a href="vignettes/sexContrastMicrobiomeAnalysis.ipynb">Sex-related differences in the human microbiome using cMD3 and Python3</a></li>
 </ul>
 </div>
-<div id="supplementary-materials" class="section level3">
-<h3 class="hasAnchor">
-<a href="#supplementary-materials" class="anchor"></a>Supplementary Materials</h3>
+<div class="section level3">
+<h3 id="supplementary-materials">Supplementary Materials<a class="anchor" aria-label="anchor" href="#supplementary-materials"></a>
+</h3>
 <ul>
 <li>
 <a href="vignettes/installation.ipynb">Installing Python dependencies in Linux</a> (Python notebook)</li>
@@ -159,27 +161,30 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/">https://​github.com/​waldronlab/​curatedMetagenomicAnalyses/​</a>
-</li>
+<li><a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/">Browse source code</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a></small></li>
+<li><small><a href="https://creativecommons.org/licenses/by/4.0" class="external-link">CC BY 4.0</a></small></li>
 </ul>
 </div>
+
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing curatedMetagenomicAnalyses</a></li>
+<li><a href="authors.html#citation">Citing curatedMetagenomicAnalyses</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Levi Waldron <br><small class="roles"> Author </small>  </li>
 <li>Paolo Manghi <br><small class="roles"> Author </small>  </li>
@@ -189,16 +194,20 @@
 </ul>
 </div>
 
+
+
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
+  <p></p>
+<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -206,6 +215,8 @@
 
   
 
+
+  
 
   </body>
 </html>

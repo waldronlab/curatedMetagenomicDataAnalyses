@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">curatedMetagenomicAnalyses</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -94,18 +96,18 @@
 
       
 
-      </header><script src="MLdatasets_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Create datasets for machine learning</h1>
-                        <h4 class="author">Levi Waldron</h4>
+                        <h4 data-toc-skip class="author">Levi Waldron</h4>
             <address class="author_afil">
       CUNY Graduate School of Public Health and Health Policy<br><a class="author_email" href="mailto:#"></a><a href="mailto:levi.waldron@sph.cuny.edu" class="email">levi.waldron@sph.cuny.edu</a>
       </address>
                   
-            <h4 class="date">26 October 2021</h4>
+            <h4 data-toc-skip class="date">14 February 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/master/vignettes/MLdatasets.Rmd"><code>vignettes/MLdatasets.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/HEAD/vignettes/MLdatasets.Rmd"><code>vignettes/MLdatasets.Rmd</code></a></small>
       <div class="hidden name"><code>MLdatasets.Rmd</code></div>
 
     </div>
@@ -118,247 +120,247 @@
 <li>A <code>.csv.gz</code> file containing only key sample metadata, and taxonomic data (variables in columns)</li>
 </ol>
 <p>See <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/MLdatasets.Rmd">source file on GitHub</a></p>
-<p>Do <code><a href="https://rdrr.io/pkg/BiocManager/man/install.html">BiocManager::install("waldronlab/curatedMetagenomicAnalyses")</a></code> to install the <code>makeSEforCondition</code> function and to run this vignette.</p>
+<p>Do <code>BiocManager::install("waldronlab/curatedMetagenomicAnalyses")</code> to install the <code>makeSEforCondition</code> function and to run this vignette.</p>
 <p>Packages used here:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicData">curatedMetagenomicData</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicAnalyses">curatedMetagenomicAnalyses</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></code></pre></div>
-<div id="investigate-potential-response-variables" class="section level1">
-<h1 class="hasAnchor">
-<a href="#investigate-potential-response-variables" class="anchor"></a>Investigate potential response variables</h1>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicAnalyses">curatedMetagenomicAnalyses</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="investigate-potential-response-variables">Investigate potential response variables<a class="anchor" aria-label="anchor" href="#investigate-potential-response-variables"></a>
+</h2>
 <p>These are the 10 study conditions most commonly found in curatedMetagenomicData:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"sampleMetadata"</span><span class="op">)</span>
-<span class="va">availablediseases</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">sampleMetadata</span>, <span class="va">study_condition</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"sampleMetadata"</span><span class="op">)</span>
+<span class="va">availablediseases</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">sampleMetadata</span>, <span class="va">study_condition</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">availablediseases</span></code></pre></div>
-<pre><code>## .
-##                   control                       IBD                       CRC 
-##                     14446                      2086                       702 
-##            premature_born                       T2D                       IGT 
-##                       448                       332                       288 
-##                      ACVD                   adenoma                 cirrhosis 
-##                       214                       209                       132 
-##                       STH                    otitis              schizofrenia 
-##                       108                       107                       106 
-##              hypertension                        AS                       T1D 
-##                        99                        97                        89 
-##                  melanoma           acute_diarrhoea          pre-hypertension 
-##                        64                        56                        56 
-##                    ME/CFS                  migraine                      STEC 
-##                        50                        49                        42 
-##               fatty_liver                 psoriasis carcinoma_surgery_history 
-##                        41                        41                        40 
-##                       FMT                        AD            cephalosporins 
-##                        40                        38                        36 
-##                       CDI                    asthma             periodontitis 
-##                        33                        24                        24 
-##                       SRP          peri-implantitis                        BD 
-##                        24                        23                        20 
-##                 mucositis                bronchitis            respiratoryinf 
-##                        20                        18                        13 
-##        metabolic_syndrome            pyelonephritis infectiousgastroenteritis 
-##                        10                         6                         5 
-##                     fever                 pneumonia               tonsillitis 
-##                         3                         3                         3 
-##                     cough             pyelonefritis                   skininf 
-##                         2                         2                         2 
-##                stomatitis                  cystitis                        NK 
-##                         2                         1                         1 
-##             salmonellosis                    sepsis                   suspinf 
-##                         1                         1                         1</code></pre>
+<pre><code><span class="co">## .</span>
+<span class="co">##                   control                       IBD                       CRC </span>
+<span class="co">##                     14446                      2086                       702 </span>
+<span class="co">##            premature_born                       T2D                       IGT </span>
+<span class="co">##                       448                       332                       288 </span>
+<span class="co">##                      ACVD                   adenoma                 cirrhosis </span>
+<span class="co">##                       214                       209                       132 </span>
+<span class="co">##                       STH                    otitis              schizofrenia </span>
+<span class="co">##                       108                       107                       106 </span>
+<span class="co">##              hypertension                        AS                       T1D </span>
+<span class="co">##                        99                        97                        89 </span>
+<span class="co">##                  melanoma           acute_diarrhoea          pre-hypertension </span>
+<span class="co">##                        64                        56                        56 </span>
+<span class="co">##                    ME/CFS                  migraine                      STEC </span>
+<span class="co">##                        50                        49                        42 </span>
+<span class="co">##               fatty_liver                 psoriasis carcinoma_surgery_history </span>
+<span class="co">##                        41                        41                        40 </span>
+<span class="co">##                       FMT                        AD            cephalosporins </span>
+<span class="co">##                        40                        38                        36 </span>
+<span class="co">##                       CDI                    asthma             periodontitis </span>
+<span class="co">##                        33                        24                        24 </span>
+<span class="co">##                       SRP          peri-implantitis                        BD </span>
+<span class="co">##                        24                        23                        20 </span>
+<span class="co">##                 mucositis                bronchitis            respiratoryinf </span>
+<span class="co">##                        20                        18                        13 </span>
+<span class="co">##        metabolic_syndrome            pyelonephritis infectiousgastroenteritis </span>
+<span class="co">##                        10                         6                         5 </span>
+<span class="co">##                     fever                 pneumonia               tonsillitis </span>
+<span class="co">##                         3                         3                         3 </span>
+<span class="co">##                     cough             pyelonefritis                   skininf </span>
+<span class="co">##                         2                         2                         2 </span>
+<span class="co">##                stomatitis                  cystitis                        NK </span>
+<span class="co">##                         2                         1                         1 </span>
+<span class="co">##             salmonellosis                    sepsis                   suspinf </span>
+<span class="co">##                         1                         1                         1</span></code></pre>
 <p>And the number of studies they are found in:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">availablediseases</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sampleMetadata</span>, <span class="va">study_condition</span> <span class="op">%in%</span> <span class="va">x</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">study_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">availablediseases</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sampleMetadata</span>, <span class="va">study_condition</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">study_name</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">availablediseases</span><span class="op">)</span>
-<span class="va">studies</span> <span class="op">&lt;-</span> <span class="va">studies</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"control"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="co">#get rid of controls</span>
-<span class="va">studies</span> <span class="op">&lt;-</span> <span class="va">studies</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">studies</span>, <span class="va">length</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">]</span> <span class="co">#available in more than one study</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">availablediseases</span><span class="op">)</span>
+<span class="va">studies</span> <span class="op">&lt;-</span> <span class="va">studies</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"control"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="co">#get rid of controls</span>
+<span class="va">studies</span> <span class="op">&lt;-</span> <span class="va">studies</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">studies</span>, <span class="va">length</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">]</span> <span class="co">#available in more than one study</span>
 <span class="va">studies</span></code></pre></div>
-<pre><code>## $IBD
-## [1] "HallAB_2017"     "HMP_2019_ibdmdb" "IjazUZ_2017"     "LiJ_2014"       
-## [5] "NielsenHB_2014"  "VilaAV_2018"    
-## 
-## $CRC
-##  [1] "FengQ_2015"      "GuptaA_2019"     "HanniganGD_2017" "ThomasAM_2018a" 
-##  [5] "ThomasAM_2018b"  "ThomasAM_2019_c" "VogtmannE_2016"  "WirbelJ_2018"   
-##  [9] "YachidaS_2019"   "YuJ_2015"        "ZellerG_2014"   
-## 
-## $premature_born
-## [1] "BrooksB_2017" "OlmMR_2017"  
-## 
-## $T2D
-## [1] "HMP_2019_t2d"           "KarlssonFH_2013"        "LiJ_2014"              
-## [4] "QinJ_2012"              "SankaranarayananK_2015"
-## 
-## $IGT
-## [1] "HMP_2019_t2d"    "KarlssonFH_2013"
-## 
-## $adenoma
-## [1] "FengQ_2015"      "HanniganGD_2017" "ThomasAM_2018a"  "YachidaS_2019"  
-## [5] "ZellerG_2014"   
-## 
-## $cirrhosis
-## [1] "LoombaR_2017" "QinN_2014"   
-## 
-## $STH
-## [1] "RosaBA_2018"  "RubelMA_2020"
-## 
-## $schizofrenia
-## [1] "Castro-NallarE_2015" "ZhuF_2020"          
-## 
-## $T1D
-## [1] "Heitz-BuschartA_2016" "KosticAD_2015"        "LiJ_2014"            
-## 
-## $melanoma
-## [1] "GopalakrishnanV_2018" "MatsonV_2018"        
-## 
-## $acute_diarrhoea
-## [1] "DavidLA_2015" "KieserS_2018"</code></pre>
+<pre><code><span class="co">## $IBD</span>
+<span class="co">## [1] "HallAB_2017"     "HMP_2019_ibdmdb" "IjazUZ_2017"     "LiJ_2014"       </span>
+<span class="co">## [5] "NielsenHB_2014"  "VilaAV_2018"    </span>
+<span class="co">## </span>
+<span class="co">## $CRC</span>
+<span class="co">##  [1] "FengQ_2015"      "GuptaA_2019"     "HanniganGD_2017" "ThomasAM_2018a" </span>
+<span class="co">##  [5] "ThomasAM_2018b"  "ThomasAM_2019_c" "VogtmannE_2016"  "WirbelJ_2018"   </span>
+<span class="co">##  [9] "YachidaS_2019"   "YuJ_2015"        "ZellerG_2014"   </span>
+<span class="co">## </span>
+<span class="co">## $premature_born</span>
+<span class="co">## [1] "BrooksB_2017" "OlmMR_2017"  </span>
+<span class="co">## </span>
+<span class="co">## $T2D</span>
+<span class="co">## [1] "HMP_2019_t2d"           "KarlssonFH_2013"        "LiJ_2014"              </span>
+<span class="co">## [4] "QinJ_2012"              "SankaranarayananK_2015"</span>
+<span class="co">## </span>
+<span class="co">## $IGT</span>
+<span class="co">## [1] "HMP_2019_t2d"    "KarlssonFH_2013"</span>
+<span class="co">## </span>
+<span class="co">## $adenoma</span>
+<span class="co">## [1] "FengQ_2015"      "HanniganGD_2017" "ThomasAM_2018a"  "YachidaS_2019"  </span>
+<span class="co">## [5] "ZellerG_2014"   </span>
+<span class="co">## </span>
+<span class="co">## $cirrhosis</span>
+<span class="co">## [1] "LoombaR_2017" "QinN_2014"   </span>
+<span class="co">## </span>
+<span class="co">## $STH</span>
+<span class="co">## [1] "RosaBA_2018"  "RubelMA_2020"</span>
+<span class="co">## </span>
+<span class="co">## $schizofrenia</span>
+<span class="co">## [1] "Castro-NallarE_2015" "ZhuF_2020"          </span>
+<span class="co">## </span>
+<span class="co">## $T1D</span>
+<span class="co">## [1] "Heitz-BuschartA_2016" "KosticAD_2015"        "LiJ_2014"            </span>
+<span class="co">## </span>
+<span class="co">## $melanoma</span>
+<span class="co">## [1] "GopalakrishnanV_2018" "MatsonV_2018"        </span>
+<span class="co">## </span>
+<span class="co">## $acute_diarrhoea</span>
+<span class="co">## [1] "DavidLA_2015" "KieserS_2018"</span></code></pre>
 <p>Each of these datasets has six data types associated with it; for example:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html">curatedMetagenomicData</a></span><span class="op">(</span><span class="st">"JieZ_2017.+"</span><span class="op">)</span></code></pre></div>
-<pre><code>## 2021-03-31.JieZ_2017.gene_families
-## 2021-03-31.JieZ_2017.marker_abundance
-## 2021-03-31.JieZ_2017.marker_presence
-## 2021-03-31.JieZ_2017.pathway_abundance
-## 2021-03-31.JieZ_2017.pathway_coverage
-## 2021-03-31.JieZ_2017.relative_abundance</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData</a></span><span class="op">(</span><span class="st">"JieZ_2017.+"</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## 2021-03-31.JieZ_2017.gene_families</span>
+<span class="co">## 2021-03-31.JieZ_2017.marker_abundance</span>
+<span class="co">## 2021-03-31.JieZ_2017.marker_presence</span>
+<span class="co">## 2021-03-31.JieZ_2017.pathway_abundance</span>
+<span class="co">## 2021-03-31.JieZ_2017.pathway_coverage</span>
+<span class="co">## 2021-03-31.JieZ_2017.relative_abundance</span></code></pre>
 </div>
-<div id="write-relative-abundance-datasets-to-disk" class="section level1">
-<h1 class="hasAnchor">
-<a href="#write-relative-abundance-datasets-to-disk" class="anchor"></a>Write relative abundance datasets to disk</h1>
+<div class="section level2">
+<h2 id="write-relative-abundance-datasets-to-disk">Write relative abundance datasets to disk<a class="anchor" aria-label="anchor" href="#write-relative-abundance-datasets-to-disk"></a>
+</h2>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-  <span class="va">cond</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
+<code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+  <span class="va">cond</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
   <span class="va">se</span> <span class="op">&lt;-</span>
     <span class="fu">curatedMetagenomicAnalyses</span><span class="fu">::</span><span class="fu"><a href="../reference/makeSEforCondition.html">makeSEforCondition</a></span><span class="op">(</span><span class="va">cond</span>, removestudies <span class="op">=</span> <span class="st">"HMP_2019_ibdmdb"</span>, dataType <span class="op">=</span> <span class="st">"relative_abundance"</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Next study condition:"</span>, <span class="va">cond</span>, <span class="st">" /// Body site: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">body_site</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">study_name</span>, <span class="va">study_condition</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\n \n"</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">se</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">cond</span>, <span class="st">".rda"</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">flattext</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"study_name"</span>, <span class="st">"study_condition"</span>, <span class="st">"subject_id"</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">flattext</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">sample_id</span>
-  <span class="va">flattext</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">flattext</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">flattext</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">cond</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"gzip "</span>, <span class="va">cond</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Next study condition:"</span>, <span class="va">cond</span>, <span class="st">" /// Body site: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">body_site</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">study_name</span>, <span class="va">study_condition</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\n \n"</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">se</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">cond</span>, <span class="st">".rda"</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">flattext</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"study_name"</span>, <span class="st">"study_condition"</span>, <span class="st">"subject_id"</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">flattext</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">sample_id</span>
+  <span class="va">flattext</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">flattext</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">flattext</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">cond</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/system.html" class="external-link">system</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gzip "</span>, <span class="va">cond</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
-<pre><code>## [1] "Next study condition: IBD  /// Body site:  stool"
-##                 study_condition
-## study_name       control IBD
-##   HallAB_2017         74 185
-##   IjazUZ_2017         38  56
-##   LiJ_2014            10 140
-##   NielsenHB_2014     248 148
-##   VilaAV_2018          0 355
-## 
-##  
-## [1] "Next study condition: CRC  /// Body site:  stool"
-##                  study_condition
-## study_name        control CRC
-##   FengQ_2015           61  46
-##   GuptaA_2019          30  30
-##   HanniganGD_2017      28  27
-##   ThomasAM_2018a       24  29
-##   ThomasAM_2018b       28  32
-##   ThomasAM_2019_c      40  40
-##   VogtmannE_2016       52  52
-##   WirbelJ_2018         65  60
-##   YachidaS_2019       251 258
-##   YuJ_2015             53  75
-##   ZellerG_2014         61  53
-## 
-##  
-## [1] "Next study condition: premature_born  /// Body site:  stool"     
-## [2] "Next study condition: premature_born  /// Body site:  oralcavity"
-## [3] "Next study condition: premature_born  /// Body site:  skin"      
-##               study_condition
-## study_name     control premature_born
-##   BrooksB_2017       5            403
-##   OlmMR_2017         0             45
-## 
-##  
-## [1] "Next study condition: T2D  /// Body site:  stool"
-##                         study_condition
-## study_name               control T2D
-##   HMP_2019_t2d                46  11
-##   KarlssonFH_2013             43  53
-##   LiJ_2014                    10  79
-##   QinJ_2012                  174 170
-##   SankaranarayananK_2015      18  19
-## 
-##  
-## [1] "Next study condition: IGT  /// Body site:  stool"
-##                  study_condition
-## study_name        control IGT
-##   HMP_2019_t2d         46 239
-##   KarlssonFH_2013      43  49
-## 
-##  
-## [1] "Next study condition: adenoma  /// Body site:  stool"
-##                  study_condition
-## study_name        adenoma control
-##   FengQ_2015           47      61
-##   HanniganGD_2017      26      28
-##   ThomasAM_2018a       27      24
-##   YachidaS_2019        67     251
-##   ZellerG_2014         42      61
-## 
-##  
-## [1] "Next study condition: cirrhosis  /// Body site:  stool"
-##               study_condition
-## study_name     cirrhosis control
-##   LoombaR_2017         9      36
-##   QinN_2014          123     114
-## 
-##  
-## [1] "Next study condition: STH  /// Body site:  stool"
-##               study_condition
-## study_name     control STH
-##   RosaBA_2018        5  19
-##   RubelMA_2020      86  89
-## 
-##  
-## [1] "Next study condition: schizofrenia  /// Body site:  oralcavity"
-## [2] "Next study condition: schizofrenia  /// Body site:  stool"     
-##                      study_condition
-## study_name            control schizofrenia
-##   Castro-NallarE_2015      16           16
-##   ZhuF_2020                81           90
-## 
-##  
-## [1] "Next study condition: T1D  /// Body site:  stool"
-##                       study_condition
-## study_name             control T1D
-##   Heitz-BuschartA_2016      26  27
-##   KosticAD_2015             89  31
-##   LiJ_2014                  10  31
-## 
-##  
-## [1] "Next study condition: melanoma  /// Body site:  stool"
-##                       study_condition
-## study_name             melanoma
-##   GopalakrishnanV_2018       25
-##   MatsonV_2018               39
-## 
-##  
-## [1] "Next study condition: acute_diarrhoea  /// Body site:  stool"
-##               study_condition
-## study_name     acute_diarrhoea control
-##   DavidLA_2015              38       9
-##   KieserS_2018              18       9
-## 
-## </code></pre>
+<pre><code><span class="co">## [1] "Next study condition: IBD  /// Body site:  stool"</span>
+<span class="co">##                 study_condition</span>
+<span class="co">## study_name       control IBD</span>
+<span class="co">##   HallAB_2017         74 185</span>
+<span class="co">##   IjazUZ_2017         38  56</span>
+<span class="co">##   LiJ_2014            10 140</span>
+<span class="co">##   NielsenHB_2014     248 148</span>
+<span class="co">##   VilaAV_2018          0 355</span>
+<span class="co">## </span>
+<span class="co">##  </span>
+<span class="co">## [1] "Next study condition: CRC  /// Body site:  stool"</span>
+<span class="co">##                  study_condition</span>
+<span class="co">## study_name        control CRC</span>
+<span class="co">##   FengQ_2015           61  46</span>
+<span class="co">##   GuptaA_2019          30  30</span>
+<span class="co">##   HanniganGD_2017      28  27</span>
+<span class="co">##   ThomasAM_2018a       24  29</span>
+<span class="co">##   ThomasAM_2018b       28  32</span>
+<span class="co">##   ThomasAM_2019_c      40  40</span>
+<span class="co">##   VogtmannE_2016       52  52</span>
+<span class="co">##   WirbelJ_2018         65  60</span>
+<span class="co">##   YachidaS_2019       251 258</span>
+<span class="co">##   YuJ_2015             53  75</span>
+<span class="co">##   ZellerG_2014         61  53</span>
+<span class="co">## </span>
+<span class="co">##  </span>
+<span class="co">## [1] "Next study condition: premature_born  /// Body site:  stool"     </span>
+<span class="co">## [2] "Next study condition: premature_born  /// Body site:  oralcavity"</span>
+<span class="co">## [3] "Next study condition: premature_born  /// Body site:  skin"      </span>
+<span class="co">##               study_condition</span>
+<span class="co">## study_name     control premature_born</span>
+<span class="co">##   BrooksB_2017       5            403</span>
+<span class="co">##   OlmMR_2017         0             45</span>
+<span class="co">## </span>
+<span class="co">##  </span>
+<span class="co">## [1] "Next study condition: T2D  /// Body site:  stool"</span>
+<span class="co">##                         study_condition</span>
+<span class="co">## study_name               control T2D</span>
+<span class="co">##   HMP_2019_t2d                46  11</span>
+<span class="co">##   KarlssonFH_2013             43  53</span>
+<span class="co">##   LiJ_2014                    10  79</span>
+<span class="co">##   QinJ_2012                  174 170</span>
+<span class="co">##   SankaranarayananK_2015      18  19</span>
+<span class="co">## </span>
+<span class="co">##  </span>
+<span class="co">## [1] "Next study condition: IGT  /// Body site:  stool"</span>
+<span class="co">##                  study_condition</span>
+<span class="co">## study_name        control IGT</span>
+<span class="co">##   HMP_2019_t2d         46 239</span>
+<span class="co">##   KarlssonFH_2013      43  49</span>
+<span class="co">## </span>
+<span class="co">##  </span>
+<span class="co">## [1] "Next study condition: adenoma  /// Body site:  stool"</span>
+<span class="co">##                  study_condition</span>
+<span class="co">## study_name        adenoma control</span>
+<span class="co">##   FengQ_2015           47      61</span>
+<span class="co">##   HanniganGD_2017      26      28</span>
+<span class="co">##   ThomasAM_2018a       27      24</span>
+<span class="co">##   YachidaS_2019        67     251</span>
+<span class="co">##   ZellerG_2014         42      61</span>
+<span class="co">## </span>
+<span class="co">##  </span>
+<span class="co">## [1] "Next study condition: cirrhosis  /// Body site:  stool"</span>
+<span class="co">##               study_condition</span>
+<span class="co">## study_name     cirrhosis control</span>
+<span class="co">##   LoombaR_2017         9      36</span>
+<span class="co">##   QinN_2014          123     114</span>
+<span class="co">## </span>
+<span class="co">##  </span>
+<span class="co">## [1] "Next study condition: STH  /// Body site:  stool"</span>
+<span class="co">##               study_condition</span>
+<span class="co">## study_name     control STH</span>
+<span class="co">##   RosaBA_2018        5  19</span>
+<span class="co">##   RubelMA_2020      86  89</span>
+<span class="co">## </span>
+<span class="co">##  </span>
+<span class="co">## [1] "Next study condition: schizofrenia  /// Body site:  oralcavity"</span>
+<span class="co">## [2] "Next study condition: schizofrenia  /// Body site:  stool"     </span>
+<span class="co">##                      study_condition</span>
+<span class="co">## study_name            control schizofrenia</span>
+<span class="co">##   Castro-NallarE_2015      16           16</span>
+<span class="co">##   ZhuF_2020                81           90</span>
+<span class="co">## </span>
+<span class="co">##  </span>
+<span class="co">## [1] "Next study condition: T1D  /// Body site:  stool"</span>
+<span class="co">##                       study_condition</span>
+<span class="co">## study_name             control T1D</span>
+<span class="co">##   Heitz-BuschartA_2016      26  27</span>
+<span class="co">##   KosticAD_2015             89  31</span>
+<span class="co">##   LiJ_2014                  10  31</span>
+<span class="co">## </span>
+<span class="co">##  </span>
+<span class="co">## [1] "Next study condition: melanoma  /// Body site:  stool"</span>
+<span class="co">##                       study_condition</span>
+<span class="co">## study_name             melanoma</span>
+<span class="co">##   GopalakrishnanV_2018       25</span>
+<span class="co">##   MatsonV_2018               39</span>
+<span class="co">## </span>
+<span class="co">##  </span>
+<span class="co">## [1] "Next study condition: acute_diarrhoea  /// Body site:  stool"</span>
+<span class="co">##               study_condition</span>
+<span class="co">## study_name     acute_diarrhoea control</span>
+<span class="co">##   DavidLA_2015              38       9</span>
+<span class="co">##   KieserS_2018              18       9</span>
+<span class="co">## </span>
+<span class="co">## </span></code></pre>
 </div>
-<div id="direct-link-to-files" class="section level1">
-<h1 class="hasAnchor">
-<a href="#direct-link-to-files" class="anchor"></a>Direct link to files</h1>
-<p>Download the .csv and .rda files directly from <a href="https://www.dropbox.com/sh/0t0nbhj9eqm3wkq/AACZIw42WA-uHjzo97bG5tE6a?dl=0" class="uri">https://www.dropbox.com/sh/0t0nbhj9eqm3wkq/AACZIw42WA-uHjzo97bG5tE6a?dl=0</a></p>
+<div class="section level2">
+<h2 id="direct-link-to-files">Direct link to files<a class="anchor" aria-label="anchor" href="#direct-link-to-files"></a>
+</h2>
+<p>Download the .csv and .rda files directly from <a href="https://www.dropbox.com/sh/0t0nbhj9eqm3wkq/AACZIw42WA-uHjzo97bG5tE6a?dl=0" class="external-link uri">https://www.dropbox.com/sh/0t0nbhj9eqm3wkq/AACZIw42WA-uHjzo97bG5tE6a?dl=0</a></p>
 </div>
   </div>
 
@@ -373,11 +375,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
+  <p></p>
+<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -385,6 +389,8 @@
 
   
 
+
+  
 
   </body>
 </html>

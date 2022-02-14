@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">curatedMetagenomicAnalyses</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -94,23 +96,23 @@
 
       
 
-      </header><script src="Age_metaanalysis_vignette_files/header-attrs-2.11/header-attrs.js"></script><script src="Age_metaanalysis_vignette_files/kePrint-0.0.1/kePrint.js"></script><link href="Age_metaanalysis_vignette_files/lightable-0.0.1/lightable.css" rel="stylesheet">
+      </header><script src="Age_metaanalysis_vignette_files/kePrint-0.0.1/kePrint.js"></script><link href="Age_metaanalysis_vignette_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Meta-analysis of age-related microbial species using cMD3.0</h1>
-                        <h4 class="author">Davide Golzato</h4>
+                        <h4 data-toc-skip class="author">Davide Golzato</h4>
             <address class="author_afil">
       Università degli Studi di Trento<br><a class="author_email" href="mailto:#"></a><a href="mailto:davide.golzato@unitn.it" class="email">davide.golzato@unitn.it</a>
       </address>
-                              <h4 class="author">Paolo Manghi</h4>
+                              <h4 data-toc-skip class="author">Paolo Manghi</h4>
             <address class="author_afil">
       Università degli Studi di Trento<br><a class="author_email" href="mailto:#"></a><a href="mailto:paolo.manghi@unitn.it" class="email">paolo.manghi@unitn.it</a>
       </address>
                   
-            <h4 class="date">26 October 2021</h4>
+            <h4 data-toc-skip class="date">14 February 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/master/vignettes/Age_metaanalysis_vignette.Rmd"><code>vignettes/Age_metaanalysis_vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/HEAD/vignettes/Age_metaanalysis_vignette.Rmd"><code>vignettes/Age_metaanalysis_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>Age_metaanalysis_vignette.Rmd</code></div>
 
     </div>
@@ -127,82 +129,82 @@ pre code {
   max-width: 1000px
 }
 </style>
-<div id="meta-analysis-of-age-related-microbial-species-using-data-from-curatedmetagenomicdata" class="section level1">
-<h1 class="hasAnchor">
-<a href="#meta-analysis-of-age-related-microbial-species-using-data-from-curatedmetagenomicdata" class="anchor"></a>Meta-analysis of age-related microbial species using data from curatedMetagenomicData</h1>
+<div class="section level2">
+<h2 id="meta-analysis-of-age-related-microbial-species-using-data-from-curatedmetagenomicdata">Meta-analysis of age-related microbial species using data from curatedMetagenomicData<a class="anchor" aria-label="anchor" href="#meta-analysis-of-age-related-microbial-species-using-data-from-curatedmetagenomicdata"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicData">curatedMetagenomicData</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/SummarizedExperiment">SummarizedExperiment</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TreeSummarizedExperiment</span><span class="op">)</span></code></pre></div>
-<div id="retrieval-of-datasets-from-the-cmd3-meeting-a-series-of-requirements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#retrieval-of-datasets-from-the-cmd3-meeting-a-series-of-requirements" class="anchor"></a>Retrieval of datasets from the cMD3 meeting a series of requirements</h2>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/SummarizedExperiment" class="external-link">SummarizedExperiment</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TreeSummarizedExperiment</span><span class="op">)</span></code></pre></div>
+<div class="section level3">
+<h3 id="retrieval-of-datasets-from-the-cmd3-meeting-a-series-of-requirements">Retrieval of datasets from the cMD3 meeting a series of requirements<a class="anchor" aria-label="anchor" href="#retrieval-of-datasets-from-the-cmd3-meeting-a-series-of-requirements"></a>
+</h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Filter on Age, body_site, study_condition and remove samples missing BMI</span>
-  <span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu">curatedMetagenomicData</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/sampleMetadata.html">sampleMetadata</a></span>  <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&gt;=</span> <span class="fl">16</span> <span class="op">&amp;</span>
+  <span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu">curatedMetagenomicData</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/sampleMetadata.html" class="external-link">sampleMetadata</a></span>  <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&gt;=</span> <span class="fl">16</span> <span class="op">&amp;</span>
            <span class="va">body_site</span> <span class="op">==</span> <span class="st">"stool"</span> <span class="op">&amp;</span>
            <span class="va">study_condition</span> <span class="op">==</span> <span class="st">"control"</span> <span class="op">&amp;</span> 
-           <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">BMI</span><span class="op">)</span> <span class="op">!=</span> <span class="cn">TRUE</span> <span class="op">&amp;</span>
-           <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">!=</span> <span class="cn">TRUE</span> <span class="op">&amp;</span>
-           <span class="va">days_from_first_collection</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">NA</span><span class="op">)</span> <span class="op">&amp;</span>
+           <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">BMI</span><span class="op">)</span> <span class="op">!=</span> <span class="cn">TRUE</span> <span class="op">&amp;</span>
+           <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">!=</span> <span class="cn">TRUE</span> <span class="op">&amp;</span>
+           <span class="va">days_from_first_collection</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">NA</span><span class="op">)</span> <span class="op">&amp;</span>
            <span class="op">!</span><span class="va">study_name</span> <span class="op">==</span> <span class="st">"ThomasAM_2019_c"</span><span class="op">)</span>
  
-  <span class="va">metadata</span> <span class="op">&lt;-</span> <span class="va">metadata</span> <span class="op">%&gt;%</span> 
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">study_name</span>, <span class="va">subject_id</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu">row_number</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span>
+  <span class="va">metadata</span> <span class="op">&lt;-</span> <span class="va">metadata</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">study_name</span>, <span class="va">subject_id</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span>
   
   <span class="co">#Apply function to grouped selected dataset</span>
-  <span class="va">datasets_tokeep</span> <span class="op">&lt;-</span> <span class="va">metadata</span> <span class="op">%&gt;%</span>
-    <span class="fu">select</span><span class="op">(</span><span class="va">study_name</span>, <span class="va">gender</span>,<span class="va">BMI</span>, <span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">group_by</span><span class="op">(</span><span class="va">study_name</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-    <span class="fu">summarise</span><span class="op">(</span>N<span class="op">=</span><span class="fu">n</span><span class="op">(</span><span class="op">)</span>,age_IQR<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span>,bmi_IQR<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">BMI</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  
-    <span class="fu">mutate</span><span class="op">(</span>keep<span class="op">=</span><span class="op">(</span><span class="va">N</span> <span class="op">&gt;=</span> <span class="fl">40</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">(</span><span class="va">age_IQR</span> <span class="op">&gt;=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">keep</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span>
+  <span class="va">datasets_tokeep</span> <span class="op">&lt;-</span> <span class="va">metadata</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">study_name</span>, <span class="va">gender</span>,<span class="va">BMI</span>, <span class="va">age</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">study_name</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>N<span class="op">=</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>,age_IQR<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/IQR.html" class="external-link">IQR</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span>,bmi_IQR<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/IQR.html" class="external-link">IQR</a></span><span class="op">(</span><span class="va">BMI</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span>  
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>keep<span class="op">=</span><span class="op">(</span><span class="va">N</span> <span class="op">&gt;=</span> <span class="fl">40</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">(</span><span class="va">age_IQR</span> <span class="op">&gt;=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">keep</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span>
   
   <span class="va">datasets_tokeep</span> <span class="op">&lt;-</span> <span class="va">datasets_tokeep</span><span class="op">$</span><span class="va">study_name</span>
   
-  <span class="va">metadata</span> <span class="op">&lt;-</span> <span class="va">metadata</span> <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">study_name</span> <span class="op">%in%</span> <span class="va">datasets_tokeep</span><span class="op">)</span></code></pre></div>
+  <span class="va">metadata</span> <span class="op">&lt;-</span> <span class="va">metadata</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">datasets_tokeep</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="download-of-datasets-and-data-wrangling-to-structure-them-in-a-format-suitable-for-this-meta-analysis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#download-of-datasets-and-data-wrangling-to-structure-them-in-a-format-suitable-for-this-meta-analysis" class="anchor"></a>Download of datasets and data wrangling to structure them in a format suitable for this meta-analysis</h2>
+<div class="section level3">
+<h3 id="download-of-datasets-and-data-wrangling-to-structure-them-in-a-format-suitable-for-this-meta-analysis">Download of datasets and data wrangling to structure them in a format suitable for this meta-analysis<a class="anchor" aria-label="anchor" href="#download-of-datasets-and-data-wrangling-to-structure-them-in-a-format-suitable-for-this-meta-analysis"></a>
+</h3>
 <p>Now that we have filtered the metadata, we apply the cMD function “returnSamples()”. This function allows us to obtain a TreeSummarizedExperiment object, in which is stored the specified data-type (in this example: relative abundances of species) for the samples for which we have selected the metadata.</p>
 <p>Before proceeding, we further split the datasets by country: in this analysis, only the AsnicarF_2021 dataset encompasses samples from 2 countries, so we divide it into GBR- and USA-samples (by renaming these last: USA_asnicar_2021).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Retrieve queried samples</span>
-<span class="va">tse</span> <span class="op">&lt;-</span> <span class="fu">curatedMetagenomicData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/returnSamples.html">returnSamples</a></span><span class="op">(</span><span class="va">metadata</span>, dataType <span class="op">=</span> <span class="st">"relative_abundance"</span><span class="op">)</span>
+<span class="va">tse</span> <span class="op">&lt;-</span> <span class="fu">curatedMetagenomicData</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/returnSamples.html" class="external-link">returnSamples</a></span><span class="op">(</span><span class="va">metadata</span>, dataType <span class="op">=</span> <span class="st">"relative_abundance"</span><span class="op">)</span>
 
 <span class="co">#Separating Asnicar USA from Asnicar GBR</span>
-<span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">$</span><span class="va">study_name</span> <span class="op">==</span> <span class="st">"AsnicarF_2021"</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">$</span><span class="va">country</span> <span class="op">==</span> <span class="st">"USA"</span><span class="op">)</span>,<span class="op">]</span><span class="op">$</span><span class="va">study_name</span> <span class="op">&lt;-</span> <span class="st">"USA_asnicarF_2021"</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">$</span><span class="va">study_name</span> <span class="op">==</span> <span class="st">"AsnicarF_2021"</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">$</span><span class="va">country</span> <span class="op">==</span> <span class="st">"USA"</span><span class="op">)</span>,<span class="op">]</span><span class="op">$</span><span class="va">study_name</span> <span class="op">&lt;-</span> <span class="st">"USA_asnicarF_2021"</span></code></pre></div>
 <p>The TreeSummarizedExperiment object of taxonomic relative abundances stores the entire taxonomy (from Kingdom to species-level) of each microbial species. We therefore use the function <em>splitByRanks</em> from the <em>mia</em> package which allows us to select <strong>higher</strong> taxonomic level. We will focus on Species.</p>
 <p>We are interested in species only, so we modify the TSE object accordingly</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/microbiome/mia">mia</a></span><span class="op">)</span>
-<span class="va">species_tse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mia/man/splitByRanks.html">splitByRanks</a></span><span class="op">(</span><span class="va">tse</span>, rank <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/microbiome/mia" class="external-link">mia</a></span><span class="op">)</span>
+<span class="va">species_tse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mia/man/splitByRanks.html" class="external-link">splitByRanks</a></span><span class="op">(</span><span class="va">tse</span>, rank <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 </div>
 </div>
-<div id="analysis-of-microbial-species-by-a-linear-model-and-computation-of-an-effect-size-for-each-species-in-each-dataset" class="section level1">
-<h1 class="hasAnchor">
-<a href="#analysis-of-microbial-species-by-a-linear-model-and-computation-of-an-effect-size-for-each-species-in-each-dataset" class="anchor"></a>Analysis of microbial species by a linear model and computation of an effect size for each species in each dataset</h1>
-<div id="defining-functions-used-to-perform-the-meta-analysis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#defining-functions-used-to-perform-the-meta-analysis" class="anchor"></a>Defining functions used to perform the meta-analysis</h2>
+<div class="section level2">
+<h2 id="analysis-of-microbial-species-by-a-linear-model-and-computation-of-an-effect-size-for-each-species-in-each-dataset">Analysis of microbial species by a linear model and computation of an effect size for each species in each dataset<a class="anchor" aria-label="anchor" href="#analysis-of-microbial-species-by-a-linear-model-and-computation-of-an-effect-size-for-each-species-in-each-dataset"></a>
+</h2>
+<div class="section level3">
+<h3 id="defining-functions-used-to-perform-the-meta-analysis">Defining functions used to perform the meta-analysis<a class="anchor" aria-label="anchor" href="#defining-functions-used-to-perform-the-meta-analysis"></a>
+</h3>
 <p>These functions will be used to compute correlation (R) from the t-value of linear models and transform relative abundance data.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Compute Correlation (R) from t-value</span>
 <span class="va">R_fromlm</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>,<span class="va">t</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">r</span> <span class="op">&lt;-</span> <span class="va">t</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="va">t</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
+  <span class="va">r</span> <span class="op">&lt;-</span> <span class="va">t</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="va">t</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>This function is used to transform species relative abundances according to the <span class="math inline">\(arcsin(\sqrt{\frac{RelAb}{100}})\)</span> function to correct for compositionality-related issues</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Transform relative abundances</span>
 <span class="va">asin_trans</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel_ab</span><span class="op">)</span><span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">asin</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">rel_ab</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">asin</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">rel_ab</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>In order to proceed with the meta-analysis, we have to compute an effect-size for each population. Each dataset effect-size is computed with the function we define after. This function estimates a per-feature relationship between age and the arcsin-square-root relative abundance of each species. The estimates is extracted by an Ordinary Least Squares (OLS) model, in which the microbial feature (in this case, the species) is the response, and the age of the subject is the predictor. Using this method we can control our model by age &amp; by gender of the patient.</p>
 <p>The model has indeed the shape: <span class="math display">\[ species \sim  sex + age + BMI\]</span></p>
@@ -219,7 +221,7 @@ pre code {
 <code class="sourceCode R">
 <span class="va">computeStandardizedMeanDifference</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">tse_object</span><span class="op">)</span><span class="op">{</span>
   
-  <span class="va">tse_datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">tse_object</span><span class="op">)</span><span class="op">$</span><span class="va">study_name</span><span class="op">)</span>
+  <span class="va">tse_datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">tse_object</span><span class="op">)</span><span class="op">$</span><span class="va">study_name</span><span class="op">)</span>
   
   <span class="co">#Build linear models for all species of each dataset present in tse_object</span>
   <span class="va">singleDatasetAnalyze</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span> <span class="op">{</span>
@@ -228,92 +230,92 @@ pre code {
 
     <span class="co">#Select vectors of relative abundances and metadata</span>
     <span class="va">exprs_df</span> <span class="op">&lt;-</span> <span class="fu">asin_trans</span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span><span class="op">(</span><span class="va">single_dataset_tse</span><span class="op">)</span><span class="op">)</span>
+      <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">single_dataset_tse</span><span class="op">)</span><span class="op">)</span>
     
-    <span class="va">exprs_df</span> <span class="op">&lt;-</span> <span class="va">exprs_df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">exprs_df</span><span class="op">)</span><span class="op">)</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">exprs_df</span><span class="op">)</span>, <span class="op">]</span>
+    <span class="va">exprs_df</span> <span class="op">&lt;-</span> <span class="va">exprs_df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">exprs_df</span><span class="op">)</span><span class="op">)</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">exprs_df</span><span class="op">)</span>, <span class="op">]</span>
 
-    <span class="va">species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">exprs_df</span><span class="op">)</span>
+    <span class="va">species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">exprs_df</span><span class="op">)</span>
     
-    <span class="va">age</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">single_dataset_tse</span><span class="op">)</span><span class="op">$</span><span class="va">age</span><span class="op">)</span>
-    <span class="va">bmi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">single_dataset_tse</span><span class="op">)</span><span class="op">$</span><span class="va">BMI</span><span class="op">)</span>
-    <span class="va">gender</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">single_dataset_tse</span><span class="op">)</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span>
+    <span class="va">age</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">single_dataset_tse</span><span class="op">)</span><span class="op">$</span><span class="va">age</span><span class="op">)</span>
+    <span class="va">bmi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">single_dataset_tse</span><span class="op">)</span><span class="op">$</span><span class="va">BMI</span><span class="op">)</span>
+    <span class="va">gender</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">single_dataset_tse</span><span class="op">)</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span>
     
     <span class="va">compute_lm</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">exprs_row</span><span class="op">)</span><span class="op">{</span>
-        <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nlevels.html">nlevels</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">&gt;</span><span class="fl">1</span><span class="op">)</span><span class="op">{</span>
-          <span class="va">lm_res</span> <span class="op">&lt;-</span>  <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">exprs_row</span> <span class="op">~</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span>  
+        <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Factor-class.html" class="external-link">nlevels</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">&gt;</span><span class="fl">1</span><span class="op">)</span><span class="op">{</span>
+          <span class="va">lm_res</span> <span class="op">&lt;-</span>  <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">exprs_row</span> <span class="op">~</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span>  
       <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-          <span class="va">lm_res</span> <span class="op">&lt;-</span>  <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">exprs_row</span> <span class="op">~</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span>
+          <span class="va">lm_res</span> <span class="op">&lt;-</span>  <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">exprs_row</span> <span class="op">~</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span>
     <span class="op">}</span>
 
-      <span class="va">lm_res</span> <span class="op">&lt;-</span> <span class="fu">column_to_rownames</span><span class="op">(</span><span class="va">lm_res</span>, var <span class="op">=</span> <span class="st">"term"</span><span class="op">)</span>
-      <span class="va">res</span> <span class="op">&lt;-</span> <span class="va">lm_res</span><span class="op">[</span><span class="st">"age"</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"statistic"</span>,<span class="st">"p.value"</span><span class="op">)</span>,drop<span class="op">=</span><span class="cn">TRUE</span><span class="op">]</span>
-      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
+      <span class="va">lm_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">column_to_rownames</a></span><span class="op">(</span><span class="va">lm_res</span>, var <span class="op">=</span> <span class="st">"term"</span><span class="op">)</span>
+      <span class="va">res</span> <span class="op">&lt;-</span> <span class="va">lm_res</span><span class="op">[</span><span class="st">"age"</span>,<span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"statistic"</span>,<span class="st">"p.value"</span><span class="op">)</span>,drop<span class="op">=</span><span class="cn">TRUE</span><span class="op">]</span>
+      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
     <span class="op">}</span>
 
-    <span class="va">lmResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">species</span>, 
+    <span class="va">lmResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">species</span>, 
             FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
               <span class="va">species_relabs</span> <span class="op">&lt;-</span> <span class="va">exprs_df</span><span class="op">[</span><span class="va">x</span>,<span class="op">]</span> 
               <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">compute_lm</span><span class="op">(</span><span class="va">species_relabs</span><span class="op">)</span>
-              <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
+              <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
                         <span class="op">}</span><span class="op">)</span><span class="op">)</span>
 
       
-    <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">exprs_df</span><span class="op">)</span>
+    <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">exprs_df</span><span class="op">)</span>
     
     <span class="co">#Compute effect size and respective standard error for each species in single</span>
     <span class="co">#dataset</span>
     
    <span class="co">#Compute effect size for each species in single dataset</span>
-    <span class="va">R_List</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">lmResults</span><span class="op">[</span>,<span class="st">"statistic"</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">R_fromlm</span><span class="op">(</span><span class="va">n</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">R_List</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">lmResults</span><span class="op">[</span>,<span class="st">"statistic"</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">R_fromlm</span><span class="op">(</span><span class="va">n</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
   
-    <span class="va">wald_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">lmResults</span><span class="op">[</span>,<span class="st">"p.value"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">wald_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">lmResults</span><span class="op">[</span>,<span class="st">"p.value"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
     
     <span class="co">#FDR-correction with Benjamini-Hochberg method for Wald p-values</span>
-    <span class="va">final_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">R_List</span>,
+    <span class="va">final_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">R_List</span>,
                                 <span class="va">wald_list</span>,
-                                <span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">wald_list</span>,method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+                                <span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">p.adjust</a></span><span class="op">(</span><span class="va">wald_list</span>,method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
     
     <span class="co">#Finalize results for the single dataset</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">final_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dataset</span>,<span class="st">"_Correlation"</span><span class="op">)</span>,
-                            <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dataset</span>,<span class="st">"_pvalue"</span><span class="op">)</span>,
-                            <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dataset</span>,<span class="st">"_Qvalue"</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">final_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">dataset</span>,<span class="st">"_Correlation"</span><span class="op">)</span>,
+                            <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">dataset</span>,<span class="st">"_pvalue"</span><span class="op">)</span>,
+                            <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">dataset</span>,<span class="st">"_Qvalue"</span><span class="op">)</span><span class="op">)</span>
     <span class="co">#final_df &lt;-na.omit(final_df)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">final_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">species</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">final_df</span><span class="op">)</span>
+    <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">final_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">species</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">final_df</span><span class="op">)</span>
   
     <span class="op">}</span>
 
-    <span class="va">linear_models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">tse_datasets</span>, <span class="va">singleDatasetAnalyze</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">linear_models</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">tse_datasets</span>
+    <span class="va">linear_models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">tse_datasets</span>, <span class="va">singleDatasetAnalyze</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">linear_models</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">tse_datasets</span>
     
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">linear_models</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">linear_models</span><span class="op">)</span>
 
 <span class="op">}</span> </code></pre></div>
 <p>Now that we have computed effect-sizes for each population, we can meta-analyze each microbial feature. In order to do this, we define a function applying the “metacor” function from the package “metafor”.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">runMetaanalysis</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">R_vector</span>, <span class="va">n</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">meta</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/meta/man/metacor.html">metacor</a></span><span class="op">(</span>cor<span class="op">=</span><span class="va">R_vector</span>,
+  <span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">meta</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/meta/man/metacor.html" class="external-link">metacor</a></span><span class="op">(</span>cor<span class="op">=</span><span class="va">R_vector</span>,
                      n<span class="op">=</span><span class="va">n</span>,
-                     studlab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">R_vector</span><span class="op">)</span>,
+                     studlab<span class="op">=</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">R_vector</span><span class="op">)</span>,
                      method.tau<span class="op">=</span><span class="st">"PM"</span>,
                      sm<span class="op">=</span><span class="st">"ZCOR"</span><span class="op">)</span>
   
-  <span class="va">final_vector</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">a</span><span class="op">$</span><span class="va">TE.random</span>,
+  <span class="va">final_vector</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="va">a</span><span class="op">$</span><span class="va">TE.random</span>,
                    <span class="va">a</span><span class="op">$</span><span class="va">seTE.random</span>,
-                   <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">a</span><span class="op">$</span><span class="va">lower.random</span>,<span class="va">a</span><span class="op">$</span><span class="va">upper.random</span>,sep<span class="op">=</span><span class="st">";"</span><span class="op">)</span>,
+                   <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">a</span><span class="op">$</span><span class="va">lower.random</span>,<span class="va">a</span><span class="op">$</span><span class="va">upper.random</span>,sep<span class="op">=</span><span class="st">";"</span><span class="op">)</span>,
                    <span class="va">a</span><span class="op">$</span><span class="va">zval.random</span>,
                    <span class="va">a</span><span class="op">$</span><span class="va">pval.random</span>,
                    <span class="va">a</span><span class="op">$</span><span class="va">tau2</span>,
                    <span class="va">a</span><span class="op">$</span><span class="va">I2</span><span class="op">)</span>
   
-  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">final_vector</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"RE_Correlation"</span>,<span class="st">"SE_RE"</span>,<span class="st">"CI_RE"</span>,<span class="st">"Zscore"</span>,<span class="st">"p-value"</span>,<span class="st">"tau2"</span>,<span class="st">"I^2"</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">final_vector</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">final_vector</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RE_Correlation"</span>,<span class="st">"SE_RE"</span>,<span class="st">"CI_RE"</span>,<span class="st">"Zscore"</span>,<span class="st">"p-value"</span>,<span class="st">"tau2"</span>,<span class="st">"I^2"</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">final_vector</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="application-of-the-described-procedure-in-the-meta-analysis-of-age-related-microbial-species" class="section level2">
-<h2 class="hasAnchor">
-<a href="#application-of-the-described-procedure-in-the-meta-analysis-of-age-related-microbial-species" class="anchor"></a>Application of the described procedure in the meta-analysis of age-related microbial species</h2>
+<div class="section level3">
+<h3 id="application-of-the-described-procedure-in-the-meta-analysis-of-age-related-microbial-species">Application of the described procedure in the meta-analysis of age-related microbial species<a class="anchor" aria-label="anchor" href="#application-of-the-described-procedure-in-the-meta-analysis-of-age-related-microbial-species"></a>
+</h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Computing Correlation (R) of species relative abundances with age for all datasets </span>
 <span class="va">Corr_list</span> <span class="op">&lt;-</span> <span class="fu">computeStandardizedMeanDifference</span><span class="op">(</span><span class="va">species_tse</span><span class="op">)</span>  
@@ -321,36 +323,36 @@ pre code {
 
 <span class="co">#Merging outputs of all datasets so to have a single dataframe with all the </span>
 <span class="co">#species found across the cohorts</span>
-<span class="va">final_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Reduce</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, all<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>, 
-                   <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">Corr_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">x</span>, rn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">final_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, all<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>, 
+                   <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">Corr_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">x</span>, rn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">final_df</span> <span class="op">&lt;-</span> <span class="va">final_df</span>  <span class="op">%&gt;%</span> <span class="fu">column_to_rownames</span><span class="op">(</span>var<span class="op">=</span><span class="st">"rn"</span><span class="op">)</span>
+<span class="va">final_df</span> <span class="op">&lt;-</span> <span class="va">final_df</span>  <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">column_to_rownames</a></span><span class="op">(</span>var<span class="op">=</span><span class="st">"rn"</span><span class="op">)</span>
 
 
 <span class="co">#Dataframes with random effect and respective vector containing sample size of </span>
 <span class="co">#each dataset</span>
 
-<span class="va">d_matrix</span> <span class="op">&lt;-</span> <span class="va">final_df</span> <span class="op">%&gt;%</span> 
-  <span class="fu">select</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"Correlation"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">d_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">d_matrix</span><span class="op">)</span>
+<span class="va">d_matrix</span> <span class="op">&lt;-</span> <span class="va">final_df</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Correlation"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">d_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">d_matrix</span><span class="op">)</span>
 
 
-<span class="va">n_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">species_tse</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">study_name</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">summarize</span><span class="op">(</span>N<span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="va">n_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">species_tse</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">study_name</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>N<span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 
-<span class="va">n_vector</span> <span class="op">&lt;-</span> <span class="va">n_vector</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="fu">str_replace</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">d_matrix</span><span class="op">)</span>, <span class="st">"_Correlation"</span>,<span class="st">""</span><span class="op">)</span>,
+<span class="va">n_vector</span> <span class="op">&lt;-</span> <span class="va">n_vector</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-comparison.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">d_matrix</span><span class="op">)</span>, <span class="st">"_Correlation"</span>,<span class="st">""</span><span class="op">)</span>,
                            <span class="va">n_vector</span><span class="op">$</span><span class="va">study_name</span> <span class="op">)</span>,<span class="op">]</span><span class="op">$</span><span class="va">N</span>
 
-<span class="va">meta_analysis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span>FUN<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="fu">runMetaanalysis</span><span class="op">(</span><span class="va">x</span>,<span class="va">n_vector</span><span class="op">)</span><span class="op">}</span>,
+<span class="va">meta_analysis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span>FUN<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="fu">runMetaanalysis</span><span class="op">(</span><span class="va">x</span>,<span class="va">n_vector</span><span class="op">)</span><span class="op">}</span>,
                                        MARGIN<span class="op">=</span><span class="fl">2</span>,
                                        <span class="va">d_matrix</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
   
-<span class="va">final_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">final_df</span>, <span class="va">meta_analysis</span><span class="op">)</span>
-<span class="va">final_df</span><span class="op">$</span><span class="va">FDR_Qvalue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">final_df</span><span class="op">$</span><span class="va">`p-value`</span>,method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span></code></pre></div>
+<span class="va">final_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">final_df</span>, <span class="va">meta_analysis</span><span class="op">)</span>
+<span class="va">final_df</span><span class="op">$</span><span class="va">FDR_Qvalue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">p.adjust</a></span><span class="op">(</span><span class="va">final_df</span><span class="op">$</span><span class="va">`p-value`</span>,method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:1000px; ">
-<table class="table table">
+<table class="table table" style="margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 </th>
@@ -15475,11 +15477,13 @@ Selenomonas noxia
 
 
       <footer><div class="copyright">
-  <p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
+  <p></p>
+<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -15487,6 +15491,8 @@ Selenomonas noxia
 
   
 
+
+  
 
   </body>
 </html>
