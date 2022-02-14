@@ -29,16 +29,16 @@ Visit `localhost` in your browser.
 
 ### R Vignettes
 
-* [Create datasets for machine learning](vignettes/MLdatasets.Rmd)
-* [Exploration of the liver cirrhosis dataset](vignettes/explorecirrhosis.Rmd)
-* [Meta-analysis of age-related microbial species using cMD3](vignettes/Age_metaanalysis_vignette.Rmd)
-* [Meta-analysis of sex-related microbial species using cMD3](vignettes/Sex_metaanalysis_vignette.Rmd)
-* [NUI Galway Metagenomics Workshop](vignettes/NUI-Galway-Metagenomics-Workshop.Rmd)
+* [Create datasets for machine learning](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/MLdatasets.Rmd)
+* [Exploration of the liver cirrhosis dataset](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/explorecirrhosis.Rmd)
+* [Meta-analysis of age-related microbial species using cMD3](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/Age_metaanalysis_vignette.Rmd)
+* [Meta-analysis of sex-related microbial species using cMD3](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/Sex_metaanalysis_vignette.Rmd)
+* [NUI Galway Metagenomics Workshop](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/NUI-Galway-Metagenomics-Workshop.Rmd)
 
 ### Python Notebooks
 
-* [Sex-related differences in the human microbiome using cMD3 and Python3](vignettes/sexContrastMicrobiomeAnalysis.ipynb)
+* [Sex-related differences in the human microbiome using cMD3 and Python3](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/sexContrastMicrobiomeAnalysis.ipynb)
 
 ### Supplementary Materials 
 
-* [Installing Python dependencies in Linux](vignettes/installation.ipynb) (Python notebook)
+* [Installing Python dependencies in Linux](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/installation.ipynb) (Python notebook)
