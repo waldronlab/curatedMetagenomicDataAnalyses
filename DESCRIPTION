@@ -36,12 +36,14 @@ Suggests:
     rmarkdown,
     scater,
     sessioninfo,
+    SIAMCAT,
     snakecase,
     stringr,
     table1,
     tibble,
     tidyr,
     tidyverse,
+    TreeSummarizedExperiment,
     uwot,
     vegan
 VignetteBuilder: knitr
