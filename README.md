@@ -29,7 +29,7 @@ Visit `localhost` in your browser.
 
 ### R Vignettes
 
-* [Create datasets for machine learning](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/MLdatasets.Rmd)
+* [Create datasets for machine learning](https://waldronlab.io/curatedMetagenomicAnalyses/articles/MLdatasets.html)
 * [Exploration of the liver cirrhosis dataset](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/explorecirrhosis.Rmd)
 * [Meta-analysis of age-related microbial species using cMD3](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/Age_metaanalysis_vignette.Rmd)
 * [Meta-analysis of sex-related microbial species using cMD3](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/Sex_metaanalysis_vignette.Rmd)
