@@ -37,7 +37,7 @@ Visit `localhost` in your browser.
 
 ### Python Notebooks
 
-* [Sex-related differences in the human microbiome using cMD3 and Python3](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/sexContrastMicrobiomeAnalysis.ipynb)
+* [Sex-related differences in the human microbiome using cMD3 and Python3](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/sexContrastMicrobiomeAnalysis.ipynb)
 
 ### Supplementary Materials 
 
