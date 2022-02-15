@@ -41,4 +41,4 @@ Visit `localhost` in your browser.
 
 ### Supplementary Materials 
 
-* [Installing Python dependencies in Linux](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/installation.ipynb) (Python notebook)
+* [Installing Python dependencies in Linux](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/installation.ipynb) (Python notebook)
