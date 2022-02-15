@@ -33,7 +33,7 @@ Visit `localhost` in your browser.
 * [Exploration of the liver cirrhosis dataset](https://waldronlab.io/curatedMetagenomicAnalyses/articles/explorecirrhosis.html)
 * [Meta-analysis of age-related microbial species using cMD3](https://waldronlab.io/curatedMetagenomicAnalyses/articles/Age_metaanalysis_vignette.html)
 * [Meta-analysis of sex-related microbial species using cMD3](https://waldronlab.io/curatedMetagenomicAnalyses/articles/Sex_metaanalysis_vignette.html)
-* [NUI Galway Metagenomics Workshop](https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/vignettes/NUI-Galway-Metagenomics-Workshop.Rmd)
+* [NUI Galway Metagenomics Workshop](https://waldronlab.io/curatedMetagenomicAnalyses/articles/NUI-Galway-Metagenomics-Workshop.html)
 
 ### Python Notebooks
 
