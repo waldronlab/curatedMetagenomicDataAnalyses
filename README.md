@@ -25,6 +25,14 @@ Then run a container based on the image with your password:
 
 Visit `localhost` in your browser.
 
+## Running locally without Docker
+
+Start with an installation of the current version of Bioconductor (see https://bioconductor.org/install/). Older versions probably will not work. 
+Installation directly from GitHub requires first installing the `remotes` package, then:
+```r
+BiocManager::install("waldronlab/curatedMetagenomicAnalyses", dependencies = TRUE)
+```
+
 ## Analyses
 
 ### R Vignettes
