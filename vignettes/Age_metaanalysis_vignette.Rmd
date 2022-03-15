@@ -241,7 +241,7 @@ computeStandardizedMeanDifference <- function(tse_object){
 ```
 
 
-Now that we have computed effect-sizes for each population, we can meta-analyze each microbial feature. In order to do this, we define a function applying the _metacor_ function from the package `BiocStyle::CRANpkg("metafor")`.
+Now that we have computed effect-sizes for each population, we can meta-analyze each microbial feature. In order to do this, we define a function applying the _metacor_ function from the package `r  BiocStyle::CRANpkg("metafor")`.
 ```{r}
 runMetaanalysis <- function(R_vector, n) {
   a <- meta::metacor(cor=R_vector,
