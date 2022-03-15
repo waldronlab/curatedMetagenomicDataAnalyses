@@ -18,7 +18,7 @@ The dataframe with the meta-analysis results, filtered for prevalent
 features and ordered by adj.p-value and effect size.
 }
 \description{
-This function allows to remove from the dataframe with the meta-analysis
+This function allows removal from the dataframe with the meta-analysis
 results those features for which the Standardized Mean Difference couldn't
 be computed in at least a user-specified number of cohorts (na_filter).
 }
