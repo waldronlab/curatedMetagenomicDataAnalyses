@@ -100,9 +100,12 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>NUI Galway Metagenomics Workshop</h1>
-                        <h4 data-toc-skip class="author">Lucas Schiffer, MPH</h4>
+                        <h4 data-toc-skip class="author">Lucas Schiffer,
+MPH</h4>
             <address class="author_afil">
-      Section of Computational Biomedicine, Boston University School of Medicine, Boston, MA, U.S.A.<br><a class="author_email" href="mailto:#"></a><a href="mailto:schifferl@bu.edu" class="email">schifferl@bu.edu</a>
+      Section of Computational Biomedicine, Boston University School of
+Medicine, Boston, MA,
+U.S.A.<br><a class="author_email" href="mailto:#"></a><a href="mailto:schifferl@bu.edu" class="email">schifferl@bu.edu</a>
       </address>
                   
             <h4 data-toc-skip class="date">October 6, 2021</h4>
@@ -117,7 +120,13 @@
 <div class="section level2">
 <h2 id="r-packages-for-this-tutorial">R Packages for This Tutorial<a class="anchor" aria-label="anchor" href="#r-packages-for-this-tutorial"></a>
 </h2>
-<p>This tutorial demonstrates basic usage of <em><a href="https://bioconductor.org/packages/3.13/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>, prerequisite steps for analysis, estimation of alpha diversity, analysis of beta diversity, and differential abundance analysis. To make the tables and figures in this tutorial, a number of R packages are required, as follows. If you are using <a href="http://app.orchestra.cancerdatasci.org" class="external-link">app.orchestra.cancerdatasci.org</a>, these packages are already installed for you; if not, you’ll have to make sure the packages are installed.</p>
+<p>This tutorial demonstrates basic usage of <em><a href="https://bioconductor.org/packages/3.14/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>,
+prerequisite steps for analysis, estimation of alpha diversity, analysis
+of beta diversity, and differential abundance analysis. To make the
+tables and figures in this tutorial, a number of R packages are
+required, as follows. If you are using <a href="http://app.orchestra.cancerdatasci.org" class="external-link">app.orchestra.cancerdatasci.org</a>,
+these packages are already installed for you; if not, you’ll have to
+make sure the packages are installed.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
@@ -137,64 +146,103 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/slowkow/ggrepel" class="external-link">ggrepel</a></span><span class="op">)</span></code></pre></div>
-<p>With the requisite R packages loaded and a basic working knowledge of metagenomics analysis (as was covered in the workshop), you’re ready to begin. Just one last note, in most of the code chunks below messages have been suppressed; more verbose output should be expected when using the R console.</p>
+<p>With the requisite R packages loaded and a basic working knowledge of
+metagenomics analysis (as was covered in the workshop), you’re ready to
+begin. Just one last note, in most of the code chunks below messages
+have been suppressed; more verbose output should be expected when using
+the R console.</p>
 </div>
 <div class="section level2">
 <h2 id="using-curatedmetagenomicdata">Using curatedMetagenomicData<a class="anchor" aria-label="anchor" href="#using-curatedmetagenomicdata"></a>
 </h2>
-<p>First, let’s address what the <em><a href="https://bioconductor.org/packages/3.13/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em> R/Bioconductor package is; here’s an brief description.</p>
+<p>First, let’s address what the <em><a href="https://bioconductor.org/packages/3.14/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
+R/Bioconductor package is; here’s an brief description.</p>
 <blockquote>
-<p>The curatedMetagenomicData package provides standardized, curated human microbiome data for novel analyses. It includes gene families, marker abundance, marker presence, pathway abundance, pathway coverage, and relative abundance for samples collected from different body sites. The bacterial, fungal, and archaeal taxonomic abundances for each sample were calculated with MetaPhlAn3 and metabolic functional potential was calculated with HUMAnN3. The manually curated sample metadata and standardized metagenomic data are available as (Tree)SummarizedExperiment objects.</p>
+<p>The curatedMetagenomicData package provides standardized, curated
+human microbiome data for novel analyses. It includes gene families,
+marker abundance, marker presence, pathway abundance, pathway coverage,
+and relative abundance for samples collected from different body sites.
+The bacterial, fungal, and archaeal taxonomic abundances for each sample
+were calculated with MetaPhlAn3 and metabolic functional potential was
+calculated with HUMAnN3. The manually curated sample metadata and
+standardized metagenomic data are available as
+(Tree)SummarizedExperiment objects.</p>
 </blockquote>
-<p>Be sure to refer to the <em><a href="https://bioconductor.org/packages/3.13/SummarizedExperiment/vignettes/SummarizedExperiment.html" class="external-link">SummarizedExperiment</a></em> and <em><a href="https://bioconductor.org/packages/3.13/TreeSummarizedExperiment/vignettes/Introduction_to_treeSummarizedExperiment.html" class="external-link">TreeSummarizedExperiment</a></em> vignettes if the data structures are unclear. There is also a reference website for <em><a href="https://bioconductor.org/packages/3.13/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em> at <a href="https://waldronlab.io/curatedMetagenomicData/" class="external-link">waldronlab.io/curatedMetagenomicData</a>, if you need it.</p>
+<p>Be sure to refer to the <em><a href="https://bioconductor.org/packages/3.14/SummarizedExperiment/vignettes/SummarizedExperiment.html" class="external-link">SummarizedExperiment</a></em>
+and <em><a href="https://bioconductor.org/packages/3.14/TreeSummarizedExperiment/vignettes/Introduction_to_treeSummarizedExperiment.html" class="external-link">TreeSummarizedExperiment</a></em>
+vignettes if the data structures are unclear. There is also a reference
+website for <em><a href="https://bioconductor.org/packages/3.14/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
+at <a href="https://waldronlab.io/curatedMetagenomicData/" class="external-link">waldronlab.io/curatedMetagenomicData</a>,
+if you need it.</p>
 <div class="section level3">
 <h3 id="sample-metadata-exploration">Sample Metadata Exploration<a class="anchor" aria-label="anchor" href="#sample-metadata-exploration"></a>
 </h3>
-<p>Any metagenomic analysis that uses <em><a href="https://bioconductor.org/packages/3.13/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em> is likely to begin with an exploration of sample metadata (i.e. <code>sampleMetadata</code>). The <code>sampleMetadata</code> object is a <code>data.frame</code> in the package that contains sample metadata that has been manually curated by humans for each and every sample. To give you an idea of some of the columns that are available, <em><a href="https://CRAN.R-project.org/package=dplyr" class="external-link">dplyr</a></em> syntax is used below to take a random sampling of 10 rows (<code>slice_sample</code>). Then, columns containing <code>NA</code> values are removed, and the first 10 remaining columns are selected. The <code>data.frame</code> is sorted alphabetically by <code>study_name</code> prior to being returned.</p>
+<p>Any metagenomic analysis that uses <em><a href="https://bioconductor.org/packages/3.14/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
+is likely to begin with an exploration of sample metadata
+(i.e. <code>sampleMetadata</code>). The <code>sampleMetadata</code>
+object is a <code>data.frame</code> in the package that contains sample
+metadata that has been manually curated by humans for each and every
+sample. To give you an idea of some of the columns that are available,
+<em><a href="https://CRAN.R-project.org/package=dplyr" class="external-link">dplyr</a></em>
+syntax is used below to take a random sampling of 10 rows
+(<code>slice_sample</code>). Then, columns containing <code>NA</code>
+values are removed, and the first 10 remaining columns are selected. The
+<code>data.frame</code> is sorted alphabetically by
+<code>study_name</code> prior to being returned.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sampleMetadata</span> |&gt;
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="op">~</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">study_name</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##            study_name                        sample_id             subject_id</span>
-<span class="co">## 1     ChengpingW_2017                          AS36raw                AS36raw</span>
-<span class="co">## 2       CosteaPI_2017                  donald3-11-30-0                   DEU9</span>
-<span class="co">## 3     HMP_2019_ibdmdb                         MSM79H7Y                  M2047</span>
-<span class="co">## 4         IjazUZ_2017                        S87_a_WGS              subIJ_16R</span>
-<span class="co">## 5  LifeLinesDeep_2016 EGAR00001420263_9002000001244632 sub_9002000001244632LL</span>
-<span class="co">## 6            OhJ_2014                          MET0056                   HV02</span>
-<span class="co">## 7      PehrssonE_2016                       SID03B_000                 SID03B</span>
-<span class="co">## 8      ThomasAM_2018a                   LILT_VF28_T016                   VF28</span>
-<span class="co">## 9         VilaAV_2018     EGAR00001773304_1000IBD00278       sub_1000IBD00278</span>
-<span class="co">## 10          ZhuF_2020                  wHAXPI032619-29        wHAXPI032619-29</span>
-<span class="co">##    body_site study_condition                 disease age_category gender</span>
-<span class="co">## 1      stool              AS                      RA        adult female</span>
-<span class="co">## 2      stool         control                 healthy        child   male</span>
-<span class="co">## 3      stool         control                 healthy        adult   male</span>
-<span class="co">## 4      stool         control                 healthy        adult   male</span>
-<span class="co">## 5      stool         control                 healthy        adult   male</span>
-<span class="co">## 6       skin         control                 healthy        adult female</span>
-<span class="co">## 7      stool         control                 healthy        adult female</span>
-<span class="co">## 8      stool         control hypertension;metastases        adult female</span>
-<span class="co">## 9      stool             IBD                     IBD        adult female</span>
-<span class="co">## 10     stool         control                 healthy        adult female</span>
-<span class="co">##    country non_westernized</span>
-<span class="co">## 1      CHN              no</span>
-<span class="co">## 2      DEU              no</span>
-<span class="co">## 3      USA              no</span>
-<span class="co">## 4      GBR              no</span>
-<span class="co">## 5      NLD              no</span>
-<span class="co">## 6      USA              no</span>
-<span class="co">## 7      PER             yes</span>
-<span class="co">## 8      ITA              no</span>
-<span class="co">## 9      NLD              no</span>
-<span class="co">## 10     CHN              no</span></code></pre>
+<pre><code><span class="co">##       study_name                            sample_id        subject_id</span>
+<span class="co">## 1  AsnicarF_2021                         SAMEA7045710 predict1_MTG_0856</span>
+<span class="co">## 2   BrooksB_2017                         S2_006_015G1            S2_006</span>
+<span class="co">## 3  CosteaPI_2017                   SID713A062-11-90-0             KAZ31</span>
+<span class="co">## 4     FengQ_2015                            SID530026         SID530026</span>
+<span class="co">## 5  PasolliE_2019                           A24_02_1FE        A24_02_1FE</span>
+<span class="co">## 6      QinJ_2012                               NLM016            NLM016</span>
+<span class="co">## 7     ShaoY_2019 d58984de-7ae6-11e9-a106-68b59976a384         C01070_ba</span>
+<span class="co">## 8       YuJ_2015                       SZAXPI003413-4    SZAXPI003413-4</span>
+<span class="co">## 9    ZeeviD_2015                         PNP_Main_602      PNP_Main_602</span>
+<span class="co">## 10  ZellerG_2014                   CCIS87167916ST-4-0            FR-223</span>
+<span class="co">##    body_site study_condition             disease age_category country</span>
+<span class="co">## 1      stool         control             healthy        adult     USA</span>
+<span class="co">## 2      stool  premature_born      premature_born      newborn     USA</span>
+<span class="co">## 3      stool         control             healthy        adult     KAZ</span>
+<span class="co">## 4      stool         adenoma adenoma;fatty_liver       senior     AUT</span>
+<span class="co">## 5      stool         control             healthy        adult     MDG</span>
+<span class="co">## 6      stool         control             healthy        adult     CHN</span>
+<span class="co">## 7      stool         control             healthy      newborn     GBR</span>
+<span class="co">## 8      stool             CRC                 CRC        adult     CHN</span>
+<span class="co">## 9      stool         control             healthy        adult     ISR</span>
+<span class="co">## 10     stool             CRC                 CRC       senior     FRA</span>
+<span class="co">##    non_westernized sequencing_platform</span>
+<span class="co">## 1               no     IlluminaNovaSeq</span>
+<span class="co">## 2               no       IlluminaHiSeq</span>
+<span class="co">## 3               no       IlluminaHiSeq</span>
+<span class="co">## 4               no       IlluminaHiSeq</span>
+<span class="co">## 5              yes       IlluminaHiSeq</span>
+<span class="co">## 6               no       IlluminaHiSeq</span>
+<span class="co">## 7               no       IlluminaHiSeq</span>
+<span class="co">## 8               no       IlluminaHiSeq</span>
+<span class="co">## 9               no       IlluminaHiSeq</span>
+<span class="co">## 10              no       IlluminaHiSeq</span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="finding-available-resources">Finding Available Resources<a class="anchor" aria-label="anchor" href="#finding-available-resources"></a>
 </h3>
-<p>The resources available in <em><a href="https://bioconductor.org/packages/3.13/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em> are organized by <code>study_name</code> and can be discovered with the <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> function. When provided with a string, it will return the names of available resources. Each <code>study_name</code> will have 6 data types (<code>gene_families</code>, <code>marker_abundance</code>, <code>marker_presence</code>, <code>pathway_abundance</code>, <code>pathway_coverage</code>, and <code>relative_abundance</code>), these follow the <code>study_name</code> and are separated by a dot. The date that precedes <code>study_name</code> is for versioning, but it’s unimportant here.</p>
+<p>The resources available in <em><a href="https://bioconductor.org/packages/3.14/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
+are organized by <code>study_name</code> and can be discovered with the
+<code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> function. When provided with a
+string, it will return the names of available resources. Each
+<code>study_name</code> will have 6 data types
+(<code>gene_families</code>, <code>marker_abundance</code>,
+<code>marker_presence</code>, <code>pathway_abundance</code>,
+<code>pathway_coverage</code>, and <code>relative_abundance</code>),
+these follow the <code>study_name</code> and are separated by a dot. The
+date that precedes <code>study_name</code> is for versioning, but it’s
+unimportant here.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData</a></span><span class="op">(</span><span class="st">"AsnicarF"</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## 2021-03-31.AsnicarF_2017.gene_families</span>
@@ -203,43 +251,65 @@
 <span class="co">## 2021-03-31.AsnicarF_2017.pathway_abundance</span>
 <span class="co">## 2021-03-31.AsnicarF_2017.pathway_coverage</span>
 <span class="co">## 2021-03-31.AsnicarF_2017.relative_abundance</span>
+<span class="co">## 2021-10-14.AsnicarF_2017.gene_families</span>
+<span class="co">## 2021-10-14.AsnicarF_2017.marker_abundance</span>
+<span class="co">## 2021-10-14.AsnicarF_2017.marker_presence</span>
+<span class="co">## 2021-10-14.AsnicarF_2017.pathway_abundance</span>
+<span class="co">## 2021-10-14.AsnicarF_2017.pathway_coverage</span>
+<span class="co">## 2021-10-14.AsnicarF_2017.relative_abundance</span>
 <span class="co">## 2021-03-31.AsnicarF_2021.gene_families</span>
 <span class="co">## 2021-03-31.AsnicarF_2021.marker_abundance</span>
 <span class="co">## 2021-03-31.AsnicarF_2021.marker_presence</span>
 <span class="co">## 2021-03-31.AsnicarF_2021.pathway_abundance</span>
 <span class="co">## 2021-03-31.AsnicarF_2021.pathway_coverage</span>
 <span class="co">## 2021-03-31.AsnicarF_2021.relative_abundance</span></code></pre>
-<p>The first argument passed to <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code>, <code>pattern</code>, is actually a regular expression. So things like <code>.+</code> (match any character one or more times) work, and the names multiple resources are returned if they match. Below, you can see there are two <code>AsnicarF</code> resources for the <code>relative_abundance</code> data type.</p>
+<p>The first argument passed to <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code>,
+<code>pattern</code>, is actually a regular expression. So things like
+<code>.+</code> (match any character one or more times) work, and the
+names multiple resources are returned if they match. Below, you can see
+there are two <code>AsnicarF</code> resources for the
+<code>relative_abundance</code> data type.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData</a></span><span class="op">(</span><span class="st">"AsnicarF.+.relative_abundance"</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## 2021-03-31.AsnicarF_2017.relative_abundance</span>
+<span class="co">## 2021-10-14.AsnicarF_2017.relative_abundance</span>
 <span class="co">## 2021-03-31.AsnicarF_2021.relative_abundance</span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="downloading-study-resources">Downloading Study Resources<a class="anchor" aria-label="anchor" href="#downloading-study-resources"></a>
 </h3>
-<p>As is clear from the examples above, simply searching for the <code>AsnicarF</code> studies did not download any curated metagenomic data. To do that you must provide another argument, <code>dryrun = FALSE</code>, to the <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> function. Doing so will download the matching resources from <em><a href="https://bioconductor.org/packages/3.13/ExperimentHub" class="external-link">ExperimentHub</a></em> (or load them from the local cache). When <code>dryrun = FALSE</code>, <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> will always return a <code>list</code> of <em><a href="https://bioconductor.org/packages/3.13/SummarizedExperiment" class="external-link">SummarizedExperiment</a></em> and/or <em><a href="https://bioconductor.org/packages/3.13/TreeSummarizedExperiment" class="external-link">TreeSummarizedExperiment</a></em> objects.</p>
+<p>As is clear from the examples above, simply searching for the
+<code>AsnicarF</code> studies did not download any curated metagenomic
+data. To do that you must provide another argument,
+<code>dryrun = FALSE</code>, to the
+<code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> function. Doing so will download
+the matching resources from <em><a href="https://bioconductor.org/packages/3.14/ExperimentHub" class="external-link">ExperimentHub</a></em>
+(or load them from the local cache). When <code>dryrun = FALSE</code>,
+<code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> will always return a
+<code>list</code> of <em><a href="https://bioconductor.org/packages/3.14/SummarizedExperiment" class="external-link">SummarizedExperiment</a></em>
+and/or <em><a href="https://bioconductor.org/packages/3.14/TreeSummarizedExperiment" class="external-link">TreeSummarizedExperiment</a></em>
+objects.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData</a></span><span class="op">(</span><span class="st">"AsnicarF.+.relative_abundance"</span>, dryrun <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## $`2021-03-31.AsnicarF_2017.relative_abundance`</span>
+<pre><code><span class="co">## $`2021-10-14.AsnicarF_2017.relative_abundance`</span>
 <span class="co">## class: TreeSummarizedExperiment </span>
-<span class="co">## dim: 301 24 </span>
+<span class="co">## dim: 298 24 </span>
 <span class="co">## metadata(0):</span>
 <span class="co">## assays(1): relative_abundance</span>
-<span class="co">## rownames(301):</span>
+<span class="co">## rownames(298):</span>
 <span class="co">##   k__Bacteria|p__Proteobacteria|c__Gammaproteobacteria|o__Enterobacterales|f__Enterobacteriaceae|g__Escherichia|s__Escherichia_coli</span>
 <span class="co">##   k__Bacteria|p__Actinobacteria|c__Actinobacteria|o__Bifidobacteriales|f__Bifidobacteriaceae|g__Bifidobacterium|s__Bifidobacterium_bifidum</span>
 <span class="co">##   ...</span>
 <span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Lactobacillales|f__Streptococcaceae|g__Streptococcus|s__Streptococcus_gordonii</span>
 <span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Lactobacillales|f__Aerococcaceae|g__Abiotrophia|s__Abiotrophia_sp_HMSC24B09</span>
-<span class="co">## rowData names(7): Kingdom Phylum ... Genus Species</span>
+<span class="co">## rowData names(7): superkingdom phylum ... genus species</span>
 <span class="co">## colnames(24): MV_FEI1_t1Q14 MV_FEI2_t1Q14 ... MV_MIM5_t2M14</span>
 <span class="co">##   MV_MIM5_t3F15</span>
 <span class="co">## colData names(22): study_name subject_id ... lactating curator</span>
 <span class="co">## reducedDimNames(0):</span>
 <span class="co">## mainExpName: NULL</span>
 <span class="co">## altExpNames(0):</span>
-<span class="co">## rowLinks: a LinkDataFrame (301 rows)</span>
+<span class="co">## rowLinks: a LinkDataFrame (298 rows)</span>
 <span class="co">## rowTree: 1 phylo tree(s) (10430 leaves)</span>
 <span class="co">## colLinks: NULL</span>
 <span class="co">## colTree: NULL</span>
@@ -255,9 +325,9 @@
 <span class="co">##   ...</span>
 <span class="co">##   k__Bacteria|p__Synergistetes|c__Synergistia|o__Synergistales|f__Synergistaceae|g__Pyramidobacter|s__Pyramidobacter_sp_C12_8</span>
 <span class="co">##   k__Bacteria|p__Actinobacteria|c__Actinobacteria|o__Micrococcales|f__Brevibacteriaceae|g__Brevibacterium|s__Brevibacterium_aurantiacum</span>
-<span class="co">## rowData names(7): Kingdom Phylum ... Genus Species</span>
+<span class="co">## rowData names(7): superkingdom phylum ... genus species</span>
 <span class="co">## colnames(1098): SAMEA7041133 SAMEA7041134 ... SAMEA7045952 SAMEA7045953</span>
-<span class="co">## colData names(21): study_name subject_id ... curator BMI</span>
+<span class="co">## colData names(22): study_name subject_id ... BMI family</span>
 <span class="co">## reducedDimNames(0):</span>
 <span class="co">## mainExpName: NULL</span>
 <span class="co">## altExpNames(0):</span>
@@ -269,29 +339,34 @@
 <div class="section level3">
 <h3 id="merging-data-across-studies">Merging Data Across Studies<a class="anchor" aria-label="anchor" href="#merging-data-across-studies"></a>
 </h3>
-<p>It can be useful to have the <code>list</code> elements returned by <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> merged into a single <em><a href="https://bioconductor.org/packages/3.13/SummarizedExperiment" class="external-link">SummarizedExperiment</a></em> or <em><a href="https://bioconductor.org/packages/3.13/TreeSummarizedExperiment" class="external-link">TreeSummarizedExperiment</a></em> object. This is accomplished using the <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/mergeData.html" class="external-link">mergeData()</a></code> function – simply pipe (<code>|&gt;</code>) the output of <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> to <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/mergeData.html" class="external-link">mergeData()</a></code> and a single object will be returned.</p>
+<p>It can be useful to have the <code>list</code> elements returned by
+<code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> merged into a single <em><a href="https://bioconductor.org/packages/3.14/SummarizedExperiment" class="external-link">SummarizedExperiment</a></em>
+or <em><a href="https://bioconductor.org/packages/3.14/TreeSummarizedExperiment" class="external-link">TreeSummarizedExperiment</a></em>
+object. This is accomplished using the <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/mergeData.html" class="external-link">mergeData()</a></code> function
+– simply pipe (<code>|&gt;</code>) the output of
+<code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> to <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/mergeData.html" class="external-link">mergeData()</a></code> and a
+single object will be returned.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData</a></span><span class="op">(</span><span class="st">"AsnicarF.+.relative_abundance"</span>, dryrun <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/mergeData.html" class="external-link">mergeData</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## class: TreeSummarizedExperiment </span>
-<span class="co">## dim: 681 1122 </span>
+<span class="co">## dim: 680 1122 </span>
 <span class="co">## metadata(0):</span>
 <span class="co">## assays(1): relative_abundance</span>
-<span class="co">## rownames(681):</span>
+<span class="co">## rownames(680):</span>
 <span class="co">##   k__Bacteria|p__Proteobacteria|c__Gammaproteobacteria|o__Enterobacterales|f__Enterobacteriaceae|g__Escherichia|s__Escherichia_coli</span>
 <span class="co">##   k__Bacteria|p__Actinobacteria|c__Actinobacteria|o__Bifidobacteriales|f__Bifidobacteriaceae|g__Bifidobacterium|s__Bifidobacterium_bifidum</span>
 <span class="co">##   ...</span>
 <span class="co">##   k__Bacteria|p__Synergistetes|c__Synergistia|o__Synergistales|f__Synergistaceae|g__Pyramidobacter|s__Pyramidobacter_sp_C12_8</span>
 <span class="co">##   k__Bacteria|p__Actinobacteria|c__Actinobacteria|o__Micrococcales|f__Brevibacteriaceae|g__Brevibacterium|s__Brevibacterium_aurantiacum</span>
-<span class="co">## rowData names(7): Kingdom Phylum ... Genus Species</span>
+<span class="co">## rowData names(7): superkingdom phylum ... genus species</span>
 <span class="co">## colnames(1122): MV_FEI1_t1Q14 MV_FEI2_t1Q14 ... SAMEA7045952</span>
 <span class="co">##   SAMEA7045953</span>
-<span class="co">## colData names(24): study_name subject_id ... antibiotics_current_use</span>
-<span class="co">##   BMI</span>
+<span class="co">## colData names(25): study_name subject_id ... BMI family</span>
 <span class="co">## reducedDimNames(0):</span>
 <span class="co">## mainExpName: NULL</span>
 <span class="co">## altExpNames(0):</span>
-<span class="co">## rowLinks: a LinkDataFrame (681 rows)</span>
+<span class="co">## rowLinks: a LinkDataFrame (680 rows)</span>
 <span class="co">## rowTree: 1 phylo tree(s) (10430 leaves)</span>
 <span class="co">## colLinks: NULL</span>
 <span class="co">## colTree: NULL</span></code></pre>
@@ -299,7 +374,24 @@
 <div class="section level3">
 <h3 id="returning-data-from-samples">Returning Data from Samples<a class="anchor" aria-label="anchor" href="#returning-data-from-samples"></a>
 </h3>
-<p>There is just one more function in the <em><a href="https://bioconductor.org/packages/3.13/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em> package to know about, <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/returnSamples.html" class="external-link">returnSamples()</a></code>. It is used when you want to return samples across studies that match a certain set of conditions. To return a specific set of samples, you first subset the <code>sampleMetadata</code> <code>data.frame</code> to include only the desired samples. In the example below, stool (<code>body_site == "stool"</code>) samples from healthy (<code>disease == "healthy"</code>) adults (<code>age &gt;= 18</code>) living in Ireland or Italy (<code>str_detect(country, "IRL|ITA")</code>) are included before columns of all <code>NA</code> values are dropped. When the <code>sampleMetadata</code> <code>data.frame</code> is subset as desired, it is piped to the <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/returnSamples.html" class="external-link">returnSamples()</a></code> function. As you can see below, there is another argument, <code>counts</code>, which has not yet been mentioned. When <code>counts = TRUE</code>, relative abundance proportions are multiplied by read depth and rounded to the nearest integer prior to being returned – the argument applies to both <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/returnSamples.html" class="external-link">returnSamples()</a></code> and <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> when requesting the <code>relative_abundance</code> data type.</p>
+<p>There is just one more function in the <em><a href="https://bioconductor.org/packages/3.14/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
+package to know about, <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/returnSamples.html" class="external-link">returnSamples()</a></code>. It is used when you
+want to return samples across studies that match a certain set of
+conditions. To return a specific set of samples, you first subset the
+<code>sampleMetadata</code> <code>data.frame</code> to include only the
+desired samples. In the example below, stool
+(<code>body_site == "stool"</code>) samples from healthy
+(<code>disease == "healthy"</code>) adults (<code>age &gt;= 18</code>)
+living in Ireland or Italy (<code>str_detect(country, "IRL|ITA")</code>)
+are included before columns of all <code>NA</code> values are dropped.
+When the <code>sampleMetadata</code> <code>data.frame</code> is subset
+as desired, it is piped to the <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/returnSamples.html" class="external-link">returnSamples()</a></code> function. As
+you can see below, there is another argument, <code>counts</code>, which
+has not yet been mentioned. When <code>counts = TRUE</code>, relative
+abundance proportions are multiplied by read depth and rounded to the
+nearest integer prior to being returned – the argument applies to both
+<code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/returnSamples.html" class="external-link">returnSamples()</a></code> and <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code>
+when requesting the <code>relative_abundance</code> data type.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">countryData</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sampleMetadata</span>, <span class="va">body_site</span> <span class="op">==</span> <span class="st">"stool"</span><span class="op">)</span> |&gt;
@@ -313,7 +405,9 @@
 <div class="section level2">
 <h2 id="getting-ready-for-analysis">Getting Ready for Analysis<a class="anchor" aria-label="anchor" href="#getting-ready-for-analysis"></a>
 </h2>
-<p>First, have a look at the <code>countryData</code> object you just created to get a better understanding of what it contains. You will be using it for the rest of this tutorial.</p>
+<p>First, have a look at the <code>countryData</code> object you just
+created to get a better understanding of what it contains. You will be
+using it for the rest of this tutorial.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">countryData</span></code></pre></div>
 <pre><code><span class="co">## class: TreeSummarizedExperiment </span>
@@ -326,7 +420,7 @@
 <span class="co">##   ...</span>
 <span class="co">##   k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Clostridiaceae|g__Clostridium|s__Clostridium_sp_D5</span>
 <span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Lactobacillales|f__Lactobacillaceae|g__Lactobacillus|s__Lactobacillus_algidus</span>
-<span class="co">## rowData names(7): Kingdom Phylum ... Genus Species</span>
+<span class="co">## rowData names(7): superkingdom phylum ... genus species</span>
 <span class="co">## colnames(286): SID01.BA.VG.2 SID01.BA.V_metag ... CRC_MR_SBJ83H_17</span>
 <span class="co">##   CRC_MR_SBJ84H_17</span>
 <span class="co">## colData names(32): study_name subject_id ... dyastolic_p systolic_p</span>
@@ -337,15 +431,22 @@
 <span class="co">## rowTree: 1 phylo tree(s) (10430 leaves)</span>
 <span class="co">## colLinks: NULL</span>
 <span class="co">## colTree: NULL</span></code></pre>
-<p>As can be seen above, the first <code>assay</code> of the <em><a href="https://bioconductor.org/packages/3.13/TreeSummarizedExperiment" class="external-link">TreeSummarizedExperiment</a></em> is named <code>relative_abundance</code>. This is usually of little consequence, but you will need to rename the assay to <code>counts</code> for the transformation in the next step; do so by setting the <code>assayNames</code> as follows.</p>
+<p>As can be seen above, the first <code>assay</code> of the <em><a href="https://bioconductor.org/packages/3.14/TreeSummarizedExperiment" class="external-link">TreeSummarizedExperiment</a></em>
+is named <code>relative_abundance</code>. This is usually of little
+consequence, but you will need to rename the assay to
+<code>counts</code> for the transformation in the next step; do so by
+setting the <code>assayNames</code> as follows.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assayNames</a></span><span class="op">(</span><span class="va">countryData</span><span class="op">)</span> <span class="op">&lt;-</span>
   <span class="st">"counts"</span></code></pre></div>
-<p>Next, use <code><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts()</a></code> from the <em><a href="https://bioconductor.org/packages/3.13/scater" class="external-link">scater</a></em> package to create a second assay <code>logcounts</code> that contains log-normalized species abundances.</p>
+<p>Next, use <code><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts()</a></code> from the <em><a href="https://bioconductor.org/packages/3.14/scater" class="external-link">scater</a></em>
+package to create a second assay <code>logcounts</code> that contains
+log-normalized species abundances.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">countryData</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts</a></span><span class="op">(</span><span class="va">countryData</span><span class="op">)</span></code></pre></div>
-<p>By taking a look again, you can see there are now two <code>assays</code> as was desired.</p>
+<p>By taking a look again, you can see there are now two
+<code>assays</code> as was desired.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">countryData</span></code></pre></div>
 <pre><code><span class="co">## class: TreeSummarizedExperiment </span>
@@ -358,7 +459,7 @@
 <span class="co">##   ...</span>
 <span class="co">##   k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Clostridiaceae|g__Clostridium|s__Clostridium_sp_D5</span>
 <span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Lactobacillales|f__Lactobacillaceae|g__Lactobacillus|s__Lactobacillus_algidus</span>
-<span class="co">## rowData names(7): Kingdom Phylum ... Genus Species</span>
+<span class="co">## rowData names(7): superkingdom phylum ... genus species</span>
 <span class="co">## colnames(286): SID01.BA.VG.2 SID01.BA.V_metag ... CRC_MR_SBJ83H_17</span>
 <span class="co">##   CRC_MR_SBJ84H_17</span>
 <span class="co">## colData names(33): study_name subject_id ... systolic_p sizeFactor</span>
@@ -369,7 +470,11 @@
 <span class="co">## rowTree: 1 phylo tree(s) (10430 leaves)</span>
 <span class="co">## colLinks: NULL</span>
 <span class="co">## colTree: NULL</span></code></pre>
-<p>Before diving into analysis, you should create a quick summary table to understand the metadata better and be prepared to handle potential biases in analysis. The steps below use <em><a href="https://CRAN.R-project.org/package=dplyr" class="external-link">dplyr</a></em> syntax to clean up a few of the variables before they are output in the summary table.</p>
+<p>Before diving into analysis, you should create a quick summary table
+to understand the metadata better and be prepared to handle potential
+biases in analysis. The steps below use <em><a href="https://CRAN.R-project.org/package=dplyr" class="external-link">dplyr</a></em> syntax to
+clean up a few of the variables before they are output in the summary
+table.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">countryData</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> |&gt;
@@ -382,12 +487,12 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>diet <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_explicit_na.html" class="external-link">fct_explicit_na</a></span><span class="op">(</span><span class="va">diet</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename_with</a></span><span class="op">(</span><span class="va">to_title_case</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div id="uogchyxkru" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="utofjeemls" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#uogchyxkru .gt_table {
+#utofjeemls .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -412,7 +517,7 @@
   border-left-color: #D3D3D3;
 }
 
-#uogchyxkru .gt_heading {
+#utofjeemls .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -424,7 +529,7 @@
   border-right-color: #D3D3D3;
 }
 
-#uogchyxkru .gt_title {
+#utofjeemls .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -436,7 +541,7 @@
   border-bottom-width: 0;
 }
 
-#uogchyxkru .gt_subtitle {
+#utofjeemls .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -448,13 +553,13 @@
   border-top-width: 0;
 }
 
-#uogchyxkru .gt_bottom_border {
+#utofjeemls .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#uogchyxkru .gt_col_headings {
+#utofjeemls .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -469,7 +574,7 @@
   border-right-color: #D3D3D3;
 }
 
-#uogchyxkru .gt_col_heading {
+#utofjeemls .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -489,7 +594,7 @@
   overflow-x: hidden;
 }
 
-#uogchyxkru .gt_column_spanner_outer {
+#utofjeemls .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -501,15 +606,15 @@
   padding-right: 4px;
 }
 
-#uogchyxkru .gt_column_spanner_outer:first-child {
+#utofjeemls .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#uogchyxkru .gt_column_spanner_outer:last-child {
+#utofjeemls .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#uogchyxkru .gt_column_spanner {
+#utofjeemls .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -521,7 +626,7 @@
   width: 100%;
 }
 
-#uogchyxkru .gt_group_heading {
+#utofjeemls .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -546,7 +651,7 @@
   vertical-align: middle;
 }
 
-#uogchyxkru .gt_empty_group_heading {
+#utofjeemls .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -561,15 +666,15 @@
   vertical-align: middle;
 }
 
-#uogchyxkru .gt_from_md > :first-child {
+#utofjeemls .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#uogchyxkru .gt_from_md > :last-child {
+#utofjeemls .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#uogchyxkru .gt_row {
+#utofjeemls .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -588,7 +693,7 @@
   overflow-x: hidden;
 }
 
-#uogchyxkru .gt_stub {
+#utofjeemls .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -601,7 +706,7 @@
   padding-right: 5px;
 }
 
-#uogchyxkru .gt_stub_row_group {
+#utofjeemls .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -615,11 +720,11 @@
   vertical-align: top;
 }
 
-#uogchyxkru .gt_row_group_first td {
+#utofjeemls .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#uogchyxkru .gt_summary_row {
+#utofjeemls .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -629,16 +734,16 @@
   padding-right: 5px;
 }
 
-#uogchyxkru .gt_first_summary_row {
+#utofjeemls .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#uogchyxkru .gt_first_summary_row.thick {
+#utofjeemls .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#uogchyxkru .gt_last_summary_row {
+#utofjeemls .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -648,7 +753,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#uogchyxkru .gt_grand_summary_row {
+#utofjeemls .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -658,7 +763,7 @@
   padding-right: 5px;
 }
 
-#uogchyxkru .gt_first_grand_summary_row {
+#utofjeemls .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -668,11 +773,11 @@
   border-top-color: #D3D3D3;
 }
 
-#uogchyxkru .gt_striped {
+#utofjeemls .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#uogchyxkru .gt_table_body {
+#utofjeemls .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -681,7 +786,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#uogchyxkru .gt_footnotes {
+#utofjeemls .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -695,7 +800,7 @@
   border-right-color: #D3D3D3;
 }
 
-#uogchyxkru .gt_footnote {
+#utofjeemls .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -704,7 +809,7 @@
   padding-right: 5px;
 }
 
-#uogchyxkru .gt_sourcenotes {
+#utofjeemls .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -718,7 +823,7 @@
   border-right-color: #D3D3D3;
 }
 
-#uogchyxkru .gt_sourcenote {
+#utofjeemls .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -726,60 +831,60 @@
   padding-right: 5px;
 }
 
-#uogchyxkru .gt_left {
+#utofjeemls .gt_left {
   text-align: left;
 }
 
-#uogchyxkru .gt_center {
+#utofjeemls .gt_center {
   text-align: center;
 }
 
-#uogchyxkru .gt_right {
+#utofjeemls .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#uogchyxkru .gt_font_normal {
+#utofjeemls .gt_font_normal {
   font-weight: normal;
 }
 
-#uogchyxkru .gt_font_bold {
+#utofjeemls .gt_font_bold {
   font-weight: bold;
 }
 
-#uogchyxkru .gt_font_italic {
+#utofjeemls .gt_font_italic {
   font-style: italic;
 }
 
-#uogchyxkru .gt_super {
+#utofjeemls .gt_super {
   font-size: 65%;
 }
 
-#uogchyxkru .gt_footnote_marks {
+#utofjeemls .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#uogchyxkru .gt_asterisk {
+#utofjeemls .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#uogchyxkru .gt_slash_mark {
+#utofjeemls .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#uogchyxkru .gt_fraction_numerator {
+#utofjeemls .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#uogchyxkru .gt_fraction_denominator {
+#utofjeemls .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -916,7 +1021,17 @@
 <div class="section level2">
 <h2 id="estimating-alpha-diversity">Estimating Alpha Diversity<a class="anchor" aria-label="anchor" href="#estimating-alpha-diversity"></a>
 </h2>
-<p>Alpha diversity estimation seeks to quantify variation within a sample; the Shannon index (H’) is probably the most widely used measure. It accounts for both richness (i.e. how many types of bacteria are present) and evenness (i.e. how equal the proportions of types is); it is assessed below using the <code><a href="https://rdrr.io/pkg/mia/man/estimateDiversity.html" class="external-link">estimateDiversity()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.13/mia" class="external-link">mia</a></em> package. Then, the <code><a href="https://rdrr.io/pkg/scater/man/plotColData.html" class="external-link">plotColData()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.13/scater" class="external-link">scater</a></em> package is used to generate a basic <em><a href="https://CRAN.R-project.org/package=ggplot2" class="external-link">ggplot2</a></em> plot, which is stylized further using the <em><a href="https://CRAN.R-project.org/package=ggsignif" class="external-link">ggsignif</a></em> and <em><a href="https://CRAN.R-project.org/package=hrbrthemes" class="external-link">hrbrthemes</a></em> packages.</p>
+<p>Alpha diversity estimation seeks to quantify variation within a
+sample; the Shannon index (H’) is probably the most widely used measure.
+It accounts for both richness (i.e. how many types of bacteria are
+present) and evenness (i.e. how equal the proportions of types is); it
+is assessed below using the <code><a href="https://rdrr.io/pkg/mia/man/estimateDiversity.html" class="external-link">estimateDiversity()</a></code> function
+from the <em><a href="https://bioconductor.org/packages/3.14/mia" class="external-link">mia</a></em> package.
+Then, the <code><a href="https://rdrr.io/pkg/scater/man/plotColData.html" class="external-link">plotColData()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.14/scater" class="external-link">scater</a></em>
+package is used to generate a basic <em><a href="https://CRAN.R-project.org/package=ggplot2" class="external-link">ggplot2</a></em> plot,
+which is stylized further using the <em><a href="https://CRAN.R-project.org/package=ggsignif" class="external-link">ggsignif</a></em> and
+<em><a href="https://CRAN.R-project.org/package=hrbrthemes" class="external-link">hrbrthemes</a></em>
+packages.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">countryData</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/pkg/mia/man/estimateDiversity.html" class="external-link">estimateDiversity</a></span><span class="op">(</span>abund_values <span class="op">=</span> <span class="st">"logcounts"</span>, index <span class="op">=</span> <span class="st">"shannon"</span><span class="op">)</span> |&gt;
@@ -932,14 +1047,25 @@
   <span class="fu"><a href="https://rdrr.io/pkg/hrbrthemes/man/theme_ipsum_rc.html" class="external-link">theme_ipsum_rc</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="NUI-Galway-Metagenomics-Workshop_files/figure-html/unnamed-chunk-13-1.png" alt="Alpha Diversity by Country. Alpha Diversity of stool samples from healthy adults, as measured by the Shannon index (H'), is significantly $(Pr(T &lt; t) &lt; 0.001)$ lower among Irish samples, as compared to Italian samples." width="768"><p class="caption">
-Alpha Diversity by Country. Alpha Diversity of stool samples from healthy adults, as measured by the Shannon index (H’), is significantly <span class="math inline">\((Pr(T &lt; t) &lt; 0.001)\)</span> lower among Irish samples, as compared to Italian samples.
+Alpha Diversity by Country. Alpha Diversity of stool samples from
+healthy adults, as measured by the Shannon index (H’), is significantly
+<span class="math inline">\((Pr(T &lt; t) &lt; 0.001)\)</span> lower
+among Irish samples, as compared to Italian samples.
 </p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="analysis-of-beta-diversity">Analysis of Beta Diversity<a class="anchor" aria-label="anchor" href="#analysis-of-beta-diversity"></a>
 </h2>
-<p>Beta diversity is a measurement of between sample variation that is usually qualitatively assessed using a low-dimensional embedding; classically this has been done in metagenomics with a principal coordinates analysis (PCoA) of Bray-Curtis dissimilarity.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This is done below using the <code><a href="https://rdrr.io/pkg/scater/man/runMDS.html" class="external-link">runMDS()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.13/scater" class="external-link">scater</a></em> package with the <code>vegdist</code> function from the <em><a href="https://CRAN.R-project.org/package=vegan" class="external-link">vegan</a></em> package. The <code><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.13/scater" class="external-link">scater</a></em> package is used to generate a basic <em><a href="https://CRAN.R-project.org/package=ggplot2" class="external-link">ggplot2</a></em> plot, which is styled further.</p>
+<p>Beta diversity is a measurement of between sample variation that is
+usually qualitatively assessed using a low-dimensional embedding;
+classically this has been done in metagenomics with a principal
+coordinates analysis (PCoA) of Bray-Curtis dissimilarity.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This is done below
+using the <code><a href="https://rdrr.io/pkg/scater/man/runMDS.html" class="external-link">runMDS()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.14/scater" class="external-link">scater</a></em>
+package with the <code>vegdist</code> function from the <em><a href="https://CRAN.R-project.org/package=vegan" class="external-link">vegan</a></em> package.
+The <code><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.14/scater" class="external-link">scater</a></em>
+package is used to generate a basic <em><a href="https://CRAN.R-project.org/package=ggplot2" class="external-link">ggplot2</a></em> plot,
+which is styled further.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">countryData</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runMDS.html" class="external-link">runMDS</a></span><span class="op">(</span>FUN <span class="op">=</span> <span class="va">vegdist</span>, method <span class="op">=</span> <span class="st">"bray"</span>, exprs_values <span class="op">=</span> <span class="st">"logcounts"</span>, name <span class="op">=</span> <span class="st">"BrayCurtis"</span><span class="op">)</span> |&gt;
@@ -954,10 +1080,18 @@ Alpha Diversity by Country. Alpha Diversity of stool samples from healthy adults
   <span class="fu"><a href="https://rdrr.io/pkg/hrbrthemes/man/theme_ipsum_rc.html" class="external-link">theme_ipsum_rc</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="NUI-Galway-Metagenomics-Workshop_files/figure-html/unnamed-chunk-14-1.png" alt="Beta Diversity by Country, Bray-Curtis PCoA. The first two principal coordinates demonstrate good seperation of Irish and Italian stool samples from healthy adults, suggesting differences in gut microbial composition between the two populations." width="768"><p class="caption">
-Beta Diversity by Country, Bray-Curtis PCoA. The first two principal coordinates demonstrate good seperation of Irish and Italian stool samples from healthy adults, suggesting differences in gut microbial composition between the two populations.
+Beta Diversity by Country, Bray-Curtis PCoA. The first two principal
+coordinates demonstrate good seperation of Irish and Italian stool
+samples from healthy adults, suggesting differences in gut microbial
+composition between the two populations.
 </p>
 </div>
-<p>To address the issue of using principal coordinates analysis (PCoA) with a dissimilarity, beta diversity can be assessed using the UMAP (Uniform Manifold Approximation and Projection) algorithm instead.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> The <code><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.13/scater" class="external-link">scater</a></em> package is used below; otherwise, the syntax is largely the same as above.</p>
+<p>To address the issue of using principal coordinates analysis (PCoA)
+with a dissimilarity, beta diversity can be assessed using the UMAP
+(Uniform Manifold Approximation and Projection) algorithm instead.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> The
+<code><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.14/scater" class="external-link">scater</a></em>
+package is used below; otherwise, the syntax is largely the same as
+above.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">countryData</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP</a></span><span class="op">(</span>exprs_values <span class="op">=</span> <span class="st">"logcounts"</span>, name <span class="op">=</span> <span class="st">"UMAP"</span><span class="op">)</span> |&gt;
@@ -972,35 +1106,58 @@ Beta Diversity by Country, Bray-Curtis PCoA. The first two principal coordinates
   <span class="fu"><a href="https://rdrr.io/pkg/hrbrthemes/man/theme_ipsum_rc.html" class="external-link">theme_ipsum_rc</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="NUI-Galway-Metagenomics-Workshop_files/figure-html/unnamed-chunk-15-1.png" alt="Beta Diversity by Country, UMAP Embedding. The two-dimensional UMAP embedding demonstrates good seperation of Irish and Italian stool samples from healthy adults, suggesting differences in gut microbial composition between the two populations." width="768"><p class="caption">
-Beta Diversity by Country, UMAP Embedding. The two-dimensional UMAP embedding demonstrates good seperation of Irish and Italian stool samples from healthy adults, suggesting differences in gut microbial composition between the two populations.
+Beta Diversity by Country, UMAP Embedding. The two-dimensional UMAP
+embedding demonstrates good seperation of Irish and Italian stool
+samples from healthy adults, suggesting differences in gut microbial
+composition between the two populations.
 </p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="modeling-bacteria-by-country">Modeling Bacteria by Country<a class="anchor" aria-label="anchor" href="#modeling-bacteria-by-country"></a>
 </h2>
-<p>Where beta diversity embeddings suggest there are features that separate Irish and Italian stool samples from healthy adults, you might like to know which are most differentially abundance. To assess this the <em><a href="https://bioconductor.org/packages/3.13/ANCOMBC" class="external-link">ANCOMBC</a></em> package has a metagenomics-specific additive log-ratio model for the task. However, the <code><a href="https://rdrr.io/pkg/ANCOMBC/man/ancombc.html" class="external-link">ancombc()</a></code> function requires a <code>phyloseq</code> class objects – one can be created using the <code><a href="https://rdrr.io/pkg/mia/man/makePhyloseqFromTreeSummarizedExperiment.html" class="external-link">makePhyloseqFromTreeSummarizedExperiment()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.13/mia" class="external-link">mia</a></em> package, as shown below.</p>
+<p>Where beta diversity embeddings suggest there are features that
+separate Irish and Italian stool samples from healthy adults, you might
+like to know which are most differentially abundance. To assess this the
+<em><a href="https://bioconductor.org/packages/3.14/ANCOMBC" class="external-link">ANCOMBC</a></em>
+package has a metagenomics-specific additive log-ratio model for the
+task. However, the <code><a href="https://rdrr.io/pkg/ANCOMBC/man/ancombc.html" class="external-link">ancombc()</a></code> function requires a
+<code>phyloseq</code> class objects – one can be created using the
+<code><a href="https://rdrr.io/pkg/mia/man/makePhyloseqFromTreeSummarizedExperiment.html" class="external-link">makePhyloseqFromTreeSummarizedExperiment()</a></code> function from
+the <em><a href="https://bioconductor.org/packages/3.14/mia" class="external-link">mia</a></em> package,
+as shown below.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ancombcResults</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="https://rdrr.io/pkg/mia/man/makePhyloseqFromTreeSummarizedExperiment.html" class="external-link">makePhyloseqFromTreeSummarizedExperiment</a></span><span class="op">(</span><span class="va">countryData</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/pkg/ANCOMBC/man/ancombc.html" class="external-link">ancombc</a></span><span class="op">(</span><span class="st">"country"</span><span class="op">)</span></code></pre></div>
-<p>The results of the <em><a href="https://bioconductor.org/packages/3.13/ANCOMBC" class="external-link">ANCOMBC</a></em> model are in a strange <code>list</code> structure and have to be coerced into a <code>data.frame</code> before they can be displayed; the <code><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_cols()</a></code> function from the <em><a href="https://CRAN.R-project.org/package=dplyr" class="external-link">dplyr</a></em> package is used below.</p>
+<p>The results of the <em><a href="https://bioconductor.org/packages/3.14/ANCOMBC" class="external-link">ANCOMBC</a></em>
+model are in a strange <code>list</code> structure and have to be
+coerced into a <code>data.frame</code> before they can be displayed; the
+<code><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_cols()</a></code> function from the <em><a href="https://CRAN.R-project.org/package=dplyr" class="external-link">dplyr</a></em> package
+is used below.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ancombcTable</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">ancombcResults</span><span class="op">[[</span><span class="st">"res"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p>Yet, the column names of the results table are missing and have to be assigned, as shown below.</p>
+<p>Yet, the column names of the results table are missing and have to be
+assigned, as shown below.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">ancombcTable</span><span class="op">)</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ancombcResults</span><span class="op">[[</span><span class="st">"res"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p>The row names of the results table are big long strings of microbial taxonomies that will need some editing if they are to be displayed nicely. the <code><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column()</a></code> function from the <em><a href="https://CRAN.R-project.org/package=tibble" class="external-link">tibble</a></em> package is used below to turn them into a column so they can be edited.</p>
+<p>The row names of the results table are big long strings of microbial
+taxonomies that will need some editing if they are to be displayed
+nicely. the <code><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column()</a></code> function from the <em><a href="https://CRAN.R-project.org/package=tibble" class="external-link">tibble</a></em> package
+is used below to turn them into a column so they can be edited.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ancombcTable</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="va">ancombcTable</span><span class="op">)</span></code></pre></div>
-<p>Before the row names are split into 7 pieces, the names of columns that each piece will be assigned to are created below.</p>
+<p>Before the row names are split into 7 pieces, the names of columns
+that each piece will be assigned to are created below.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rankNames</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span></code></pre></div>
-<p>The row names of the results table are then transformed using <em><a href="https://CRAN.R-project.org/package=tidyr" class="external-link">tidyr</a></em>, <em><a href="https://CRAN.R-project.org/package=dplyr" class="external-link">dplyr</a></em>, and <em><a href="https://CRAN.R-project.org/package=stringr" class="external-link">stringr</a></em>, as shown below.</p>
+<p>The row names of the results table are then transformed using <em><a href="https://CRAN.R-project.org/package=tidyr" class="external-link">tidyr</a></em>, <em><a href="https://CRAN.R-project.org/package=dplyr" class="external-link">dplyr</a></em>, and
+<em><a href="https://CRAN.R-project.org/package=stringr" class="external-link">stringr</a></em>, as
+shown below.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ancombcTable</span><span class="op">[[</span><span class="st">"rowname"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">ancombcTable</span>, <span class="va">rowname</span>, <span class="va">rankNames</span>, sep <span class="op">=</span> <span class="st">"\\|"</span><span class="op">)</span> |&gt;
@@ -1009,7 +1166,13 @@ Beta Diversity by Country, UMAP Embedding. The two-dimensional UMAP embedding de
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span>.fns <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace_all</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">"_"</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">Species</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">label</span><span class="op">)</span></code></pre></div>
-<p>Once the results table is in good shape, it can be filtered to include only bacterial species that exhibited large (e.g. <code>abs(beta) &gt; 1</code>) and significant (<code>-log10(q_val) &gt; 5</code>) differences in abundances between the two countries. In the example below, the table is sorted by effect size and a number of formatting conventions are applied before displaying the results table.</p>
+<p>Once the results table is in good shape, it can be filtered to
+include only bacterial species that exhibited large
+(e.g. <code>abs(beta) &gt; 1</code>) and significant
+(<code>-log10(q_val) &gt; 5</code>) differences in abundances between
+the two countries. In the example below, the table is sorted by effect
+size and a number of formatting conventions are applied before
+displaying the results table.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ancombcTable</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">beta</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">q_val</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">5</span><span class="op">)</span> |&gt;
@@ -1023,6 +1186,13 @@ Beta Diversity by Country, UMAP Embedding. The two-dimensional UMAP embedding de
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>q_val <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">q_val</span> <span class="op">==</span> <span class="fl">0</span>, <span class="st">"&lt; 0.001"</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">q_val</span>, nsmall <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"β"</span>, <span class="st">"SE"</span>, <span class="st">"P"</span>, <span class="st">"Q"</span><span class="op">)</span>, align <span class="op">=</span> <span class="st">"cccc"</span>, escape <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <table class="table">
+<colgroup>
+<col width="48%">
+<col width="17%">
+<col width="9%">
+<col width="12%">
+<col width="12%">
+</colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="center">β</th>
@@ -1369,7 +1539,16 @@ Beta Diversity by Country, UMAP Embedding. The two-dimensional UMAP embedding de
 </tr>
 </tbody>
 </table>
-<p>While the table above is somewhat interesting, the results are better summarized as a volcano plot (i.e. statistical significance versus fold change) and one can be made using the results table. To shorten labels for readability, <em><a href="https://CRAN.R-project.org/package=stringr" class="external-link">stringr</a></em> is first used to abbreviate species names by replacing the first word of the name with a single letter followed by a period. Next, the same filtering of the table as above is undertaken, and the color scheme used in all the plots above is applied. Both labeling and coloring are only applied where effect size and significance thresholds are met, as denoted by the dotted lines.</p>
+<p>While the table above is somewhat interesting, the results are better
+summarized as a volcano plot (i.e. statistical significance versus fold
+change) and one can be made using the results table. To shorten labels
+for readability, <em><a href="https://CRAN.R-project.org/package=stringr" class="external-link">stringr</a></em> is
+first used to abbreviate species names by replacing the first word of
+the name with a single letter followed by a period. Next, the same
+filtering of the table as above is undertaken, and the color scheme used
+in all the plots above is applied. Both labeling and coloring are only
+applied where effect size and significance thresholds are met, as
+denoted by the dotted lines.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ancombcTable</span> |&gt;
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>rowname <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace</a></span><span class="op">(</span><span class="va">rowname</span>, <span class="st">"^([A-Z])([a-z])+ "</span>, <span class="st">"\\1. "</span><span class="op">)</span><span class="op">)</span> |&gt;
@@ -1394,16 +1573,27 @@ Beta Diversity by Country, UMAP Embedding. The two-dimensional UMAP embedding de
   <span class="fu"><a href="https://rdrr.io/pkg/hrbrthemes/man/theme_ipsum_rc.html" class="external-link">theme_ipsum_rc</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="NUI-Galway-Metagenomics-Workshop_files/figure-html/unnamed-chunk-23-1.png" alt="Volcano Plot of Differentially Abundance Bacterial Species. In the model and the figure, Irish samples are the reference group such that bacterial species in blue at the left are significantly more abundant in Irish samples and those in yellow at the right are significantly more abundant in Italian samples." width="912"><p class="caption">
-Volcano Plot of Differentially Abundance Bacterial Species. In the model and the figure, Irish samples are the reference group such that bacterial species in blue at the left are significantly more abundant in Irish samples and those in yellow at the right are significantly more abundant in Italian samples.
+Volcano Plot of Differentially Abundance Bacterial Species. In the model
+and the figure, Irish samples are the reference group such that
+bacterial species in blue at the left are significantly more abundant in
+Irish samples and those in yellow at the right are significantly more
+abundant in Italian samples.
 </p>
 </div>
-<p>As a bonus, do a Google or a PubMed search for <em>Holdemanella biformis</em> to see what condition(s) it is associated with and then explore differences between the two countries using <a href="https://vizhub.healthdata.org/gbd-compare/" class="external-link">GBD Compare</a> visualizations.</p>
+<p>As a bonus, do a Google or a PubMed search for <em>Holdemanella
+biformis</em> to see what condition(s) it is associated with and then
+explore differences between the two countries using <a href="https://vizhub.healthdata.org/gbd-compare/" class="external-link">GBD Compare</a>
+visualizations.</p>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p>Bray-Curtis dissimilarity is not a metric distance and does not satisfy the triangle inequality, but it is generally accepted in metagenomics.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>McInnes, L., Healy, J. &amp; Melville, J. UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction. <em>arXiv [stat.ML]</em> (2018)<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Bray-Curtis dissimilarity is not a metric distance and
+does not satisfy the triangle inequality, but it is generally accepted
+in metagenomics.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>McInnes, L., Healy, J. &amp; Melville, J. UMAP: Uniform
+Manifold Approximation and Projection for Dimension Reduction. <em>arXiv
+[stat.ML]</em> (2018)<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
@@ -1420,12 +1610,14 @@ Volcano Plot of Differentially Abundance Bacterial Species. In the model and the
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
+<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas
+Schiffer, Jennifer Wokaty.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>

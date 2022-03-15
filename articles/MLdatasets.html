@@ -100,12 +100,14 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Create datasets for machine learning</h1>
-                        <h4 data-toc-skip class="author">Levi Waldron</h4>
+                        <h4 data-toc-skip class="author">Levi
+Waldron</h4>
             <address class="author_afil">
-      CUNY Graduate School of Public Health and Health Policy<br><a class="author_email" href="mailto:#"></a><a href="mailto:levi.waldron@sph.cuny.edu" class="email">levi.waldron@sph.cuny.edu</a>
+      CUNY Graduate School of Public Health and Health
+Policy<br><a class="author_email" href="mailto:#"></a><a href="mailto:levi.waldron@sph.cuny.edu" class="email">levi.waldron@sph.cuny.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">9 March 2022</h4>
+            <h4 data-toc-skip class="date">15 March 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/HEAD/vignettes/MLdatasets.Rmd"><code>vignettes/MLdatasets.Rmd</code></a></small>
       <div class="hidden name"><code>MLdatasets.Rmd</code></div>
@@ -114,13 +116,22 @@
 
     
     
-<p>This vignette identifies and writes to disk datasets for use in multi-dataset machine learning. For each relevant study condition, two files are written:</p>
+<p>This vignette identifies and writes to disk datasets for use in
+multi-dataset machine learning. For each relevant study condition, two
+files are written:</p>
 <ol style="list-style-type: decimal">
-<li>A <code>.rda</code> file containing a TreeSummarizedExperiment with full colData, rowData, a phylogenetic tree, and assay data containing taxonomic data.</li>
-<li>A <code>.csv.gz</code> file containing only key sample metadata, and taxonomic data (variables in columns)</li>
+<li>A <code>.rda</code> file containing a TreeSummarizedExperiment with
+full colData, rowData, a phylogenetic tree, and assay data containing
+taxonomic data.</li>
+<li>A <code>.csv.gz</code> file containing only key sample metadata, and
+taxonomic data (variables in columns)</li>
 </ol>
-<p>See <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/MLdatasets.Rmd">source file on GitHub</a></p>
-<p>Do <code>BiocManager::install("waldronlab/curatedMetagenomicAnalyses")</code> to install the <code>makeSEforCondition</code> function and to run this vignette.</p>
+<p>See <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/MLdatasets.Rmd">source
+file on GitHub</a></p>
+<p>Do
+<code>BiocManager::install("waldronlab/curatedMetagenomicAnalyses")</code>
+to install the <code>makeSEforCondition</code> function and to run this
+vignette.</p>
 <p>Packages used here:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></span><span class="op">)</span>
@@ -129,11 +140,12 @@
 <div class="section level2">
 <h2 id="investigate-potential-response-variables">Investigate potential response variables<a class="anchor" aria-label="anchor" href="#investigate-potential-response-variables"></a>
 </h2>
-<p>These are the 10 study conditions most commonly found in curatedMetagenomicData:</p>
+<p>These are the 10 study conditions most commonly found in
+curatedMetagenomicData:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"sampleMetadata"</span><span class="op">)</span>
-<span class="va">availablediseases</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">sampleMetadata</span>, <span class="va">study_condition</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span>
+<span class="va">availablediseases</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">sampleMetadata</span>, <span class="va">study_condition</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">availablediseases</span></code></pre></div>
 <pre><code><span class="co">## .</span>
@@ -174,8 +186,8 @@
 <p>And the number of studies they are found in:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">availablediseases</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sampleMetadata</span>, <span class="va">study_condition</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">study_name</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sampleMetadata</span>, <span class="va">study_condition</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">study_name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
     <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">availablediseases</span><span class="op">)</span>
@@ -222,7 +234,8 @@
 <span class="co">## </span>
 <span class="co">## $acute_diarrhoea</span>
 <span class="co">## [1] "DavidLA_2015" "KieserS_2018"</span></code></pre>
-<p>Each of these datasets has six data types associated with it; for example:</p>
+<p>Each of these datasets has six data types associated with it; for
+example:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData</a></span><span class="op">(</span><span class="st">"JieZ_2017.+"</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## 2021-03-31.JieZ_2017.gene_families</span>
@@ -230,7 +243,13 @@
 <span class="co">## 2021-03-31.JieZ_2017.marker_presence</span>
 <span class="co">## 2021-03-31.JieZ_2017.pathway_abundance</span>
 <span class="co">## 2021-03-31.JieZ_2017.pathway_coverage</span>
-<span class="co">## 2021-03-31.JieZ_2017.relative_abundance</span></code></pre>
+<span class="co">## 2021-03-31.JieZ_2017.relative_abundance</span>
+<span class="co">## 2021-10-14.JieZ_2017.gene_families</span>
+<span class="co">## 2021-10-14.JieZ_2017.marker_abundance</span>
+<span class="co">## 2021-10-14.JieZ_2017.marker_presence</span>
+<span class="co">## 2021-10-14.JieZ_2017.pathway_abundance</span>
+<span class="co">## 2021-10-14.JieZ_2017.pathway_coverage</span>
+<span class="co">## 2021-10-14.JieZ_2017.relative_abundance</span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="write-relative-abundance-datasets-to-disk">Write relative abundance datasets to disk<a class="anchor" aria-label="anchor" href="#write-relative-abundance-datasets-to-disk"></a>
@@ -376,12 +395,14 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
+<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas
+Schiffer, Jennifer Wokaty.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>

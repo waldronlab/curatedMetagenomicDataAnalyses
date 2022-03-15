@@ -101,7 +101,8 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Exploration of the liver cirrhosis dataset</h1>
-                        <h4 data-toc-skip class="author">Levi Waldron</h4>
+                        <h4 data-toc-skip class="author">Levi
+Waldron</h4>
             
             <h4 data-toc-skip class="date">July 19, 2021</h4>
       
@@ -123,12 +124,11 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">se</span> <span class="op">&lt;-</span>
     <span class="fu">curatedMetagenomicAnalyses</span><span class="fu">::</span><span class="fu"><a href="../reference/makeSEforCondition.html">makeSEforCondition</a></span><span class="op">(</span><span class="st">"cirrhosis"</span>, removestudies <span class="op">=</span> <span class="st">"HMP_2019_ibdmdb"</span>, dataType <span class="op">=</span> <span class="st">"relative_abundance"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## snapshotDate(): 2021-05-18</span></code></pre>
+<pre><code><span class="co">## snapshotDate(): 2021-10-19</span></code></pre>
 <pre><code><span class="co">## </span>
-<span class="co">## $`2021-03-31.LoombaR_2017.relative_abundance`</span>
+<span class="co">## $`2021-10-14.LoombaR_2017.relative_abundance`</span>
 <span class="co">## dropping rows without rowTree matches:</span>
 <span class="co">##   k__Bacteria|p__Actinobacteria|c__Coriobacteriia|o__Coriobacteriales|f__Coriobacteriaceae|g__Collinsella|s__Collinsella_stercoris</span>
-<span class="co">##   k__Bacteria|p__Actinobacteria|c__Coriobacteriia|o__Coriobacteriales|f__Coriobacteriaceae|g__Enorma|s__[Collinsella]_massiliensis</span>
 <span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Bacillales|f__Bacillales_unclassified|g__Gemella|s__Gemella_bergeri</span>
 <span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Lactobacillales|f__Carnobacteriaceae|g__Granulicatella|s__Granulicatella_elegans</span>
 <span class="co">##   k__Bacteria|p__Firmicutes|c__Erysipelotrichia|o__Erysipelotrichales|f__Erysipelotrichaceae|g__Bulleidia|s__Bulleidia_extructa</span>
@@ -387,7 +387,9 @@
 </tr>
 </tbody>
 </table></div>
-<p>There seems to be strong correlation between study condition and current antibiotics use, raising questions of causality direction in these predictions:</p>
+<p>There seems to be strong correlation between study condition and
+current antibiotics use, raising questions of causality direction in
+these predictions:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">study_condition</span>, <span class="va">df</span><span class="op">$</span><span class="va">antibiotics_current_use</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##            </span>
@@ -428,12 +430,17 @@
 <span class="co">##      disease_stage bilubirin prothrombin_time       inr       ctp</span>
 <span class="co">##          &lt;integer&gt; &lt;numeric&gt;        &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;</span>
 <span class="co">## LV-1            NA      1.82               NA      1.18         6</span></code></pre>
-<p>Note, this a result of species where phylogenetic information was unavailable in building of the <code>TreeSummarizedExperiment</code>. It would be possible to take data directly from <code>ExperimentHub</code> to avoid the data loss, but the data loss is rare and small and probably unimportant for most purposes.</p>
+<p>Note, this a result of species where phylogenetic information was
+unavailable in building of the <code>TreeSummarizedExperiment</code>. It
+would be possible to take data directly from <code>ExperimentHub</code>
+to avoid the data loss, but the data loss is rare and small and probably
+unimportant for most purposes.</p>
 </div>
 <div class="section level2">
 <h2 id="siamcat-analysis">SIAMCAT analysis<a class="anchor" aria-label="anchor" href="#siamcat-analysis"></a>
 </h2>
-<p>From the <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/SIAMCAT/inst/doc/SIAMCAT_vignette.html" class="external-link">SIAMCAT vignette</a>.</p>
+<p>From the <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/SIAMCAT/inst/doc/SIAMCAT_vignette.html" class="external-link">SIAMCAT
+vignette</a>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"SIAMCAT"</span><span class="op">)</span><span class="op">)</span>
   <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"SIAMCAT"</span><span class="op">)</span>
@@ -447,7 +454,7 @@
 <span class="co">##    cirrhosis</span>
 <span class="co">## Label used as control:</span>
 <span class="co">##    control</span></code></pre>
-<pre><code><span class="co">## + finished create.label.from.metadata in 0.01 s</span></code></pre>
+<pre><code><span class="co">## + finished create.label.from.metadata in 0.009 s</span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sc.obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/siamcat.html" class="external-link">siamcat</a></span><span class="op">(</span>feat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span>,
     label<span class="op">=</span><span class="va">labs</span>,
@@ -457,14 +464,14 @@
 <pre><code><span class="co">## + Keeping labels of 282 sample(s).</span></code></pre>
 <pre><code><span class="co">## +++ checking sample number per class</span></code></pre>
 <pre><code><span class="co">## +++ checking overlap between samples and metadata</span></code></pre>
-<pre><code><span class="co">## + finished validate.data in 0.051 s</span></code></pre>
+<pre><code><span class="co">## + finished validate.data in 0.043 s</span></code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/methods/show.html" class="external-link">show</a></span><span class="op">(</span><span class="va">sc.obj</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## siamcat-class object</span>
 <span class="co">## label()                Label object:         150 control and 132 cirrhosis samples</span>
 <span class="co">## </span>
 <span class="co">## contains phyloseq-class experiment-level object @phyloseq:</span>
-<span class="co">## phyloseq@otu_table()   OTU Table:            [ 693 taxa and 282 samples ]</span>
+<span class="co">## phyloseq@otu_table()   OTU Table:            [ 697 taxa and 282 samples ]</span>
 <span class="co">## phyloseq@sam_data()    Sample Data:          [ 282 samples by 31 sample variables ]</span></code></pre>
 <p>Unsupervised filtering:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
@@ -506,12 +513,14 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
+<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas
+Schiffer, Jennifer Wokaty.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>
