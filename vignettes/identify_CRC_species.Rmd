@@ -1,0 +1,85 @@
+---
+title: "List all species present in CRC datasets"
+author: 
+  - name: Levi Waldron
+    affiliation:
+    - CUNY Graduate School of Public Health and Health Policy
+    email: levi.waldron@sph.cuny.edu
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+date: "`r BiocStyle::doc_date()`"
+package: "`r BiocStyle::pkg_ver('curatedMetagenomicAnalyses')`"
+vignette: >
+  %\VignetteIndexEntry{Identify all species seen in CRC}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+This analysis selects a subset of samples (all CRC-related in this example), 
+sorts those those species in order of descending prevalence, then displays a 
+table of prevalences and writes the prevalences to file.
+
+Required packages:
+```{r}
+suppressPackageStartupMessages({
+  library(curatedMetagenomicData)
+  library(dplyr)
+  library(table1)
+})
+```
+
+# Select samples
+
+Note that a few species without phylogenetic information are lost.
+
+```{r}
+crc_subset <- filter(sampleMetadata, study_condition == "CRC") %>%
+  returnSamples(dataType = "relative_abundance",
+                rownames = "short")
+```
+
+Create a summary table of the cohort:
+
+```{r}
+table1::table1( ~ disease + disease_subtype + age + gender + country,
+                data = colData(crc_subset))
+```
+
+# Show species in order of decreasing prevalence
+
+```{r}
+prevalences <- rowSums(assay(crc_subset) > 0) / ncol(crc_subset) 
+prevalences <- tibble(species = names(prevalences), prevalence = signif(prevalences, 2)) %>%
+  filter(prevalence > 0) %>%
+  arrange(-prevalence)
+```
+
+```{r}
+DT::datatable(prevalences)
+```
+
+Write to disk:
+
+```{r}
+write.csv(prevalences, row.names = FALSE, file = "prevalences.csv")
+```
+
+Download the zipped prevalences file produced by BiocStyle::Biocpkg("curatedMetagenomicData") version 3.2.3: [prevalences.csv.zip](https://github.com/waldronlab/curatedMetagenomicAnalyses/files/8254646/prevalences.csv.zip)
+
+# Session Info
+
+```{r}
+sessioninfo::session_info()
+```
+
