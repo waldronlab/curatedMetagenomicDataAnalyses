@@ -40,7 +40,6 @@ pre code {
 </style>
 
 ```{r setup, include = FALSE}
-library("knitr")
 library(kableExtra)
 
 options(width = 120)
@@ -113,12 +112,12 @@ colData(tse)[which(colData(tse)$study_name == "AsnicarF_2021" & colData(tse)$cou
 
 
 The TreeSummarizedExperiment object of taxonomic relative abundances stores the entire taxonomy (from Kingdom to species-level) of each microbial species. 
-We therefore use the function _splitByRanks_ from the _mia_ package which allows us to select **higher** taxonomic level. We will focus on Species.
+We therefore use the function _splitByRanks_ from the  `r  BiocStyle::Biocpkg("mia")` package which allows us to select **higher** taxonomic level. We will focus on Species.
 
 We are interested in species only, so we modify the TSE object accordingly
 ```{r message=FALSE}
 library(mia)
-species_tse <- splitByRanks(tse, rank = "Species")[[1]]
+species_tse <- splitByRanks(tse, rank = "species")[[1]]
 ```
 
 # Analysis of microbial species by a linear model and computation of an effect size for each species in each dataset
@@ -242,7 +241,7 @@ computeStandardizedMeanDifference <- function(tse_object){
 ```
 
 
-Now that we have computed effect-sizes for each population, we can meta-analyze each microbial feature. In order to do this, we define a function applying the “metacor” function from the package “metafor”.
+Now that we have computed effect-sizes for each population, we can meta-analyze each microbial feature. In order to do this, we define a function applying the _metacor_ function from the package `BiocStyle::CRANpkg("metafor")`.
 ```{r}
 runMetaanalysis <- function(R_vector, n) {
   a <- meta::metacor(cor=R_vector,
