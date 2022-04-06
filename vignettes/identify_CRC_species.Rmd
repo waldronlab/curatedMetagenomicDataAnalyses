@@ -1,5 +1,5 @@
 ---
-title: "List all species present in CRC datasets"
+title: "List all species present in colorectal cancer datasets"
 author: 
   - name: Levi Waldron
     affiliation:
@@ -26,16 +26,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
-This analysis selects a subset of samples (all CRC-related in this example), 
-sorts those those species in order of descending prevalence, then displays a 
-table of prevalences and writes the prevalences to file.
+This analysis:
+1. selects a subset of samples (all CRC-related in this example), 
+2. uses the `r CRANpkg("table1")` package to display a table of the characteristics of the included cohort, 
+3. sorts species in order of descending prevalence, 
+4. uses the `r CRANpkg("DT")` package `datatable` function to display a searchable, paged table of prevalences, and
+4. writes the prevalences to file.
 
 Required packages:
 ```{r}
 suppressPackageStartupMessages({
+  library(table1)
+  library(DT)
   library(curatedMetagenomicData)
   library(dplyr)
-  library(table1)
 })
 ```
 
@@ -49,10 +53,12 @@ crc_subset <- filter(sampleMetadata, study_condition == "CRC") %>%
                 rownames = "short")
 ```
 
-Create a summary table of the cohort:
+# Cohort characteristics
+
+Create a summary table of the participants in this cohort:
 
 ```{r}
-table1::table1( ~ disease + disease_subtype + age + gender + country,
+table1::table1( ~ disease + disease_subtype + age + gender + country + study_name,
                 data = colData(crc_subset))
 ```
 
