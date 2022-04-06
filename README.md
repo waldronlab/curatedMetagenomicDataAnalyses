@@ -39,6 +39,7 @@ BiocManager::install("waldronlab/curatedMetagenomicAnalyses", dependencies = TRU
 
 * [Create datasets for machine learning](https://waldronlab.io/curatedMetagenomicAnalyses/articles/MLdatasets.html)
 * [Exploration of the liver cirrhosis dataset](https://waldronlab.io/curatedMetagenomicAnalyses/articles/explorecirrhosis.html)
+* [Select all colorectal cancer patients and create a cohort table, calculate prevalence of all species found in their stool microbiomes and create a dynamic searchable html table](https://waldronlab.io/curatedMetagenomicDataAnalyses/articles/identify_CRC_species.html)
 * [Meta-analysis of age-related microbial species using cMD3](https://waldronlab.io/curatedMetagenomicAnalyses/articles/Age_metaanalysis_vignette.html)
 * [Meta-analysis of sex-related microbial species using cMD3](https://waldronlab.io/curatedMetagenomicAnalyses/articles/Sex_metaanalysis_vignette.html)
 * [NUI Galway Metagenomics Workshop](https://waldronlab.io/curatedMetagenomicAnalyses/articles/NUI-Galway-Metagenomics-Workshop.html)

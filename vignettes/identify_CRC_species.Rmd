@@ -27,6 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Overview
 
 This analysis:
+
 1. selects a subset of samples (all CRC-related in this example), 
 2. uses the `r CRANpkg("table1")` package to display a table of the characteristics of the included cohort, 
 3. sorts species in order of descending prevalence, 

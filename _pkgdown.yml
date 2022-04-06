@@ -16,7 +16,7 @@ navbar:
           href: articles/MLdatasets.html
         - text: Exploration of the liver cirrhosis dataset
           href: articles/explorecirrhosis.html
-        - text: Prevalences of all species found in stool microbiomes of colorectal cancer patients (dynamic table)
+        - text: Colorectal cancer stool microbiome species prevalence (dynamic table)
           href: articles/identify_CRC_species.html
         - text: Meta-analysis of age-related microbial species using cMD3
           href: articles/Age_metaanalysis_vignette.html
