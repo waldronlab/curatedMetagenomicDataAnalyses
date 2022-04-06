@@ -47,7 +47,7 @@ suppressPackageStartupMessages({
 
 Note that a few species without phylogenetic information are lost.
 
-```{r}
+```{r, message=FALSE}
 crc_subset <- filter(sampleMetadata, study_condition == "CRC") %>%
   returnSamples(dataType = "relative_abundance",
                 rownames = "short")
@@ -64,14 +64,14 @@ table1::table1( ~ disease + disease_subtype + age + gender + country + study_nam
 
 # Show species in order of decreasing prevalence
 
+Prevalences shown are the fraction of specimens from CRC patients with non-zero 
+relative abundance.
+
 ```{r}
 prevalences <- rowSums(assay(crc_subset) > 0) / ncol(crc_subset) 
 prevalences <- tibble(species = names(prevalences), prevalence = signif(prevalences, 2)) %>%
   filter(prevalence > 0) %>%
   arrange(-prevalence)
-```
-
-```{r}
 DT::datatable(prevalences)
 ```
 
@@ -81,7 +81,7 @@ Write to disk:
 write.csv(prevalences, row.names = FALSE, file = "prevalences.csv")
 ```
 
-Download the zipped prevalences file produced by BiocStyle::Biocpkg("curatedMetagenomicData") version 3.2.3: [prevalences.csv.zip](https://github.com/waldronlab/curatedMetagenomicAnalyses/files/8254646/prevalences.csv.zip)
+Download the zipped prevalences file produced by `r BiocStyle::Biocpkg("curatedMetagenomicData")` version 3.2.3: [prevalences.csv.zip](https://github.com/waldronlab/curatedMetagenomicAnalyses/files/8254646/prevalences.csv.zip)
 
 # Session Info
 
