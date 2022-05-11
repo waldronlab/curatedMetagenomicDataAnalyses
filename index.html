@@ -104,17 +104,11 @@
 <div class="section level1">
 <div class="page-header"><h1 id="curated-metagenomic-analyses">Curated Metagenomic Analyses<a class="anchor" aria-label="anchor" href="#curated-metagenomic-analyses"></a>
 </h1></div>
-<p>This repository provides biologically relevant analyses using the <a href="https://bioconductor.org/packages/curatedMetagenomicData/" class="external-link">curatedMetagenomicData</a>
-package, both using R/Bioconductor and using Python. You can run both R
-and Python analyses locally in the provided Docker container, or on the
-Cloud for free.</p>
+<p>This repository provides biologically relevant analyses using the <a href="https://bioconductor.org/packages/curatedMetagenomicData/" class="external-link">curatedMetagenomicData</a> package, both using R/Bioconductor and using Python. You can run both R and Python analyses locally in the provided Docker container, or on the Cloud for free.</p>
 <div class="section level2">
 <h2 id="running-on-the-cloud-for-free">Running on the Cloud for free<a class="anchor" aria-label="anchor" href="#running-on-the-cloud-for-free"></a>
 </h2>
-<p>A machine with all dependencies, code from this repository, and
-Jupyterlab (with R and Python3) and RStudio running is available at <a href="http://app.orchestra.cancerdatasci.org/" class="external-link uri">http://app.orchestra.cancerdatasci.org/</a> (search for the
-Curated Metagenomic Analyses workshop). You can use these machines for
-up to 8 hours at a time.</p>
+<p>A machine with all dependencies, code from this repository, and Jupyterlab (with R and Python3) and RStudio running is available at <a href="http://app.orchestra.cancerdatasci.org/" class="external-link uri">http://app.orchestra.cancerdatasci.org/</a> (search for the Curated Metagenomic Analyses workshop). You can use these machines for up to 8 hours at a time.</p>
 </div>
 <div class="section level2">
 <h2 id="running-locally-using-docker">Running locally using Docker<a class="anchor" aria-label="anchor" href="#running-locally-using-docker"></a>
@@ -138,10 +132,7 @@ up to 8 hours at a time.</p>
 <div class="section level2">
 <h2 id="running-locally-without-docker">Running locally without Docker<a class="anchor" aria-label="anchor" href="#running-locally-without-docker"></a>
 </h2>
-<p>Start with an installation of the current version of Bioconductor
-(see <a href="https://bioconductor.org/install/" class="external-link uri">https://bioconductor.org/install/</a>). Older versions
-probably will not work. Installation directly from GitHub requires first
-installing the <code>remotes</code> package, then:</p>
+<p>Start with an installation of the current version of Bioconductor (see <a href="https://bioconductor.org/install/" class="external-link uri">https://bioconductor.org/install/</a>). Older versions probably will not work. Installation directly from GitHub requires first installing the <code>remotes</code> package, then:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"waldronlab/curatedMetagenomicAnalyses"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
@@ -152,28 +143,19 @@ installing the <code>remotes</code> package, then:</p>
 <h3 id="r-vignettes">R Vignettes<a class="anchor" aria-label="anchor" href="#r-vignettes"></a>
 </h3>
 <ul>
-<li><a href="https://waldronlab.io/curatedMetagenomicAnalyses/articles/MLdatasets.html" class="external-link">Create
-datasets for machine learning</a></li>
-<li><a href="https://waldronlab.io/curatedMetagenomicAnalyses/articles/explorecirrhosis.html" class="external-link">Exploration
-of the liver cirrhosis dataset</a></li>
-<li><a href="https://waldronlab.io/curatedMetagenomicDataAnalyses/articles/identify_CRC_species.html" class="external-link">Select
-all colorectal cancer patients and create a cohort table, calculate
-prevalence of all species found in their stool microbiomes and create a
-dynamic searchable html table</a></li>
-<li><a href="https://waldronlab.io/curatedMetagenomicAnalyses/articles/Age_metaanalysis_vignette.html" class="external-link">Meta-analysis
-of age-related microbial species using cMD3</a></li>
-<li><a href="https://waldronlab.io/curatedMetagenomicAnalyses/articles/Sex_metaanalysis_vignette.html" class="external-link">Meta-analysis
-of sex-related microbial species using cMD3</a></li>
-<li><a href="https://waldronlab.io/curatedMetagenomicAnalyses/articles/NUI-Galway-Metagenomics-Workshop.html" class="external-link">NUI
-Galway Metagenomics Workshop</a></li>
+<li><a href="https://waldronlab.io/curatedMetagenomicAnalyses/articles/MLdatasets.html" class="external-link">Create datasets for machine learning</a></li>
+<li><a href="https://waldronlab.io/curatedMetagenomicAnalyses/articles/explorecirrhosis.html" class="external-link">Exploration of the liver cirrhosis dataset</a></li>
+<li><a href="https://waldronlab.io/curatedMetagenomicDataAnalyses/articles/identify_CRC_species.html" class="external-link">Select all colorectal cancer patients and create a cohort table, calculate prevalence of all species found in their stool microbiomes and create a dynamic searchable html table</a></li>
+<li><a href="https://waldronlab.io/curatedMetagenomicAnalyses/articles/Age_metaanalysis_vignette.html" class="external-link">Meta-analysis of age-related microbial species using cMD3</a></li>
+<li><a href="https://waldronlab.io/curatedMetagenomicAnalyses/articles/Sex_metaanalysis_vignette.html" class="external-link">Meta-analysis of sex-related microbial species using cMD3</a></li>
+<li><a href="https://waldronlab.io/curatedMetagenomicAnalyses/articles/NUI-Galway-Metagenomics-Workshop.html" class="external-link">NUI Galway Metagenomics Workshop</a></li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="python-notebooks">Python Notebooks<a class="anchor" aria-label="anchor" href="#python-notebooks"></a>
 </h3>
 <ul>
-<li><a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/sexContrastMicrobiomeAnalysis.ipynb">Sex-related
-differences in the human microbiome using cMD3 and Python3</a></li>
+<li><a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/sexContrastMicrobiomeAnalysis.ipynb">Sex-related differences in the human microbiome using cMD3 and Python3</a></li>
 </ul>
 </div>
 <div class="section level3">
@@ -181,8 +163,7 @@ differences in the human microbiome using cMD3 and Python3</a></li>
 </h3>
 <ul>
 <li>
-<a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/installation.ipynb">Installing
-Python dependencies in Linux</a> (Python notebook)</li>
+<a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/installation.ipynb">Installing Python dependencies in Linux</a> (Python notebook)</li>
 </ul>
 </div>
 </div>
@@ -232,14 +213,12 @@ Python dependencies in Linux</a> (Python notebook)</li>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas
-Schiffer, Jennifer Wokaty.</p>
+<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
