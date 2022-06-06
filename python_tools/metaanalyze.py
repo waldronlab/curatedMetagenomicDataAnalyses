@@ -8,10 +8,10 @@ sys.path.append(os.path.join(os.path.dirname(sys.path[0]), "python_modules"))
 from meta_analysis_runner import singleStudyEffect
 from meta_analysis_runner import meta_analysis_with_linear_model
 from meta_analysis_runner import analysis_with_linear_model
+from meta_analysis_runner import analysis_with_logistic_model
 from meta_analyses import paule_mandel_tau
 from meta_analyses import RE_meta_binary
 from meta_analyses import RE_meta
-
 
 def read_params():
     p = ap.ArgumentParser(description=\
@@ -30,22 +30,38 @@ def read_params():
 	"\n\t-z s__ -re -cc female:male \\"
 	"\n\t--formula \"C(gender) + age + BMI\"", \
 	formatter_class=ap.RawTextHelpFormatter)
+
     add = p.add_argument
     add("metadata_data_table", type=str, help="Samples in columns, fields in index: "
 	"must include both metadata you want ot study and features. ")
     add("-z", "--feat_id", type=str, default="s__", help="The feature identifier will "
 	"\n refer to all the features. Remember that the default is s__ (species level rel.abundances)")
+
+    ## UNSTANDARDISED CASES: TO USE WHEN THE RESPONSES MAKE SENSE AS THEY ARE (e.g. BMI)
+    add("-uma", "--uma", action="store_true", help="Activate a random effect (categorical) meta-analysis: real interpretation of the responses")
+    add("-usma", "--usma", action="store_true", help="Is like the -uma, but works on a single dataset: real interpreation of the respnses")
+
+    ## CLASSICS
     add("-re", "--re", action="store_true", help="Activate a random effect (categorical) meta-analysis")
     add("-mc", "--mc", action="store_true", help="Activate a meta-correlation analsysis: continouus case")
     add("-sre", "--sre", action="store_true", help="Is like the -re, but works on a single dataset.")
+
+    ## BASED ON LOGISTIC REGRESSION FOR BINARY RESPONSE 
+    add("-sor", "--sor", action="store_true", help="Activate logistic regression for single dataset (using odd ratio)")
+    add("-OR", "--OR", action="store_true", help="Activate meta-analysis using logistic regression (using odd ratio)")
+    add("-scor", "--scor", action="store_true", help="Activate logistic regression for a continuous predictor for single dataset")
+    add("-COR", "--COR", action="store_true", help="Activate logistic regression for a continuous predictor for meta-analysis ")
+
     add("-cc", "--controlcase", type=str, default=None, help="Use ':' : -cc female:male will set control and cases for an analysis on sex, e.g..")
     add("-fm", "--formula", type=str, default="", help="Var of study + covariates (cancer + age + BMI) "
 	"\n **REFERRING TO COVARIATES** use patsy formulas, e.g. C(sex) for defining a catgorical variable. "
 	"\n NOTE that: for -re and -sre is always necessary to specify which is the negative and the positive via --controlcase")
     add("-H", "--heterogeneity", type=str, choices=["FIX", "PM", "DL"], help="Heterogeneity (not active for -sre. Default is PM (Paule-Mandel) "
 	"NOTE THAT by setting '-H FIX' you use a fixed-effect model", default="PM")
+
     add("-si", "--studyid", type=str, default="study_name", help="Name of column 'Study'. Default=[study_name]")
     add("-of", "--outfile", type=str, default="", help="If not set, attach _metaanalysis to the name of the input.")
+
     return p.parse_args()
 
 
@@ -53,14 +69,26 @@ def main(args):
 
     datatable = pd.read_csv(args.metadata_data_table, sep="\t", header=0, index_col=0, low_memory=False, engine="c").fillna("NA")
 
-    if (not args.outfile): args.outfile = args.metadata_data_table.replace(".tsv", "_metaanalysis.tsv")
+    if (not args.outfile):
+        args.outfile = args.metadata_data_table.replace(".tsv", "_metaanalysis.tsv")
+
     feats = [j for j in datatable.index.tolist() if (args.feat_id in j)]
     metadata = [k for k in datatable.index.tolist() if (not k in feats)]
     
-    if np.count_nonzero(np.array([args.re, args.mc, args.sre], dtype=np.int64))!=1:
-        raise SyntaxError("Sorry: you have to specify ONE in -re, -mc or -sre")
+    if np.count_nonzero(np.array([args.re, args.mc, args.sre, args.sor, args.OR, args.COR, args.scor, args.uma, args.usma], dtype=np.int64))!=1:
+        raise SyntaxError("Sorry: you have to specify ONE in -re, -mc, -sre, -OR, -COR, -scor, -sor, -uma, OR -usam")
 
-    if args.re:
+    if args.uma:
+        neg, pos = (None, None) if not args.controlcase else tuple(args.controlcase.split(":"))
+        ma = meta_analysis_with_linear_model(datatable, args.formula, args.studyid, feats, args.outfile, "UNS", args.heterogeneity, pos=pos, neg=neg)
+        ma.random_effect_regression_model()
+          
+    elif args.usma:
+        neg, pos = (None, None) if not args.controlcase else tuple(args.controlcase.split(":"))
+        alm = analysis_with_linear_model(datatable, args.formula, feats, args.outfile, pos, neg, standardised = False)
+        alm.write_out()
+
+    elif args.re:
         if (not args.controlcase):
             raise SyntaxError("For --re you *must* include a -cc var with control and cases defined")
         neg, pos = tuple(args.controlcase.split(":"))
@@ -70,14 +98,35 @@ def main(args):
     elif args.mc:
         ma = meta_analysis_with_linear_model(datatable, args.formula, args.studyid, feats, args.outfile, "REG", args.heterogeneity, pos=None, neg=None)
         ma.random_effect_regression_model()
+
+    elif args.OR:
+        if (not args.controlcase):
+            raise SyntaxError("For --OR you *must* include a -cc var with control and cases defined")
+        neg, pos = tuple(args.controlcase.split(":"))
+        ma = meta_analysis_with_linear_model(datatable, args.formula, args.studyid, feats, args.outfile, "LOG", args.heterogeneity, pos=pos, neg=neg)
+        ma.random_effect_regression_model()
+
+    elif args.COR:
+        ma = meta_analysis_with_linear_model(datatable, args.formula, args.studyid, feats, args.outfile, "LOGC", args.heterogeneity, pos=None, neg=None)
+        ma.random_effect_regression_model()
         
     elif args.sre:
         if (not args.controlcase):
             raise SyntaxError("For --sre you *must* include a -cc var with control and cases defined")
         neg, pos = tuple(args.controlcase.split(":"))
-        alm = analysis_with_linear_model(datatable, args.formula, feats, args.outfile, pos, neg)
+        alm = analysis_with_linear_model(datatable, args.formula, feats, args.outfile, pos, neg, standardised = True)
         alm.write_out()
 
+    elif args.sor:
+        if (not args.controlcase):
+            raise SyntaxError("For --sor you *must* include a -cc var with control and cases defined")
+        neg, pos = tuple(args.controlcase.split(":"))
+        alm = analysis_with_logistic_model(datatable, args.formula, feats, args.outfile, pos, neg)
+        alm.write_out()
+
+    elif args.scor:
+        alm = continuous_analysis_with_logistic_model(datatable, args.formula, feats, args.outfile, pos=None, neg=None)
+        alm.write_out()
 
 if __name__ == "__main__":
     main(read_params())
