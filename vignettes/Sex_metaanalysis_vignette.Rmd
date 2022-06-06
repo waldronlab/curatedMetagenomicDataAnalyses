@@ -1,0 +1,363 @@
+---
+title: "Meta-analysis of sex-related microbial species using cMD 3"
+author: 
+  - name: Davide Golzato
+    affiliation:
+    - Università degli Studi di Trento
+    email:
+    - davide.golzato@unitn.it
+  - name: Paolo Manghi
+    affiliation:
+    - Università degli Studi di Trento
+    email:
+    - paolo.manghi@unitn.it
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+date: "`r doc_date()`"
+package: "`r pkg_ver('curatedMetagenomicData')`"
+vignette: >
+  %\VignetteIndexEntry{Sex metaanalysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+
+<style>
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+  max-width: 1000px
+}
+</style>
+
+```{r setup, include = FALSE}
+library(kableExtra)
+
+options(width = 120)
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    crop = NULL, ## Related to https://stat.ethz.ch/pipermail/bioc-devel/2020-April/016656.html,
+    tidy.opts=list(width.cutoff=120)
+)
+```
+
+
+# Meta-analysis of sex-related microbial species using data from curatedMetagenomicData
+
+```{r, message=FALSE}
+library(curatedMetagenomicData)
+library(tidyverse)
+library(SummarizedExperiment)
+library(TreeSummarizedExperiment)
+```
+
+
+## Retrieval of datasets from the cMD3 meeting a series of requirements
+```{r}
+#Filter on Age, body_site, study_condition and remove samples missing BMI
+metadata <- curatedMetagenomicData::sampleMetadata %>% 
+  filter(age >= 16 &
+           body_site == "stool" &
+           study_condition == "control" & 
+           is.na(BMI) != TRUE &
+           is.na(gender) != TRUE &
+           days_from_first_collection %in% c(0,NA))
+
+metadata <- metadata %>% 
+  group_by(study_name, subject_id) %>% 
+  filter(row_number() == 1) %>% 
+  ungroup()
+
+  
+#Apply function to grouped selected dataset
+datasets_tokeep <- metadata %>%
+    select(study_name, gender) %>%
+    group_by(study_name) %>% 
+    summarise(n_males = sum(gender=="male"), 
+              n_females= sum(gender=="female"), 
+              N=n()) %>%  
+    mutate(keep = (pmin(n_males,n_females) >= 40) & (n_females/N >= 0.25) & (n_males/N >= 0.25)) %>% 
+    filter(keep == TRUE)
+
+datasets_tokeep <- datasets_tokeep$study_name
+  
+metadata <- metadata %>% 
+    filter(study_name %in% datasets_tokeep)
+
+```
+
+
+## Download of datasets and data wrangling to structure them in a format suitable for this meta-analysis
+
+Now that we have filtered the metadata, we apply the cMD function “returnSamples()”.
+This function allows us to obtain a TreeSummarizedExperiment object, in which is stored the specified data-type (in this example: relative abundances of species) for the samples for which we have selected the metadata.
+
+Before proceeding, we further split the datasets by country: in this analysis, only the AsnicarF_2021 dataset encompasses samples from 2 countries, so we divide it into GBR- and USA-samples (by renaming these last: USA_asnicar_2021).
+
+
+```{r message=FALSE}
+#Retrieve queried samples
+tse <- curatedMetagenomicData::returnSamples(metadata, dataType = "relative_abundance")
+
+#Separating Asnicar USA from Asnicar GBR
+colData(tse)[which(colData(tse)$study_name == "AsnicarF_2021" & colData(tse)$country == "USA"),]$study_name <- "USA_asnicarF_2021"
+```
+
+The TreeSummarizedExperiment object of taxonomic relative abundances stores the entire taxonomy (from Kingdom to species-level) of each microbial species. 
+We therefore use the function _splitByRanks_ from the `r  BiocStyle::Biocpkg("mia")` package which allows us to select **higher** taxonomic level. We will focus on Species.
+
+We are interested in species only, so we modify the TSE object accordingly
+```{r message=FALSE}
+library(mia)
+species_tse <- splitByRanks(tse, rank = "species")[[1]]
+```
+
+# Single-dataset sex-related microbial species differential-abundance-analyses, via a linear modelling controlling for age & BMI
+
+## Defining functions used to perform the analysis
+These functions will be used to compute the standardized difference (d) from the t-value of linear models, the respective Standard Error ($SE_d$)
+and transform relative abundance data.
+
+```{r}
+#Compute Standardized Difference (d) from t-value
+d_fromlm <- function(n1,n2,t) {
+  d <- (t*(n1+n2)/(sqrt(n1*n2)*sqrt(n1+n2-2)))
+  return(d)
+}
+
+#Compute Std. error of d
+SE_d <- function(n1,n2,d) {
+  se_d <- sqrt(((n1+n2-1)/(n1+n2-3))*((4/(n1+n2))*(1+((d**2)/8))))
+  return(se_d)
+}
+```
+
+We define another function to transform the data with the $arcsin(\sqrt{\frac{RelAb}{100}})$ of the corresponding proportions.
+```{r}
+#Transform relative abundances
+asin_trans <- function(rel_ab){
+  return(asin(sqrt(rel_ab/100)))
+}
+```
+
+In order to proceed with the meta-analysis, we have to compute an effect-size for each population.
+Each dataset effect-size is computed with the function we define after. This function estimates a per-feature relationship between the sex (encoded here as a binary variable) and the arcsin-square-root relative abundance of each species. The estimates is extracted by an Ordinary Least Squares (OLS) model, in which the microbial feature (in this case, the species) is the response, and the sex is the predictor. Using this method we can control our model by age & by BMI of the patient. 
+
+The model has indeed the shape:
+
+$$ species \sim  sex + age + BMI$$
+
+
+
+Weighted effect-size of sex in this model is computed as:
+
+$$\text{effect-size} = \frac{t\cdot (n1+n2)}{\sqrt{n1\cdot n2}\cdot \sqrt{df}}$$
+
+where:
+
+  - $n1$ is the total number of controls (females) in the corresponding dataset
+  - $n2$ is the total number of cases (males) in the corresponding dataset
+  - $df$ are the degrees of freedom, computed as $df=n1 + n2 - 2$ are the degrees of freedom of the linear model built
+  - $t$ is the T-statistics for sex returned by the software  
+
+
+The computed Effect-size (corrected by covariates) has Standard Error and Variance:
+
+$$SE =\sqrt{\frac{n1+n2-1}{n1+n2-3}\cdot\frac{4}{n1+n2}\cdot(1+\frac{\text{effect-size}^2}{8})}$$
+
+```{r message=FALSE}
+#Function that takes in input a tse object and for each dataset computes a linear model for each linear species
+computeStandardizedMeanDifference <- function(tse_object){
+  
+  tse_datasets <- unique(colData(tse_object)$study_name)
+  
+  #Build linear models for all species of each dataset present in tse_object
+  singleDatasetAnalyze <- function(dataset) {
+    
+    single_dataset_tse <- tse_object[,tse_object$study_name == dataset]
+
+    #Select vectors of relative abundances and metadata
+    exprs_df <- asin_trans(
+      assay(single_dataset_tse))
+    
+    exprs_df <- exprs_df[rowSums(is.na(exprs_df)) != ncol(exprs_df), ]
+
+    species <- rownames(exprs_df)
+    
+    age <- colData(single_dataset_tse)$age
+    bmi <- colData(single_dataset_tse)$BMI
+    gender <- as.factor(colData(single_dataset_tse)$gender)
+    
+    compute_lm <- function(exprs_row){
+      lm_res <-  broom::tidy(lm(exprs_row ~ bmi + age + gender))
+      lm_res <- column_to_rownames(lm_res, var = "term")
+      res <- lm_res["gendermale",c("statistic","p.value"),drop=TRUE]
+      return(res)
+    }
+
+    lmResults <- t(
+      sapply(species, 
+            FUN = function(x) {
+              species_relabs <- exprs_df[x,] 
+              res <- compute_lm(species_relabs)
+              return(res)
+                        }))
+
+    n_gender <- c(table(gender)["male"][[1]],
+                  table(gender)["female"][[1]])
+    
+    #Compute effect size and respective standard error for each species
+    #in single dataset
+    
+    d_List <- as.vector(sapply(lmResults[,"statistic"], function(x) d_fromlm(n_gender[1],
+                                                                   n_gender[2], 
+                                                                   x)))
+    
+    SE_d_List <- as.vector(sapply(d_List, function(x) SE_d(n_gender[1],
+                                                           n_gender[2],
+                                                           x )))
+    
+    #Wald test for relative abundance of species between males and females
+    #(default of lm() function)
+    wald_list <- as.double(lmResults[,"p.value", drop=TRUE])
+    
+    #FDR-correction with Benjamini-Hochberg method for Wald p-values
+    q_values <- p.adjust(wald_list,method = "BH")
+    
+    
+    final_df <- as.matrix(cbind(d_List,
+                                SE_d_List,
+                                wald_list,
+                                q_values))
+    
+    #Finalize results for the single dataset
+    colnames(final_df) <- c(paste0(dataset,"_CohenD"),
+                            paste0(dataset,"_SE_d"),
+                            paste0(dataset,"_pvalue"),
+                            paste0(dataset,"_Qvalue"))
+    
+    rownames(final_df) <- species
+
+    return(final_df)
+  
+  }
+  
+    linear_models <- lapply(tse_datasets, singleDatasetAnalyze)
+    names(linear_models) <- tse_datasets
+    
+    return(linear_models)
+
+} 
+```
+
+Now that we have computed effect-sizes for each population, we can meta-analyze each microbial feature. In order to do this, we define a function applying the _metagen_ function from the package `r  BiocStyle::CRANpkg("metafor")`.
+```{r}
+runMetaanalysis <- function(d_vector, SE_d_vector) {
+  a <- meta::metagen(TE=d_vector,
+                     seTE=SE_d_vector,
+                     studlab=rownames(d_vector),
+                     method.tau="PM",          
+                     sm="SMD")
+  
+  final_vector <-c(a$TE.random,
+                   a$seTE.random,
+                   paste(a$lower.random,a$upper.random,sep=";"),
+                   a$zval.random,
+                   a$pval.random,
+                   a$tau2,
+                   a$I2)
+  
+  names(final_vector) <- c("RE","SE_RE","CI_RE","Zscore","p-value","tau2","I^2")
+  return(final_vector)
+}
+```
+
+
+
+## Application of the described procedure in the meta-analysis of sex-related microbial species
+
+```{r}
+#Computing Standardized Mean Differences (d), and the respective standard error
+#(SE_D) of species relative abundances between males and female for all datasets 
+SDM <- computeStandardizedMeanDifference(species_tse)  
+
+#Merging outputs of all datasets so to have a single dataframe with all the 
+#species found across the cohorts
+final_df <- Reduce(function(x, y) merge(x, y, all=TRUE), 
+                   lapply(SDM, function(x) data.frame(x, rn = row.names(x))))
+
+final_df <- final_df  %>% column_to_rownames(var="rn")
+
+#Subsetting from SDM dataframe only the columns we actually need to perform 
+#the meta-analysis into two separated dataframes (one for the standardized mean
+#differences (d), and one for the respective standard error (SE_D)
+
+d_matrix <- final_df %>% 
+  select(contains("CohenD"))
+d_matrix <- t(d_matrix)
+se_matrix <- final_df %>% 
+  select(contains("SE_d"))
+se_matrix <- t(se_matrix)
+
+#Run meta-analyses
+meta_analysis_regression <- t(mapply(function(x,y) {runMetaanalysis(x,y)},
+                                                   as.data.frame(d_matrix),
+                                                   as.data.frame(se_matrix)))
+
+
+final_df <- cbind(final_df, meta_analysis_regression)
+
+#Correct p-values of random effect with FDR Benjamini-Hochberg
+final_df$FDR_Qvalue <- p.adjust(final_df$`p-value`,method = "BH")
+```
+
+```{r, echo=FALSE, message=FALSE}
+filter_sort <- function(df_to_sort, na_filter){
+  cols_cohenD <- grep("CohenD|Correlation",colnames(df_to_sort))
+  cols_cohenD <- cols_cohenD[which(cols_cohenD >= 9)]
+  df_to_sort$na_n <- apply(df_to_sort[,cols_cohenD], MARGIN = 1, FUN = function(x){
+     na_n <- sum(!is.na(x))
+   })
+  
+  df_to_sort <- df_to_sort[which(df_to_sort$na_n >= na_filter),]
+  df_to_sort$RE_correlation_ABS <- abs(as.double(df_to_sort[,1]))
+  df_to_sort$lower_than_fdr <- ifelse(df_to_sort$FDR_Qvalue < 0.2, 1, 0)
+  
+  #Split the dataset
+  df_to_sort_lower_fdr <- df_to_sort[which(df_to_sort$lower_than_fdr == 1),]
+  df_to_sort_upper_fdr <- df_to_sort[which(df_to_sort$lower_than_fdr == 0),]
+
+  #Sort according to ABS.re
+  df_to_sort_lower_fdr <- df_to_sort_lower_fdr %>% 
+    arrange(-RE_correlation_ABS)
+  
+  df_to_sort_upper_fdr <- df_to_sort_upper_fdr %>% 
+    arrange( -RE_correlation_ABS)
+  
+  df_to_sort <- rbind(df_to_sort_lower_fdr, df_to_sort_upper_fdr)
+  df_to_sort <- df_to_sort %>% 
+    select(-c(na_n, lower_than_fdr,RE_correlation_ABS))
+  
+  return(df_to_sort)
+}
+
+final_df <- final_df %>% dplyr::select(RE:FDR_Qvalue,everything())
+final_df <- filter_sort(final_df, 4)
+```
+
+
+```{r, echo=FALSE}
+kable(final_df[,1:7], "html") %>%
+    kable_styling() %>%
+    scroll_box(width = "1000px", height = "500px")
+```
+

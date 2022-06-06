@@ -11,7 +11,7 @@ rm -rf ~/.npm
 python3 -m pip install jupyterlab jupyter-server-proxy jupyter-rsession-proxy
 
 # Install Python analysis dependencies
-apt-get -y --no-install-recommends python3-skbio python-skbio-doc
+apt-get install -y --no-install-recommends python3-skbio python-skbio-doc
 python3 -m pip install pandas \
   setuptools \
   numpy \
@@ -45,8 +45,8 @@ c.NotebookApp.ip = "*"
 EOT
 
 # Clone repository and change permissions waldronlab
-git clone https://github.com/waldronlab/$REPOSITORY.git /home/waldronlab/$REPOSITORY
+git clone --depth 1 https://github.com/waldronlab/$REPOSITORY.git /home/waldronlab/$REPOSITORY
 chown -R waldronlab:waldronlab /home/waldronlab/$REPOSITORY
 
-# Make symbolic link to README.md
-ln -s /home/waldronlab/$REPOSITORY/README.md /home/waldronlab/README.md
+# Copy README.md and adjust links for analyses paths
+cat /home/waldronlab/$REPOSITORY/README.md | sed "s/(vignettes/($REPOSITORY\/vignettes/g" >> /home/waldronlab/README.md

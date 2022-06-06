@@ -1,0 +1,304 @@
+---
+title: "NUI Galway Metagenomics Workshop"
+author:
+- name: Lucas Schiffer, MPH
+  affiliation:
+  - Section of Computational Biomedicine, Boston University School of Medicine,
+    Boston, MA, U.S.A.
+  email: schifferl@bu.edu
+date: "October 6, 2021"
+output:
+  BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{NUI Galway Metagenomics Workshop}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# R Packages for This Tutorial
+
+This tutorial demonstrates basic usage of `r BiocStyle::Biocpkg("curatedMetagenomicData")`, prerequisite steps for analysis, estimation of alpha diversity, analysis of beta diversity, and differential abundance analysis. To make the tables and figures in this tutorial, a number of R packages are required, as follows. If you are using [app.orchestra.cancerdatasci.org](http://app.orchestra.cancerdatasci.org), these packages are already installed for you; if not, you'll have to make sure the packages are installed.
+
+```{r, message = FALSE}
+library(curatedMetagenomicData)
+library(dplyr)
+library(stringr)
+library(scater)
+library(snakecase)
+library(forcats)
+library(gtsummary)
+library(mia)
+library(ggplot2)
+library(ggsignif)
+library(hrbrthemes)
+library(vegan)
+library(uwot)
+library(ANCOMBC)
+library(tibble)
+library(tidyr)
+library(knitr)
+library(ggrepel)
+```
+
+With the requisite R packages loaded and a basic working knowledge of metagenomics analysis (as was covered in the workshop), you're ready to begin. Just one last note, in most of the code chunks below messages have been suppressed; more verbose output should be expected when using the R console.
+
+# Using curatedMetagenomicData
+
+First, let's address what the `r BiocStyle::Biocpkg("curatedMetagenomicData")` R/Bioconductor package is; here's an brief description.
+
+> The curatedMetagenomicData package provides standardized, curated human microbiome data for novel analyses. It includes gene families, marker abundance, marker presence, pathway abundance, pathway coverage, and relative abundance for samples collected from different body sites. The bacterial, fungal, and archaeal taxonomic abundances for each sample were calculated with MetaPhlAn3 and metabolic functional potential was calculated with HUMAnN3. The manually curated sample metadata and standardized metagenomic data are available as (Tree)SummarizedExperiment objects.
+
+Be sure to refer to the `r BiocStyle::Biocpkg("SummarizedExperiment", vignette = "SummarizedExperiment.html")` and `r BiocStyle::Biocpkg("TreeSummarizedExperiment", vignette = "Introduction_to_treeSummarizedExperiment.html")` vignettes if the data structures are unclear. There is also a reference website for `r BiocStyle::Biocpkg("curatedMetagenomicData")` at [waldronlab.io/curatedMetagenomicData](https://waldronlab.io/curatedMetagenomicData/), if you need it.
+
+## Sample Metadata Exploration
+
+Any metagenomic analysis that uses `r BiocStyle::Biocpkg("curatedMetagenomicData")` is likely to begin with an exploration of sample metadata (i.e. `sampleMetadata`). The `sampleMetadata` object is a `data.frame` in the package that contains sample metadata that has been manually curated by humans for each and every sample. To give you an idea of some of the columns that are available, `r BiocStyle::CRANpkg("dplyr")` syntax is used below to take a random sampling of 10 rows (`slice_sample`). Then, columns containing `NA` values are removed, and the first 10 remaining columns are selected. The `data.frame` is sorted alphabetically by `study_name` prior to being returned.
+
+```{r, message = FALSE}
+sampleMetadata |>
+  slice_sample(n = 10) |>
+  select(where(~ !any(is.na(.x)))) |>
+  select(1:10) |>
+  arrange(study_name)
+```
+
+## Finding Available Resources
+
+The resources available in `r BiocStyle::Biocpkg("curatedMetagenomicData")` are organized by `study_name` and can be discovered with the `curatedMetagenomicData()` function. When provided with a string, it will return the names of available resources. Each `study_name` will have 6 data types (`gene_families`, `marker_abundance`, `marker_presence`, `pathway_abundance`, `pathway_coverage`, and `relative_abundance`), these follow the `study_name` and are separated by a dot. The date that precedes `study_name` is for versioning, but it's unimportant here.
+
+```{r}
+curatedMetagenomicData("AsnicarF")
+```
+
+The first argument passed to `curatedMetagenomicData()`, `pattern`, is actually a regular expression. So things like `.+` (match any character one or more times) work, and the names multiple resources are returned if they match. Below, you can see there are two `AsnicarF` resources for the `relative_abundance` data type.
+
+```{r}
+curatedMetagenomicData("AsnicarF.+.relative_abundance")
+```
+
+## Downloading Study Resources
+
+As is clear from the examples above, simply searching for the `AsnicarF` studies did not download any curated metagenomic data. To do that you must provide another argument, `dryrun = FALSE`, to the `curatedMetagenomicData()` function. Doing so will download the matching resources from `r BiocStyle::Biocpkg("ExperimentHub")` (or load them from the local cache). When `dryrun = FALSE`, `curatedMetagenomicData()` will always return a `list` of `r BiocStyle::Biocpkg("SummarizedExperiment")` and/or `r BiocStyle::Biocpkg("TreeSummarizedExperiment")` objects.
+
+```{r, message = FALSE}
+curatedMetagenomicData("AsnicarF.+.relative_abundance", dryrun = FALSE)
+```
+
+## Merging Data Across Studies
+
+It can be useful to have the `list` elements returned by `curatedMetagenomicData()` merged into a single `r BiocStyle::Biocpkg("SummarizedExperiment")` or `r BiocStyle::Biocpkg("TreeSummarizedExperiment")` object. This is accomplished using the `mergeData()` function – simply pipe (`|>`) the output of `curatedMetagenomicData()` to `mergeData()` and a single object will be returned.
+
+```{r, message = FALSE}
+curatedMetagenomicData("AsnicarF.+.relative_abundance", dryrun = FALSE) |>
+  mergeData()
+```
+
+## Returning Data from Samples
+
+There is just one more function in the `r BiocStyle::Biocpkg("curatedMetagenomicData")` package to know about, `returnSamples()`. It is used when you want to return samples across studies that match a certain set of conditions. To return a specific set of samples, you first subset the `sampleMetadata` `data.frame` to include only the desired samples. In the example below, stool (`body_site == "stool"`) samples from healthy (`disease == "healthy"`) adults (`age >= 18`) living in Ireland or Italy (`str_detect(country, "IRL|ITA")`) are included before columns of all `NA` values are dropped. When the `sampleMetadata` `data.frame` is subset as desired, it is piped to the `returnSamples()` function. As you can see below, there is another argument, `counts`, which has not yet been mentioned. When `counts = TRUE`, relative abundance proportions are multiplied by read depth and rounded to the nearest integer prior to being returned – the argument applies to both `returnSamples()` and `curatedMetagenomicData()` when requesting the `relative_abundance` data type.
+
+```{r, message = FALSE}
+countryData <-
+  filter(sampleMetadata, body_site == "stool") |>
+  filter(disease == "healthy") |>
+  filter(age >= 18) |>
+  filter(str_detect(country, "IRL|ITA")) |>
+  select(where(~ !all(is.na(.x)))) |>
+  returnSamples("relative_abundance", counts = TRUE)
+```
+
+# Getting Ready for Analysis
+
+First, have a look at the `countryData` object you just created to get a better understanding of what it contains. You will be using it for the rest of this tutorial.
+
+```{r}
+countryData
+```
+
+As can be seen above, the first `assay` of the `r BiocStyle::Biocpkg("TreeSummarizedExperiment")` is named `relative_abundance`. This is usually of little consequence, but you will need to rename the assay to `counts` for the transformation in the next step; do so by setting the `assayNames` as follows.
+
+```{r, message = FALSE}
+assayNames(countryData) <-
+  "counts"
+```
+
+Next, use `logNormCounts()` from the `r BiocStyle::Biocpkg("scater")` package to create a second assay `logcounts` that contains log-normalized species abundances.
+
+```{r, message = FALSE}
+countryData <-
+  logNormCounts(countryData)
+```
+
+By taking a look again, you can see there are now two `assays` as was desired.
+
+```{r}
+countryData
+```
+
+Before diving into analysis, you should create a quick summary table to understand the metadata better and be prepared to handle potential biases in analysis. The steps below use `r BiocStyle::CRANpkg("dplyr")` syntax to clean up a few of the variables before they are output in the summary table.
+
+```{r, message = FALSE}
+colData(countryData) |>
+  as.data.frame() |>
+  select(study_name, age, gender, country, sequencing_platform, curator, diet) |>
+  mutate(gender = to_title_case(gender)) |>
+  mutate(gender = fct_explicit_na(gender)) |>
+  mutate(curator = str_replace_all(curator, "_", " ")) |>
+  mutate(curator = str_replace_all(curator, ";", ", ")) |>
+  mutate(diet = to_title_case(diet)) |>
+  mutate(diet = fct_explicit_na(diet)) |>
+  rename_with(to_title_case) |>
+  tbl_summary()
+```
+
+# Estimating Alpha Diversity
+
+Alpha diversity estimation seeks to quantify variation within a sample; the Shannon index (H') is probably the most widely used measure. It accounts for both richness (i.e. how many types of bacteria are present) and evenness (i.e. how equal the proportions of types is); it is assessed below using the `estimateDiversity()` function from the `r BiocStyle::Biocpkg("mia")` package. Then, the `plotColData()` function from the `r BiocStyle::Biocpkg("scater")` package is used to generate a basic `r BiocStyle::CRANpkg("ggplot2")` plot, which is stylized further using the `r BiocStyle::CRANpkg("ggsignif")` and `r BiocStyle::CRANpkg("hrbrthemes")` packages.
+
+```{r, fig.width = 8, fig.height = 8, fig.cap = "Alpha Diversity by Country. Alpha Diversity of stool samples from healthy adults, as measured by the Shannon index (H'), is significantly $(Pr(T < t) < 0.001)$ lower among Irish samples, as compared to Italian samples."}
+countryData |>
+  estimateDiversity(abund_values = "logcounts", index = "shannon") |>
+  plotColData(x = "country", y = "shannon", colour_by = "country", shape_by = "country") +
+  geom_signif(comparisons = list(c("IRL", "ITA")), test = "t.test", map_signif_level = TRUE) +
+  labs(
+    title = "Alpha Diversity by Country, Shannon Index (H')",
+    subtitle = "Stool Samples of Healthy Adults",
+    x = "Country",
+    y = "Alpha Diversity (H')"
+  ) +
+  guides(color = guide_none(), shape = guide_none()) +
+  theme_ipsum_rc()
+```
+
+# Analysis of Beta Diversity
+
+Beta diversity is a measurement of between sample variation that is usually qualitatively assessed using a low-dimensional embedding; classically this has been done in metagenomics with a principal coordinates analysis (PCoA) of Bray-Curtis dissimilarity.[^1] This is done below using the `runMDS()` function from the `r BiocStyle::Biocpkg("scater")` package with the `vegdist` function from the `r BiocStyle::CRANpkg("vegan")` package. The `plotReducedDim()` function from the `r BiocStyle::Biocpkg("scater")` package is used to generate a basic `r BiocStyle::CRANpkg("ggplot2")` plot, which is styled further.
+
+[^1]: Bray-Curtis dissimilarity is not a metric distance and does not satisfy the triangle inequality, but it is generally accepted in metagenomics.
+
+```{r, fig.width = 8, fig.height = 8, fig.cap = "Beta Diversity by Country, Bray-Curtis PCoA. The first two principal coordinates demonstrate good seperation of Irish and Italian stool samples from healthy adults, suggesting differences in gut microbial composition between the two populations."}
+countryData |>
+  runMDS(FUN = vegdist, method = "bray", exprs_values = "logcounts", name = "BrayCurtis") |>
+  plotReducedDim("BrayCurtis", colour_by = "country", shape_by = "country", text_by = "country") +
+  labs(
+    title = "Beta Diversity by Country, Bray-Curtis PCoA",
+    subtitle = "Stool Samples of Healthy Adults",
+    x = "PCo 1",
+    y = "PCo 2"
+  ) +
+  guides(color = guide_none(), shape = guide_none()) +
+  theme_ipsum_rc()
+```
+
+To address the issue of using principal coordinates analysis (PCoA) with a dissimilarity, beta diversity can be assessed using the UMAP (Uniform Manifold Approximation and Projection) algorithm instead.[^2] The `runUMAP()` function from the `r BiocStyle::Biocpkg("scater")` package is used below; otherwise, the syntax is largely the same as above.
+
+[^2]: McInnes, L., Healy, J. & Melville, J. UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction. *arXiv [stat.ML]* (2018)
+
+```{r, fig.width = 8, fig.height = 8, fig.cap = "Beta Diversity by Country, UMAP Embedding. The two-dimensional UMAP embedding demonstrates good seperation of Irish and Italian stool samples from healthy adults, suggesting differences in gut microbial composition between the two populations."}
+countryData |>
+  runUMAP(exprs_values = "logcounts", name = "UMAP") |>
+  plotReducedDim("UMAP", colour_by = "country", shape_by = "country", text_by = "country") +
+  labs(
+    title = "Beta Diversity by Country, UMAP Embedding",
+    subtitle = "Stool Samples of Healthy Adults",
+    x = "UMAP 1",
+    y = "UMAP 2"
+  ) +
+  guides(color = guide_none(), shape = guide_none()) +
+  theme_ipsum_rc()
+```
+
+# Modeling Bacteria by Country
+
+Where beta diversity embeddings suggest there are features that separate Irish and Italian stool samples from healthy adults, you might like to know which are most differentially abundance. To assess this the `r BiocStyle::Biocpkg("ANCOMBC")` package has a metagenomics-specific additive log-ratio model for the task. However, the `ancombc()` function requires a `phyloseq` class objects – one can be created using the `makePhyloseqFromTreeSummarizedExperiment()` function from the `r BiocStyle::Biocpkg("mia")` package, as shown below.
+
+```{r, message = FALSE, warning = FALSE}
+ancombcResults <-
+  makePhyloseqFromTreeSummarizedExperiment(countryData) |>
+  ancombc("country")
+```
+
+The results of the `r BiocStyle::Biocpkg("ANCOMBC")` model are in a strange `list` structure and have to be coerced into a `data.frame` before they can be displayed; the `bind_cols()` function from the `r BiocStyle::CRANpkg("dplyr")` package is used below.
+
+```{r, message = FALSE}
+ancombcTable <-
+  bind_cols(ancombcResults[["res"]])
+```
+
+Yet, the column names of the results table are missing and have to be assigned, as shown below.
+
+```{r, message = FALSE}
+colnames(ancombcTable) <-
+  names(ancombcResults[["res"]])
+```
+
+The row names of the results table are big long strings of microbial taxonomies that will need some editing if they are to be displayed nicely. the `rownames_to_column()` function from the `r BiocStyle::CRANpkg("tibble")` package is used below to turn them into a column so they can be edited.
+
+```{r, message = FALSE}
+ancombcTable <-
+  rownames_to_column(ancombcTable)
+```
+
+Before the row names are split into 7 pieces, the names of columns that each piece will be assigned to are created below.
+
+```{r, message = FALSE}
+rankNames <-
+  c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+
+```
+
+The row names of the results table are then transformed using `r BiocStyle::CRANpkg("tidyr")`, `r BiocStyle::CRANpkg("dplyr")`, and `r BiocStyle::CRANpkg("stringr")`, as shown below.
+
+```{r, message = FALSE}
+ancombcTable[["rowname"]] <-
+  separate(ancombcTable, rowname, rankNames, sep = "\\|") |>
+  select(all_of(rankNames)) |>
+  mutate(across(.fns = ~ str_remove_all(.x, ".__"))) |>
+  mutate(across(.fns = ~ str_replace_all(.x, "_", " "))) |>
+  mutate(label = Species) |>
+  pull(label)
+```
+
+Once the results table is in good shape, it can be filtered to include only bacterial species that exhibited large (e.g. `abs(beta) > 1`) and significant (`-log10(q_val) > 5`) differences in abundances between the two countries. In the example below, the table is sorted by effect size and a number of formatting conventions are applied before displaying the results table.
+
+```{r, message = FALSE}
+filter(ancombcTable, abs(beta) > 1) |>
+  filter(-log10(q_val) > 5) |>
+  select(rowname, beta, se, p_val, q_val) |>
+  arrange(-abs(beta)) |>
+  column_to_rownames() |>
+  mutate(across(.fns = ~ round(.x, digits = 3))) |>
+  mutate(beta = format(beta)) |>
+  mutate(beta = str_replace(beta, " ", "&nbsp;")) |>
+  mutate(p_val = if_else(p_val == 0, "< 0.001", format(p_val, nsmall = 3))) |>
+  mutate(q_val = if_else(q_val == 0, "< 0.001", format(q_val, nsmall = 3))) |>
+  kable(col.names = c("β", "SE", "P", "Q"), align = "cccc", escape = FALSE)
+```
+
+While the table above is somewhat interesting, the results are better summarized as a volcano plot (i.e. statistical significance versus fold change) and one can be made using the results table. To shorten labels for readability, `r BiocStyle::CRANpkg("stringr")` is first used to abbreviate species names by replacing the first word of the name with a single letter followed by a period. Next, the same filtering of the table as above is undertaken, and the color scheme used in all the plots above is applied. Both labeling and coloring are only applied where effect size and significance thresholds are met, as denoted by the dotted lines.
+
+```{r, fig.width = 9.5, fig.height = 16, fig.cap = "Volcano Plot of Differentially Abundance Bacterial Species. In the model and the figure, Irish samples are the reference group such that bacterial species in blue at the left are significantly more abundant in Irish samples and those in yellow at the right are significantly more abundant in Italian samples."}
+ancombcTable |>
+  mutate(rowname = str_replace(rowname, "^([A-Z])([a-z])+ ", "\\1. ")) |>
+  mutate(q_val = -log10(q_val)) |>
+  mutate(label = if_else(abs(beta) > 1, rowname, NA_character_)) |>
+  mutate(label = if_else(q_val > 5, label, NA_character_)) |>
+  mutate(color = if_else(beta > 0, "#FF9E4A", "#729ECE")) |>
+  mutate(color = if_else(is.na(label), "#000000", color)) |>
+  ggplot(mapping = aes(beta, q_val, color = I(color), label = label, shape = I(1))) +
+  geom_point() +
+  geom_hline(linetype = "dotted", yintercept = 5) +
+  geom_vline(linetype = "dotted", xintercept = 1) +
+  geom_vline(linetype = "dotted", xintercept = -1) +
+  geom_label_repel(min.segment.length = 0, force = 10, max.overlaps = 20, na.rm = TRUE) +
+  labs(
+    title = "Significance vs. Effect Size, ANCOM-BC",
+    subtitle = "Stool Samples of Healthy Adults",
+    x = expression(beta),
+    y = expression(-~log[10]~Q)
+  ) +
+  guides(color = guide_none(), shape = guide_none()) +
+  theme_ipsum_rc()
+```
+
+As a bonus, do a Google or a PubMed search for *Holdemanella biformis* to see what condition(s) it is associated with and then explore differences between the two countries using [GBD Compare](https://vizhub.healthdata.org/gbd-compare/) visualizations.

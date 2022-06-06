@@ -1,0 +1,92 @@
+---
+title: "List all species present in colorectal cancer datasets"
+author: 
+  - name: Levi Waldron
+    affiliation:
+    - CUNY Graduate School of Public Health and Health Policy
+    email: levi.waldron@sph.cuny.edu
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+date: "`r BiocStyle::doc_date()`"
+package: "`r BiocStyle::pkg_ver('curatedMetagenomicAnalyses')`"
+vignette: >
+  %\VignetteIndexEntry{Identify all species seen in CRC}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+This analysis:
+
+1. selects a subset of samples (all CRC-related in this example), 
+2. uses the `r CRANpkg("table1")` package to display a table of the characteristics of the included cohort, 
+3. sorts species in order of descending prevalence, 
+4. uses the `r CRANpkg("DT")` package `datatable` function to display a searchable, paged table of prevalences, and
+4. writes the prevalences to file.
+
+Required packages:
+```{r}
+suppressPackageStartupMessages({
+  library(table1)
+  library(DT)
+  library(curatedMetagenomicData)
+  library(dplyr)
+})
+```
+
+# Select samples
+
+Note that a few species without phylogenetic information are lost.
+
+```{r, message=FALSE}
+crc_subset <- filter(sampleMetadata, study_condition == "CRC") %>%
+  returnSamples(dataType = "relative_abundance",
+                rownames = "short")
+```
+
+# Cohort characteristics
+
+Create a summary table of the participants in this cohort:
+
+```{r}
+table1::table1( ~ disease + disease_subtype + age + gender + country + study_name,
+                data = colData(crc_subset))
+```
+
+# Show species in order of decreasing prevalence
+
+Prevalences shown are the fraction of specimens from CRC patients with non-zero 
+relative abundance.
+
+```{r}
+prevalences <- rowSums(assay(crc_subset) > 0) / ncol(crc_subset) 
+prevalences <- tibble(species = names(prevalences), prevalence = signif(prevalences, 2)) %>%
+  filter(prevalence > 0) %>%
+  arrange(-prevalence)
+DT::datatable(prevalences)
+```
+
+Write to disk:
+
+```{r}
+write.csv(prevalences, row.names = FALSE, file = "prevalences.csv")
+```
+
+Download the zipped prevalences file produced by `r BiocStyle::Biocpkg("curatedMetagenomicData")` version 3.2.3: [prevalences.csv.zip](https://github.com/waldronlab/curatedMetagenomicAnalyses/files/8254646/prevalences.csv.zip)
+
+# Session Info
+
+```{r}
+sessioninfo::session_info()
+```
+
