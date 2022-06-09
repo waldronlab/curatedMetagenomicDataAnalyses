@@ -42,13 +42,14 @@ class meta_analysis_with_linear_model(object):
         self.covariates = [ c.strip() for c in fm_covs[1:] ]
 
         self.easy_names_covariates = dict([(c, c[2:-1]) for c in self.covariates if c.startswith("C(") ])
-        #print( self.covariates  )
+        print( self.covariates  )
 
         for cv in self.covariates:
-            #print(cv)
+            print(cv)
        
             if not cv.startswith("C"):
-                #print("NA" in self.data[cv].tolist())
+    
+                print("NA" in self.data[cv].tolist())
 
                 self.data[cv] = self.data[cv].values.astype(float)
             print(cv)
@@ -102,6 +103,7 @@ class meta_analysis_with_linear_model(object):
 
             md = smf.logit(formula, data=data_here)
             model_fit = md.fit()
+            #print(model_fit.summary(), " la m a do n n a p u t t a t n a ")
 
         #### print(model_fit.summary())
 
@@ -215,10 +217,12 @@ class meta_analysis_with_linear_model(object):
                         result = result.append(re.result)
 
             elif self.cls_or_reg in ["LOG", "LOGC"]:
+                print(" SONO DOVE CAZZO DOVREI ESSERE... ")
 
                 variances_considered = []
 
                 for study in self.studies:
+                    print(" SONO DOVE CAZZO DOVREI ESSERE... ", study)
                     try:
                         LOR, Pvalue, variance, Lens = self.correlation_of_study(study, feature)
                         if self.cls_or_reg == "LOGC":
@@ -299,8 +303,10 @@ class meta_analysis_with_linear_model(object):
 
 
         for S,_p_dist_col in zip(self.studies, [(s+"_Pvalue") for s in self.studies]):
+            #print(S, _p_dist_col, "questo e l studio", end="")
 
             if _p_dist_col in set(result.columns.tolist()):
+                #print("NON ATTACCO")
                 feat_p_map = [[f,p] for f,p in zip(result.index.tolist(), result[_p_dist_col].tolist()) if p!="NA"]
                 ps = [p[1] for p in feat_p_map]
                 _,fdr = fdrcorrection(ps, alpha=0.05)
@@ -308,6 +314,7 @@ class meta_analysis_with_linear_model(object):
                 result = result.join(littleFrame)
                 result.fillna("NA", inplace=True)
             else:
+                #print("STTACCO ROBA")
                 result[_p_dist_col] = "NA"
                 result[S+"_Correlation"] = "NA"
                 result[S+"_Qvalue"] = "NA"
@@ -398,8 +405,8 @@ class continuous_analysis_with_logistic_model(object):
 
         self.frame["Qvalue"] = FDR
         self.frame.index.name = "Feature"
-        #for ft in self.frame.index.tolist():
-        #    print(ft, self.frame.loc[ft, "RE_Effect"], self.frame.loc[ft,"Qvalue"])
+        for ft in self.frame.index.tolist():
+            print(ft, self.frame.loc[ft, "RE_Effect"], self.frame.loc[ft,"Qvalue"])
 
     def write_out(self):
         self.frame.to_csv(self.outfile, sep="\t", header=True, index=True)
@@ -410,6 +417,7 @@ class continuous_analysis_with_logistic_model(object):
         #formula = ('Q("%s") ~ ' %feature) + self.formula
         formula = ('Q("%s") ~ ' %feature) + self.formula
 
+        print(self.data[feature], " CAAAZZOOOO")
 
         md = smf.logit(formula, data=self.data)
         model_fit = md.fit()
@@ -477,8 +485,8 @@ class analysis_with_logistic_model(object):
 
         self.frame["Qvalue"] = FDR
         self.frame.index.name = "Feature"
-        #for ft in self.frame.index.tolist():
-        #    print(ft, self.frame.loc[ft, "RE_Effect"], self.frame.loc[ft,"Qvalue"])
+        for ft in self.frame.index.tolist():
+            print(ft, self.frame.loc[ft, "RE_Effect"], self.frame.loc[ft,"Qvalue"])
 
     def write_out(self):
         self.frame.to_csv(self.outfile, sep="\t", header=True, index=True)
@@ -488,6 +496,8 @@ class analysis_with_logistic_model(object):
 
         #formula = ('Q("%s") ~ ' %feature) + self.formula
         formula = ('Q("%s") ~ ' %feature) + self.formula
+
+        print(self.data[feature], " CAAAZZOOOO")
 
         md = smf.logit(formula, data=self.data)
         model_fit = md.fit()

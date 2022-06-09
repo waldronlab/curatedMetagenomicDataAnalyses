@@ -73,6 +73,7 @@ class RE_meta_binary(object):
                 self.CI_of_d = [ (d-( 1.96*dv ), d+( 1.96*dv ))  for d,dv in zip(self.effects, self.devs)]
             else:
                 self.CI_of_d = CI
+                self.devs = np.sqrt( self.vi )
         else:
             self.n_studies = "NULL"
             self.vi = np.array([(((nc+nt-1)/float(nc+nt-3)) * ((4./float(nc+nt))*(1+((eff**2.)/8.)))) for nt,nc,eff in \
@@ -87,6 +88,7 @@ class RE_meta_binary(object):
                     self.CI_of_d += [[d_lw, d_up]]
             else:
                 self.CI_of_d = CI
+                self.devs = np.sqrt( self.vi )
         
         self.w = np.array([(1./float(v)) for v in self.vi], dtype=np.float64)
         mu_bar = np.sum(a*b for a,b in zip(self.w, self.effects))/np.sum(self.w)
@@ -144,9 +146,11 @@ class RE_meta_binary(object):
 
     def nice_shape(self):
         NS = {}
-        for eff,P,study in zip(self.effects, self.singleStudyPvalues, self.studies):
+        for eff,std,P,study in zip(self.effects, self.devs, self.singleStudyPvalues, self.studies):
             NS[str(study) + "_Effect"] = eff
             NS[str(study) + "_Pvalue"] = P
+            NS[str(study) + "_SE"] = std
+            #+ "_conf_int"] = ";".join(list(map(str, [np.tanh(c) for c in ci])))
         NS["RE_Effect"] = self.RE
         NS["RE_Pvalue"] = self.Pval
         NS["RE_stdErr"] = self.stdErr
@@ -233,12 +237,13 @@ class RE_meta(object):
         return 2.*(1 - sts.norm.cdf(np.abs(Z)))
 
     def nice_shape(self, REG):
-        NS = {}
-        for rho,ci,P,study in zip(self.effects, self.CI_of_z, self.singleStudyPvalues, self.studies):
+        NS = {} 
+        for rho,std,P,study in zip(self.effects, self.devs, self.singleStudyPvalues, self.studies):
             eff = rho if (not REG) else np.tanh(rho)
             NS[study + "_Correlation"] = eff
             NS[study + "_Pvalue"] = P
-            NS[study + "_conf_int"] = ";".join(list(map(str, [np.tanh(c) for c in ci])))
+            NS[study + "_SE"] = std
+            #";".join(list(map(str, [np.tanh(c) for c in ci])))
 
         NS["RE_Correlation"] = np.tanh(self.RE)
         NS["RE_Pvalue"] = self.Pval
