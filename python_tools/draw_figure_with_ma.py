@@ -51,7 +51,7 @@ def read_params( args ):
 
     add("-i", "--imp", type=int, default=30, help="Tries to plot the first *imp*ortant features. ")
 
-    add("-how", "--how", type=str, default="first", choices=["first", "union", "intersection"], help=\
+    add("-how", "--how", type=str, default="first", choices=["first", "union", "intersection", "joint_top"], help=\
         "How to chose the [--imp] features to plot, default : intersection. NOTE: "
         "meaningfull only for multiple meta-analysis plot")
 
@@ -70,12 +70,12 @@ def read_params( args ):
     add("-es", "--e_suff", type=str, default=["_es"], nargs="+")
  
     add("-qs", "--q_suff", type=str, default=["_Q"], nargs="+")
+ 
+    #add("-pe", "--prevalence", type=str, default=[""], nargs="+")
 
-    add("-pe", "--prevalence", type=str, default=[""], nargs="+")
+    add("-mp", "--min_prevalence", type=float, default=[0.00], nargs="+")
 
-    add("-mp", "--min_prevalence", type=float, default=[0.01], nargs="+")
-
-    add("-mna", "--min_ab", type=float, default=[""], nargs="+")
+    add("-mna", "--min_ab", type=float, default=[0.0], nargs="+")
 
     add("-ms", "--min_studies", type=int, nargs="+", default=[4], help=\
         "Minimum number of meta-analysis in which a feature must be present "
@@ -129,6 +129,9 @@ def read_params( args ):
     add("--pos_max_rho", type=float, default=0.80)
 
     add("--legloc", type=str, default="best")
+
+    add("--check_genera", action="store_true", help="meaningfull only with --how==joint_top; it searches that if genera and species are present genera are"
+            " selected only in case they are different at the 3rd digimal digit")
  
     add("--shrink_names", type=str, default="|", help="Apply .split(\"<shrink-names>\") to the Y-axis (feature) names of the figure")
 
@@ -159,15 +162,18 @@ def parse_args_table(args, ij):
 
     meta_analysis.fillna( "NA", inplace=True )
 
-    if (not take_a_param( args["relative_abundances"], ij)) and (not take_a_param( args["prevalence"], ij )):
-        warnings.warn("You didn't specifiy neither abundances tables nor prevalence. This means that all the feats found will be retained.")
-        filter_on = "NO_FILTER"
-    else:
-        if take_a_param( args["relative_abundances"], ij) and take_a_param( args["prevalence"], ij ):
+    filter_on = "NO_FILTER"
+ 
+    if (take_a_param( args["relative_abundances"], ij)): # and (not take_a_param( args["prevalence"], ij )):
+        #warnings.warn("You didn't specifiy neither abundances tables nor prevalence. This means that all the feats found will be retained.")
+        #filter_on = "NO_FILTER"
+
+        if take_a_param( args["relative_abundances"], ij) and take_a_param( args["min_prevalence"], ij ):
             filter_on = "PREVALENCE"
-            warnings.warn("You set both prevalence AND relative_abundances: the first one will be used")
-        else:
-            filter_on = "PREVALENCE" if take_a_param( args["prevalence"], ij ) else "ABUNDANCE"
+
+            #warnings.warn("You set both prevalence AND relative_abundances: the first one will be used")
+        elif take_a_param( args["relative_abundances"], ij) and (take_a_param( args["min_ab"], ij ) > 0.0):
+            filter_on = "BOTH" if take_a_param( args["min_prevalence"], ij ) else "ABUNDANCE"
 
     min_prevalence = dict( )
     features = meta_analysis.index.tolist( )
@@ -176,9 +182,9 @@ def parse_args_table(args, ij):
         abundances = pd.read_csv( take_a_param( args["relative_abundances"], ij), sep="\t", header=0, index_col=0, low_memory=False, engine="c")
         prevalences = dict([ (feat, (np.count_nonzero(abundances.loc[feat, :].values.astype(float))/float(abundances.shape[1]) \
             if feat in abundances.index.tolist() else 1.0) ) for feat in features ])
- 
-    if take_a_param( args["prevalence"], ij ): # and not take_a_param( args.min_ab, ij )):  
-        prevalences = dict([ (feat, meta_analysis.loc[feat, take_a_param( args["prevalence"], ij )]) for feat in features])
+  
+    #if take_a_param( args["prevalence"], ij ): # and not take_a_param( args.min_ab, ij )):  
+    #    prevalences = dict([ (feat, meta_analysis.loc[feat, take_a_param( args["prevalence"], ij )]) for feat in features])
 
     single_effects = [ c for c in meta_analysis.columns.tolist() if \
         ((c.endswith( take_a_param( args["e_suff"], ij ) )) and (c != take_a_param( args["random_effect"], ij ) ))  ]
@@ -193,18 +199,27 @@ def parse_args_table(args, ij):
         single_effect_Qs = single_effect_Qs.remove( take_a_param( args["random_effect_q"], ij ) )
         
     results = meta_analysis.loc[ meta_analysis[ take_a_param( args["random_effect_q"], ij ) ]<\
-            (args["a_random"] if args["how"]=="first" else 1.0), : ]
+            (args["a_random"] if (args["how"] in ["first", "joint_top"]) else 1.0), : ]
 
     results = results.loc[ [ i for i in results.index.tolist() if ((len(single_effects) - results.loc[ i, single_effects ].tolist().count("NA")) \
         >= take_a_param( args["min_studies"], ij)) ], :]
 
+
+
     if filter_on != "NO_FILTER":
+
         if filter_on == "PREVALENCE":
             results = results.loc[ [ i for i in results.index.tolist() if (prevalences[i]>=take_a_param( args["min_prevalence"], ij))], : ]
+
+        elif filter_on == "ABUNDANCE":
+            results = results.loc[ [ i for i in results.index.tolist() if (np.mean(abundances.loc[i].values.astype(float))>=take_a_param( args["min_ab"], ij)) ], : ]
+
         else:
-            results = results.loc[ [ i for i in results.index.tolist() if \
-                (not i in abundances.index.tolist()) or (np.mean(abundances.loc[i].values.astype(float))>=take_a_param( args["min_prevalence"], ij)) \
-                ], : ]
+            results = results.loc[ [ i for i in results.index.tolist() if (prevalences[i]>=take_a_param( args["min_prevalence"], ij))], : ]
+            results = results.loc[ [ i for i in results.index.tolist() if (np.mean(abundances.loc[i].values.astype(float))>=take_a_param( args["min_ab"], ij)) ], : ]
+                 
+            #    (not i in abundances.index.tolist()) or (np.mean(abundances.loc[i].values.astype(float))>=take_a_param( args["min_prevalence"], ij)) \
+            #    ], : ]
     
     if args["narrowed"]:
         results = results.loc[[i for i in results.index.tolist() if \
@@ -215,7 +230,7 @@ def parse_args_table(args, ij):
     results["abs"] = np.abs( results[ take_a_param( args["random_effect"], ij) ].values.astype(float) )
     results.sort_values( "abs", inplace=True, ascending=False )
 
-    if args["how"]=="first":
+    if args["how"] in ["first", "joint_top"]:
         results = results[:args["imp"]]
 
     positive = [i for i in results.index.tolist() if ( float(results.loc[i, take_a_param( args["random_effect"], ij)] >0.) ) ]
@@ -223,12 +238,9 @@ def parse_args_table(args, ij):
     res_pos = results.loc[ positive, : ].sort_values( take_a_param( args["random_effect"], ij), ascending=False )
     res_neg = results.loc[ negative, : ].sort_values( take_a_param( args["random_effect"], ij), ascending=True )
     results = res_pos.append(res_neg)
-    #print(results, "FIVE")
 
     return [results, single_effects, single_effect_Qs, results.index.tolist( ), name]
             
-
-
 
 
 
@@ -239,10 +251,40 @@ def select_features(how, results):
         return set().union(*results)
     elif how == "intersection":
         return set().intersection(*results)
- 
 
 
+  
+def select_joint_top_features( args, results ):
+    take_a_param = lambda param, ij : param[ij] if len(param)>1 else param[0]
+    effects = sorted(
+            list(it.chain.from_iterable([ [(k,abs(v),v) for k,v in curr_res.loc[ :, take_a_param( args["random_effect"], i ) ].to_dict().items()] for i,curr_res in enumerate(results) ])), 
+            key=lambda a : a[1], reverse=True)
 
+    to_rem = []
+
+    if args["check_genera"]:
+        for name in effects:
+            e = name[0]
+            if \
+            (e.startswith("g__")) and \
+            (any([(x[0].startswith(e.replace("g__", "s__"))) for x in effects if (x[0]!=e) ])): # and \
+
+                effect = str(name[1])
+                spc_l = [ (x[0]) for x in effects if ( (x[0]!=e) and (x[0].startswith(e.replace("g__", "s__"))) ) ]
+                spc_e = [ (x[1]) for x in effects if ( (x[0]!=e) and (x[0].startswith(e.replace("g__", "s__"))) ) ]
+            
+                mapp = dict([(x,str(y)) for x,y in zip(spc_l, spc_e)])
+                for x in mapp:
+                    if mapp[x].split(".")[1][:3] == effect.split(".")[1][:3]:
+                        to_rem.append( e )
+
+    effects = [u for u in effects if (not u[0] in to_rem)]
+    result_feats = [w[0] for w in sorted([x for x in effects[:args["imp"]]], key=lambda a : a[2])]
+
+    return result_feats
+
+
+    
 
  
 def build_long_frame(args, analysis, ij, result_features, all_markers):
@@ -325,11 +367,14 @@ def draw_figure(args, show):
     if not show:
         matplotlib.use('Agg')
 
-    analyses = [\
+    analyses = [ \
         parse_args_table( args, ij ) for ij in range(len( args["metaanalysis"] ))
         ]
 
-    result_features = select_features( args["how"], [ an[0] for an in analyses ] )
+    if args["how"] != "joint_top":
+        result_features = select_features( args["how"], [ an[0] for an in analyses ] )
+    else:
+        result_features = select_joint_top_features( args, [ an[0] for an in analyses ] )
  
     take_a_param = lambda param, ij : param[ij] if len(param)>1 else param[0]
  
