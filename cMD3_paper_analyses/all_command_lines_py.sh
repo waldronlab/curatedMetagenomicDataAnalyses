@@ -6,10 +6,10 @@ mkdir -p ML/ml_dis_rf/results
 # UNCOMPRESSING KEGG-ORTHOLOGS
 bizp2 -d clr_tables/*
 
-wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/sex_u_kegg.tsv.bz2 -O - | bunzip2 -qc > relative_abundances/sex_u_kegg.tsv.bz2
-wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/age-kegg_clr.tsv.bz2 -O - | bunzip2 -qc > clr_tables/age-kegg_clr.tsv.bz2
-wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/bmi-kegg_clr.tsv.bz2 -O - | bunzip2 -qc > clr_tables/bmi-kegg_clr.tsv.bz2
-wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/sex-kegg_clr.tsv.bz2 -O - | bunzip2 -qc > clr_tables/sex-kegg_clr.tsv.bz2
+wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/sex_u_kegg.tsv.bz2 -O - | bunzip2 -qc > relative_abundances/sex_u_kegg.tsv
+wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/age-kegg_clr.tsv.bz2 -O - | bunzip2 -qc > clr_tables/age-kegg_clr.tsv
+wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/bmi-kegg_clr.tsv.bz2 -O - | bunzip2 -qc > clr_tables/bmi-kegg_clr.tsv
+wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/sex-kegg_clr.tsv.bz2 -O - | bunzip2 -qc > clr_tables/sex-kegg_clr.tsv
 
 ## SECTION 1: SPECIES, GENUS, PWY, and KOs META-ANALYSIS ON SEX, AGE, and BMI
 python ../python_tools/metaanalyze.py clr_tables/sex-species_clr.tsv -z s__ -re -cc "0.0:1.0" --formula "gender + age + BMI + number_reads" 
