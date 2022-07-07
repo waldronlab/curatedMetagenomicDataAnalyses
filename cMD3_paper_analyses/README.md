@@ -15,9 +15,14 @@ The four main blocks are:
 4. SECTION 4: ORAL INTROGRESSION ANALYSIS AND META-ANALYSIS
 
 ### Requirements
+
+* [metAML](https://github.com/SegataLab/metaml/)
  
-You need 
-* [metAML](https://github.com/SegataLab/metaml/).
+You need to have the metAML tool in order to run the main machine learning analyses.
+It is enough to CLONE IT IN THE SAME PLACE IN WHICH YOU ARE KEEPING THIS REPOSITORY.
+ 
+	`git clone git@github.com:SegataLab/metaml.git`
+
 * [pandas](https://pandas.pydata.org/) >= 1.0.3
 * [scikit-learn](https://scikit-learn.org/stable/) >= 0.24.2
 * [statsmodels](https://www.statsmodels.org/stable/index.html) >= 1.11.1
