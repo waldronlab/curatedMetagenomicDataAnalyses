@@ -191,7 +191,6 @@ class meta_an_of_meta_an(object):
 
                 filename = os.path.join(self.args.analysis_folder, "cv_dataset_%s_and_%s.tsv" %(name.replace("/", "_"), \
 			(dataset if (not dataset in ["HMP_2019_ibdmdb", "NielsenHB_2014", "XieH_2016"]) else dataset + "_" + name)))
-                print("Cazzo di fgilename", filename) 
  
                 usable_of_name.to_csv(filename, sep="\t", header=True, index=True)
  
@@ -404,7 +403,6 @@ class meta_an_of_meta_an(object):
 
                 if ((not os.path.exists(out_file + ".txt")) or (os.path.getsize(out_file + ".txt") == 0)):
                     rf.runCV()
-                else:
 
 
 if __name__ == "__main__":

@@ -30,7 +30,10 @@ import statsmodels.formula.api as smf
 import pingouin as pg
 from sklearn.metrics import pairwise_distances
 from sklearn.metrics import roc_auc_score
-from metareg import RE_meta_binary, RE_meta, singleStudyEffect, paule_mandel_tau
+
+sys.path.append("../../python_modules/")
+from meta_analyses import RE_meta_binary, RE_meta, singleStudyEffect, paule_mandel_tau
+
 from skbio.stats import composition as cps
 from statsmodels.stats.diagnostic import lilliefors
 
@@ -559,27 +562,36 @@ class oral_introgression(object):
         meandiff_metaanalysis_file_adjusted = os.path.join("meta_analysis_files/", an_oral_index + "_metaanalysis_meandiff_adjusted_" + self.condition)
 
                             #nsingle_datasets, index, datasets, problem, positive, negative
+
+        print(1)
         self.get_numbers_binary(segregated, an_oral_index, crc_datasets + non_crc_datasets, self.condition, self.positive, \
             self.negative  )
 
+        print(2)
         self.meta_analysis(segregated, an_oral_index, crc_datasets + non_crc_datasets, self.condition, self.positive, \
             self.negative, out_metaanalysis_file_raw, self.args.type_of_meta, raw=True, no_covariates=True)
 
+        print(3)
         self.meta_analysis(segregated, an_oral_index, crc_datasets + non_crc_datasets, self.condition, self.positive, \
             self.negative, out_metaanalysis_file, self.args.type_of_meta, raw=False, no_covariates=False)
 
+        print(4)
         self.meta_analysis(segregated, an_oral_index, crc_datasets + non_crc_datasets, self.condition, self.positive, \
             self.negative, out_metaanalysis_file_uncorrected, self.args.type_of_meta, raw=False, no_covariates=True)
  
+        print(5)
         self.log_fold_change_meta_an( segregated, an_oral_index, crc_datasets + non_crc_datasets, \
             self.condition, self.positive, self.negative, out_metaanalysis_file_fold_change, self.args.type_of_meta)
          
+        print(6)
         self.meta_interpretable(segregated, an_oral_index, crc_datasets + non_crc_datasets, self.condition, self.positive, \
             self.negative, meandiff_metaanalysis_file_raw, self.args.type_of_meta, raw=True, no_covariates=True    )
 
+        print(7)
         self.meta_interpretable(segregated, an_oral_index, crc_datasets + non_crc_datasets, self.condition, self.positive, \
             self.negative, meandiff_metaanalysis_file_adjusted, self.args.type_of_meta, raw=True, no_covariates=False    )
  
+        print(8, "gay")
         self.meta_interpretable_2(segregated, an_oral_index, crc_datasets + non_crc_datasets, self.condition, self.positive, \
              self.negative, meandiff_metaanalysis_file_adjusted, self.args.type_of_meta, raw=True, no_covariates=False)
 
@@ -819,7 +831,7 @@ class oral_introgression(object):
 
                 for x,ci in zip(\
                     [y for y in re.result.columns.tolist() if \
-			((y.endswith("_CohenD")) and (not y.startswith("RE_")))], re.CI_of_d):
+			((y.endswith("_Effect")) and (not y.startswith("RE_")))], re.CI_of_d):
                     re.result[x+"_conf_int"] = ";".join(map(str, ci))
 
                 print("*******************************************************   finishings ******************************************************")
@@ -937,8 +949,8 @@ class oral_introgression(object):
         #meta_an1 = "Oral_Entropy_metaanalysis_uncorrected_condition.tsv"
         #meta_an2 = "Oral_Entropy_metaanalysis_condition.tsv"
 
-        meta_an1 = "meta_analysis_files/Oral_Richness_metaanalysis_uncorrected_condition.tsv"
-        meta_an2 = "meta_analysis_files/Oral_Richness_metaanalysis_condition.tsv"
+        meta_an1 = "meta_analysis_files/%s_metaanalysis_uncorrected_condition.tsv" %index_name
+        meta_an2 = "meta_analysis_files/%s_metaanalysis_condition.tsv" %index_name
 
         def plot(meta_an, marker, palette, ax=ax_c):
  
@@ -946,8 +958,9 @@ class oral_introgression(object):
  
             read_ma = lambda MA,index_name,d : \
                 tuple(list(map(float, \
-                MA.loc[index_name, [d+"_CohenD", d+"_Pvalue"]].tolist() + \
-                str(MA.loc[index_name, d+("_CohenD" if d!="RE" else "")+"_conf_int"]).split(";"))))
+                MA.loc[index_name, [d+"_Effect", d+"_Pvalue"]].tolist() + \
+                str(MA.loc[index_name, d+("_Effect" if d!="RE" else "")+"_conf_int"]).split(";"))))
+
             MA_results = [read_ma(MA, index_name2, dat) for dat in DATS + ["RE"]]
  
             MA_frame = {"Dataset": [], \
@@ -1002,7 +1015,9 @@ class oral_introgression(object):
                 (MA_frame.loc[d, "Effect-size"], MA_frame.loc[d, "Lower-Conf"], \
             MA_frame.loc[d, "Upper-Conf"])) for d in (DATS + ["RE"])[::-1]])
 
+        print("plot 1")
         plot(meta_an1, "d", {"Y": "purple", "N": "slategrey"})
+        print("plot 2")
         plot(meta_an2, "o", {"Y": "mediumturquoise", "N": "slategrey"})
 
         leg_handles = [(mlines.Line2D([], [], color=color, marker=marker, linestyle='None', alpha=1.0, \
@@ -1028,5 +1043,5 @@ if __name__ == "__main__":
     elif OI.args.type_of_meta == "AGE": ## python oral_introgression.py 
         OI.regr_validation(OI.args.Oral_Richness)
 
-    elif OI.args.type_of_meta == "SEX":
-        OI.sex_validation(OI.args.Oral_Richness)
+    #elif OI.args.type_of_meta == "SEX":
+    #    OI.sex_validation(OI.args.Oral_Richness)

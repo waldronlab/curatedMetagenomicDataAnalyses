@@ -542,5 +542,3 @@ if __name__ == "__main__":
         OI.main_validation(OI.args.Oral_Richness)
     elif OI.args.type_of_meta == "REG": ## python oral_introgression.py 
         OI.regr_validation(OI.args.Oral_Richness)
-    elif OI.args.type_of_meta == "SEX":
-        OI.sex_validation(OI.args.Oral_Richness)

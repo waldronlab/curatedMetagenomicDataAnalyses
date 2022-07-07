@@ -131,9 +131,6 @@ class healthy_microbiome_plot(object):
         data_aucs_multiple_only = dict([(name, [self.get_aucs(lodo_multiple(name))[0]]) for name in self.multiple_datasets])
         data_aucs_one_at_the_time = dict([(name, [self.get_aucs(lodo_one_at_the_time(name))[0]]) for name in self.multiple_datasets])
 
-        #for name in self.multiple_datasets:
-        #    print(name, lodo_one_at_the_time(name), self.get_aucs(lodo_one_at_the_time(name)))
-
         data_aucs_cross = dict([(name, [self.get_aucs(cross_valids(name))[0]]) for name in self.cross_datasets])
         data_corrected = dict([(name, [self.get_aucs(lodo_corrected(name))[0]]) for name in self.corrected_datasets])
         
@@ -247,8 +244,6 @@ class healthy_microbiome_plot(object):
         def get_prevalence_OR(feat, dataset):
             #u = self.usable.loc[feat, self.usable.loc["dataset_name"]==dataset].values.astype(float)
 
-            #print(np.sum(u), " somma di partenza... ")
-
             print(dataset, feat, "  => This is the dataset & feat")
             usable_this_feat = self.usable.copy() #loc[:, :]
             #print(usable_this_feat) 
@@ -340,8 +335,6 @@ class healthy_microbiome_plot(object):
 
         # data_aucs_direct, data_aucs_multiple_only, data_aucs_one_at_the_time, data_aucs_cross, data_corrected
 
-        #print(self.datasets, " qiesti sono i dataset (self.datasets) su cui calcoli larray per le heatmap")
-
         Auc_direct = pd.DataFrame(dict([(dat, data_aucs_direct[dat]) for dat in self.datasets]), index=["Auc"]).T
         Auc_multiple = pd.DataFrame(dict([(dat, data_aucs_multiple_only[dat]) for dat in self.multiple_datasets]), index=["Auc"]).T
         Auc_oneatthe = pd.DataFrame(dict([(dat, data_aucs_one_at_the_time[dat]) for dat in self.multiple_datasets]), index=["Auc"]).T
@@ -352,8 +345,6 @@ class healthy_microbiome_plot(object):
 
         dirp = pd.DataFrame(dict([(k,[vv[1] for vv in v]) for k,v in datasp.items()]), index=pos_feats).T
         dirn = pd.DataFrame(dict([(k,[vv[1] for vv in v]) for k,v in datasn.items()]), index=neg_feats).T
-
-        #print(Auc_cross_val)
 
         print(Auc_direct.shape, " one shape")
         print(Auc_multiple.shape, " two shape")
@@ -376,9 +367,6 @@ class healthy_microbiome_plot(object):
             ### "NielsenHB_2014_CD", "HMP_2019_ibdmdb_CD", "XieH_2016_ashtma"]
        
         #self.Auc_direct = self.Auc_direct.loc[self.datasets]
-
-        print(self.Auc_multiple, " ora cresho")
-        #print(self.datasets[6:-1])
 
         self.Auc_multiple = self.Auc_multiple.loc[self.datasets[8:]]
         self.Auc_oneatthe = self.Auc_oneatthe.loc[self.datasets[8:]]
@@ -449,10 +437,6 @@ class healthy_microbiome_plot(object):
         #print(mask_)
 
         ## self.wilc_pos, self.wilc_neg
-
-        #print(self.wilc_pos.shape, self.wilc_neg.shape, "  questi sono pos e neg")
-        #print(self.N.shape, self.P.shape, "  questi sono N e P")
-        #print(self.wilc_pos)
 
         #heatmap_health = sns.heatmap(data=self.N*(-1.), vmin=0.0, vmax=(max_odd_value), ax=ax_heatmap_neg, cbar=False, square=False, cmap="Oranges", \
         #     yticklabels=[], mask=mask_, linewidths=1.5, linecolor="goldenrod", annot=self.wilc_neg, fmt="s")
