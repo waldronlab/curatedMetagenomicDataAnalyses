@@ -91,7 +91,7 @@ be computed in at least a user-specified number of cohorts (na_filter).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">filter_sort</span><span class="op">(</span><span class="va">df_to_sort</span>, <span class="va">na_filter</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filter_sort</span><span class="op">(</span><span class="va">df_to_sort</span>, <span class="va">na_filter</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -99,13 +99,18 @@ be computed in at least a user-specified number of cohorts (na_filter).</p>
     <dl><dt>df_to_sort</dt>
 <dd><p>The dataframe containing the meta-analysis results (final_df
 in this vignette).</p></dd>
+
+
 <dt>na_filter</dt>
 <dd><p>Maximum number of cohorts for which the SDM difference couldn't
 be computed to allow for a feature to be included.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The dataframe with the meta-analysis results, filtered for prevalent
+    
+
+<p>The dataframe with the meta-analysis results, filtered for prevalent
 features and ordered by adj.p-value and effect size.</p>
     </div>
     <div id="details">
@@ -126,7 +131,7 @@ to the corrected p-values and in decreasing order for the Overall effect size</p
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

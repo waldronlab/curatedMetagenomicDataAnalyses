@@ -87,7 +87,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">dataDump</span><span class="op">(</span>dataType <span class="op">=</span> <span class="st">"relative_abundance"</span>, counts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dataDump</span><span class="op">(</span>dataType <span class="op">=</span> <span class="st">"relative_abundance"</span>, counts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -95,14 +95,19 @@
     <dl><dt>dataType</dt>
 <dd><p>(default: "relative_abundance")
 Data type, passed on to <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/returnSamples.html" class="external-link">returnSamples</a></code>.</p></dd>
+
+
 <dt>counts</dt>
 <dd><p>(Default: FALSE)
 Whether to convert to count-like data by multiplying through by read depth.
 Passed on to <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/returnSamples.html" class="external-link">returnSamples</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The SummarizedExperiment or TreeSummarizedExperiment containing all of cMD for the data type requested.
+    
+
+<p>The SummarizedExperiment or TreeSummarizedExperiment containing all of cMD for the data type requested.
 Calling this function has the side-effect of also writing two csv files, one for the assay data of this
 object and one for the colData.</p>
     </div>
@@ -114,11 +119,11 @@ which are duplicated in the LeChatelierE_2013 study. The cMD version number is p
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">   <span class="va">tse</span> <span class="op">&lt;-</span> <span class="fu">dataDump</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">   <span class="va">tse</span></span>
-<span class="r-in">   <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">dir</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"\\.csv"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>   <span class="va">tse</span> <span class="op">&lt;-</span> <span class="fu">dataDump</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="va">tse</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">dir</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"\\.csv"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -133,7 +138,7 @@ which are duplicated in the LeChatelierE_2013 study. The cMD version number is p
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

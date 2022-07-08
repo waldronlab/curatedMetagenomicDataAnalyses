@@ -87,12 +87,12 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">makeSEforCondition</span><span class="op">(</span>
-  <span class="va">condition</span>,
-  removestudies <span class="op">=</span> <span class="cn">NULL</span>,
-  dataType <span class="op">=</span> <span class="st">"relative_abundance"</span>,
-  counts <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">makeSEforCondition</span><span class="op">(</span></span>
+<span>  <span class="va">condition</span>,</span>
+<span>  removestudies <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  dataType <span class="op">=</span> <span class="st">"relative_abundance"</span>,</span>
+<span>  counts <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -100,17 +100,26 @@
     <dl><dt>condition</dt>
 <dd><p>Condition of study for which to build a case-control dataset.
 See "study_condition" column of the <code>sampleMetadata</code> object.</p></dd>
+
+
 <dt>removestudies</dt>
 <dd><p>Any studies not to be included (default: NULL)</p></dd>
+
+
 <dt>dataType</dt>
 <dd><p>Type of metagenomic data to return, see <code>?curatedMetagenomicData</code></p></dd>
+
+
 <dt>counts</dt>
 <dd><p>Convert to something resembling counts, by multiplying through
 by read depth?</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a (Tree)SummarizedExperiment containing merged data from 1+ studies</p>
+    
+
+<p>a (Tree)SummarizedExperiment containing merged data from 1+ studies</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -122,7 +131,7 @@ controls. These datasets are then merged into a single
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">makeSEforCondition</span><span class="op">(</span><span class="st">"STH"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">makeSEforCondition</span><span class="op">(</span><span class="st">"STH"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2021-10-19</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> $`2021-10-14.RosaBA_2018.relative_abundance`</span>
@@ -173,7 +182,7 @@ controls. These datasets are then merged into a single
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

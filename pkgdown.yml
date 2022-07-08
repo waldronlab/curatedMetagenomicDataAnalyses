@@ -1,5 +1,5 @@
 pandoc: 2.17.1.1
-pkgdown: 2.0.3
+pkgdown: 2.0.5
 pkgdown_sha: ~
 articles:
   Age_metaanalysis_vignette: Age_metaanalysis_vignette.html
@@ -8,7 +8,7 @@ articles:
   Sex_metaanalysis_vignette: Sex_metaanalysis_vignette.html
   explorecirrhosis: explorecirrhosis.html
   identify_CRC_species: identify_CRC_species.html
-last_built: 2022-05-11T18:15Z
+last_built: 2022-07-08T21:21Z
 urls:
   reference: https://github.com/waldronlab/curatedMetagenomicAnalyses/reference
   article: https://github.com/waldronlab/curatedMetagenomicAnalyses/articles

@@ -118,52 +118,52 @@ Waldron</h4>
     
 <p>Packages used here:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicAnalyses">curatedMetagenomicAnalyses</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicAnalyses">curatedMetagenomicAnalyses</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="cirrhosis-exploratory-analysis">Cirrhosis exploratory analysis<a class="anchor" aria-label="anchor" href="#cirrhosis-exploratory-analysis"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">se</span> <span class="op">&lt;-</span>
-    <span class="fu">curatedMetagenomicAnalyses</span><span class="fu">::</span><span class="fu"><a href="../reference/makeSEforCondition.html">makeSEforCondition</a></span><span class="op">(</span><span class="st">"cirrhosis"</span>, removestudies <span class="op">=</span> <span class="st">"HMP_2019_ibdmdb"</span>, dataType <span class="op">=</span> <span class="st">"relative_abundance"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## snapshotDate(): 2021-10-19</span></code></pre>
-<pre><code><span class="co">## </span>
-<span class="co">## $`2021-10-14.LoombaR_2017.relative_abundance`</span>
-<span class="co">## dropping rows without rowTree matches:</span>
-<span class="co">##   k__Bacteria|p__Actinobacteria|c__Coriobacteriia|o__Coriobacteriales|f__Coriobacteriaceae|g__Collinsella|s__Collinsella_stercoris</span>
-<span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Bacillales|f__Bacillales_unclassified|g__Gemella|s__Gemella_bergeri</span>
-<span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Lactobacillales|f__Carnobacteriaceae|g__Granulicatella|s__Granulicatella_elegans</span>
-<span class="co">##   k__Bacteria|p__Firmicutes|c__Erysipelotrichia|o__Erysipelotrichales|f__Erysipelotrichaceae|g__Bulleidia|s__Bulleidia_extructa</span>
-<span class="co">##   k__Bacteria|p__Proteobacteria|c__Betaproteobacteria|o__Burkholderiales|f__Sutterellaceae|g__Sutterella|s__Sutterella_parvirubra</span>
-<span class="co">##   k__Bacteria|p__Synergistetes|c__Synergistia|o__Synergistales|f__Synergistaceae|g__Cloacibacillus|s__Cloacibacillus_evryensis</span></code></pre>
-<pre><code><span class="co">## $`2021-03-31.QinN_2014.relative_abundance`</span>
-<span class="co">## dropping rows without rowTree matches:</span>
-<span class="co">##   k__Bacteria|p__Actinobacteria|c__Coriobacteriia|o__Coriobacteriales|f__Atopobiaceae|g__Olsenella|s__Olsenella_profusa</span>
-<span class="co">##   k__Bacteria|p__Actinobacteria|c__Coriobacteriia|o__Coriobacteriales|f__Coriobacteriaceae|g__Collinsella|s__Collinsella_stercoris</span>
-<span class="co">##   k__Bacteria|p__Actinobacteria|c__Coriobacteriia|o__Coriobacteriales|f__Coriobacteriaceae|g__Enorma|s__[Collinsella]_massiliensis</span>
-<span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Bacillales|f__Bacillales_unclassified|g__Gemella|s__Gemella_bergeri</span>
-<span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Lactobacillales|f__Carnobacteriaceae|g__Granulicatella|s__Granulicatella_elegans</span>
-<span class="co">##   k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Ruminococcaceae|g__Ruminococcus|s__Ruminococcus_champanellensis</span>
-<span class="co">##   k__Bacteria|p__Firmicutes|c__Erysipelotrichia|o__Erysipelotrichales|f__Erysipelotrichaceae|g__Bulleidia|s__Bulleidia_extructa</span>
-<span class="co">##   k__Bacteria|p__Proteobacteria|c__Betaproteobacteria|o__Burkholderiales|f__Sutterellaceae|g__Sutterella|s__Sutterella_parvirubra</span>
-<span class="co">##   k__Bacteria|p__Synergistetes|c__Synergistia|o__Synergistales|f__Synergistaceae|g__Cloacibacillus|s__Cloacibacillus_evryensis</span></code></pre>
+<code class="sourceCode R"><span><span class="va">se</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu">curatedMetagenomicAnalyses</span><span class="fu">::</span><span class="fu"><a href="../reference/makeSEforCondition.html">makeSEforCondition</a></span><span class="op">(</span><span class="st">"cirrhosis"</span>, removestudies <span class="op">=</span> <span class="st">"HMP_2019_ibdmdb"</span>, dataType <span class="op">=</span> <span class="st">"relative_abundance"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## snapshotDate(): 2021-10-19</span></span></code></pre>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## $`2021-10-14.LoombaR_2017.relative_abundance`</span></span>
+<span><span class="co">## dropping rows without rowTree matches:</span></span>
+<span><span class="co">##   k__Bacteria|p__Actinobacteria|c__Coriobacteriia|o__Coriobacteriales|f__Coriobacteriaceae|g__Collinsella|s__Collinsella_stercoris</span></span>
+<span><span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Bacillales|f__Bacillales_unclassified|g__Gemella|s__Gemella_bergeri</span></span>
+<span><span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Lactobacillales|f__Carnobacteriaceae|g__Granulicatella|s__Granulicatella_elegans</span></span>
+<span><span class="co">##   k__Bacteria|p__Firmicutes|c__Erysipelotrichia|o__Erysipelotrichales|f__Erysipelotrichaceae|g__Bulleidia|s__Bulleidia_extructa</span></span>
+<span><span class="co">##   k__Bacteria|p__Proteobacteria|c__Betaproteobacteria|o__Burkholderiales|f__Sutterellaceae|g__Sutterella|s__Sutterella_parvirubra</span></span>
+<span><span class="co">##   k__Bacteria|p__Synergistetes|c__Synergistia|o__Synergistales|f__Synergistaceae|g__Cloacibacillus|s__Cloacibacillus_evryensis</span></span></code></pre>
+<pre><code><span><span class="co">## $`2021-03-31.QinN_2014.relative_abundance`</span></span>
+<span><span class="co">## dropping rows without rowTree matches:</span></span>
+<span><span class="co">##   k__Bacteria|p__Actinobacteria|c__Coriobacteriia|o__Coriobacteriales|f__Atopobiaceae|g__Olsenella|s__Olsenella_profusa</span></span>
+<span><span class="co">##   k__Bacteria|p__Actinobacteria|c__Coriobacteriia|o__Coriobacteriales|f__Coriobacteriaceae|g__Collinsella|s__Collinsella_stercoris</span></span>
+<span><span class="co">##   k__Bacteria|p__Actinobacteria|c__Coriobacteriia|o__Coriobacteriales|f__Coriobacteriaceae|g__Enorma|s__[Collinsella]_massiliensis</span></span>
+<span><span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Bacillales|f__Bacillales_unclassified|g__Gemella|s__Gemella_bergeri</span></span>
+<span><span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Lactobacillales|f__Carnobacteriaceae|g__Granulicatella|s__Granulicatella_elegans</span></span>
+<span><span class="co">##   k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Ruminococcaceae|g__Ruminococcus|s__Ruminococcus_champanellensis</span></span>
+<span><span class="co">##   k__Bacteria|p__Firmicutes|c__Erysipelotrichia|o__Erysipelotrichales|f__Erysipelotrichaceae|g__Bulleidia|s__Bulleidia_extructa</span></span>
+<span><span class="co">##   k__Bacteria|p__Proteobacteria|c__Betaproteobacteria|o__Burkholderiales|f__Sutterellaceae|g__Sutterella|s__Sutterella_parvirubra</span></span>
+<span><span class="co">##   k__Bacteria|p__Synergistetes|c__Synergistia|o__Synergistales|f__Synergistaceae|g__Cloacibacillus|s__Cloacibacillus_evryensis</span></span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/benjaminrich/table1" class="external-link">table1</a></span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## </span>
-<span class="co">## Attaching package: 'table1'</span></code></pre>
-<pre><code><span class="co">## The following objects are masked from 'package:base':</span>
-<span class="co">## </span>
-<span class="co">##     units, units&lt;-</span></code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/benjaminrich/table1" class="external-link">table1</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## Attaching package: 'table1'</span></span></code></pre>
+<pre><code><span><span class="co">## The following objects are masked from 'package:base':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     units, units&lt;-</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html" class="external-link">label</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">study_name</span><span class="op">)</span> <span class="op">=</span> <span class="st">"Study Name"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html" class="external-link">label</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">body_site</span><span class="op">)</span> <span class="op">=</span> <span class="st">"Body site"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html" class="external-link">label</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">study_condition</span><span class="op">)</span> <span class="op">=</span> <span class="st">"Study condition"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html" class="external-link">label</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">antibiotics_current_use</span><span class="op">)</span> <span class="op">=</span> <span class="st">"Current Antibiotics Use"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/table1/man/units.html" class="external-link">units</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">age</span><span class="op">)</span> <span class="op">=</span> <span class="st">"Years"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html" class="external-link">label</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">study_name</span><span class="op">)</span> <span class="op">=</span> <span class="st">"Study Name"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html" class="external-link">label</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">body_site</span><span class="op">)</span> <span class="op">=</span> <span class="st">"Body site"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html" class="external-link">label</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">study_condition</span><span class="op">)</span> <span class="op">=</span> <span class="st">"Study condition"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html" class="external-link">label</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">antibiotics_current_use</span><span class="op">)</span> <span class="op">=</span> <span class="st">"Current Antibiotics Use"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/table1/man/units.html" class="external-link">units</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">age</span><span class="op">)</span> <span class="op">=</span> <span class="st">"Years"</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/table1/man/table1.html" class="external-link">table1</a></span><span class="op">(</span><span class="op">~</span> <span class="va">.</span> <span class="op">-</span>  <span class="va">subject_id</span> <span class="op">|</span> <span class="va">study_name</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/table1/man/table1.html" class="external-link">table1</a></span><span class="op">(</span><span class="op">~</span> <span class="va">.</span> <span class="op">-</span>  <span class="va">subject_id</span> <span class="op">|</span> <span class="va">study_name</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <div class="Rtable1"><table class="table Rtable1">
 <thead><tr>
 <th class="rowlabel firstrow lastrow"></th>
@@ -394,45 +394,45 @@ Waldron</h4>
 current antibiotics use, raising questions of causality direction in
 these predictions:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">study_condition</span>, <span class="va">df</span><span class="op">$</span><span class="va">antibiotics_current_use</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##            </span>
-<span class="co">##              no yes</span>
-<span class="co">##   cirrhosis  66  57</span>
-<span class="co">##   control   114   0</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">study_condition</span>, <span class="va">df</span><span class="op">$</span><span class="va">antibiotics_current_use</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##            </span></span>
+<span><span class="co">##              no yes</span></span>
+<span><span class="co">##   cirrhosis  66  57</span></span>
+<span><span class="co">##   control   114   0</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="compositionality">Compositionality<a class="anchor" aria-label="anchor" href="#compositionality"></a>
 </h2>
 <p>Many, but not all, columns add up to 100%:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">##   97.04   99.98  100.00   99.92  100.00  100.00</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span><span class="co">##   97.04   99.98  100.00   99.92  100.00  100.00</span></span></code></pre>
 <p>The observation with minimum sum of relative abundances is:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></code></pre></div>
-<pre><code><span class="co">## DataFrame with 1 row and 31 columns</span>
-<span class="co">##       study_name  subject_id   body_site antibiotics_current_use</span>
-<span class="co">##      &lt;character&gt; &lt;character&gt; &lt;character&gt;             &lt;character&gt;</span>
-<span class="co">## LV-1   QinN_2014        LV-1       stool                      no</span>
-<span class="co">##      study_condition             disease       age age_category      gender</span>
-<span class="co">##          &lt;character&gt;         &lt;character&gt; &lt;integer&gt;  &lt;character&gt; &lt;character&gt;</span>
-<span class="co">## LV-1       cirrhosis cirrhosis;hepatitis        42        adult        male</span>
-<span class="co">##          country non_westernized sequencing_platform DNA_extraction_kit</span>
-<span class="co">##      &lt;character&gt;     &lt;character&gt;         &lt;character&gt;        &lt;character&gt;</span>
-<span class="co">## LV-1         CHN              no       IlluminaHiSeq                 NA</span>
-<span class="co">##             PMID number_reads number_bases minimum_read_length</span>
-<span class="co">##      &lt;character&gt;    &lt;integer&gt;    &lt;numeric&gt;           &lt;integer&gt;</span>
-<span class="co">## LV-1    25079328     34522116   3452211600                 100</span>
-<span class="co">##      median_read_length      NCBI_accession      curator       BMI</span>
-<span class="co">##               &lt;integer&gt;         &lt;character&gt;  &lt;character&gt; &lt;numeric&gt;</span>
-<span class="co">## LV-1                100 ERR528291;ERR528292 Paolo_Manghi     19.03</span>
-<span class="co">##      antibiotics_family disease_subtype  creatine  albumine     alcohol</span>
-<span class="co">##             &lt;character&gt;     &lt;character&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;character&gt;</span>
-<span class="co">## LV-1                 NA   HBV;cirrhosis        65      31.2         yes</span>
-<span class="co">##      disease_stage bilubirin prothrombin_time       inr       ctp</span>
-<span class="co">##          &lt;integer&gt; &lt;numeric&gt;        &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;</span>
-<span class="co">## LV-1            NA      1.82               NA      1.18         6</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## DataFrame with 1 row and 31 columns</span></span>
+<span><span class="co">##       study_name  subject_id   body_site antibiotics_current_use</span></span>
+<span><span class="co">##      &lt;character&gt; &lt;character&gt; &lt;character&gt;             &lt;character&gt;</span></span>
+<span><span class="co">## LV-1   QinN_2014        LV-1       stool                      no</span></span>
+<span><span class="co">##      study_condition             disease       age age_category      gender</span></span>
+<span><span class="co">##          &lt;character&gt;         &lt;character&gt; &lt;integer&gt;  &lt;character&gt; &lt;character&gt;</span></span>
+<span><span class="co">## LV-1       cirrhosis cirrhosis;hepatitis        42        adult        male</span></span>
+<span><span class="co">##          country non_westernized sequencing_platform DNA_extraction_kit</span></span>
+<span><span class="co">##      &lt;character&gt;     &lt;character&gt;         &lt;character&gt;        &lt;character&gt;</span></span>
+<span><span class="co">## LV-1         CHN              no       IlluminaHiSeq                 NA</span></span>
+<span><span class="co">##             PMID number_reads number_bases minimum_read_length</span></span>
+<span><span class="co">##      &lt;character&gt;    &lt;integer&gt;    &lt;numeric&gt;           &lt;integer&gt;</span></span>
+<span><span class="co">## LV-1    25079328     34522116   3452211600                 100</span></span>
+<span><span class="co">##      median_read_length      NCBI_accession      curator       BMI</span></span>
+<span><span class="co">##               &lt;integer&gt;         &lt;character&gt;  &lt;character&gt; &lt;numeric&gt;</span></span>
+<span><span class="co">## LV-1                100 ERR528291;ERR528292 Paolo_Manghi     19.03</span></span>
+<span><span class="co">##      antibiotics_family disease_subtype  creatine  albumine     alcohol</span></span>
+<span><span class="co">##             &lt;character&gt;     &lt;character&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;character&gt;</span></span>
+<span><span class="co">## LV-1                 NA   HBV;cirrhosis        65      31.2         yes</span></span>
+<span><span class="co">##      disease_stage bilubirin prothrombin_time       inr       ctp</span></span>
+<span><span class="co">##          &lt;integer&gt; &lt;numeric&gt;        &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;</span></span>
+<span><span class="co">## LV-1            NA      1.82               NA      1.18         6</span></span></code></pre>
 <p>Note, this a result of species where phylogenetic information was
 unavailable in building of the <code>TreeSummarizedExperiment</code>. It
 would be possible to take data directly from <code>ExperimentHub</code>
@@ -445,60 +445,60 @@ unimportant for most purposes.</p>
 <p>From the <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/SIAMCAT/inst/doc/SIAMCAT_vignette.html" class="external-link">SIAMCAT
 vignette</a>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"SIAMCAT"</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"SIAMCAT"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SIAMCAT</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"SIAMCAT"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"SIAMCAT"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SIAMCAT</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">labs</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/create.label.html" class="external-link">create.label</a></span><span class="op">(</span>meta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span>,
-               label <span class="op">=</span> <span class="st">'study_condition'</span>,
-               case <span class="op">=</span> <span class="st">'cirrhosis'</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Label used as case:</span>
-<span class="co">##    cirrhosis</span>
-<span class="co">## Label used as control:</span>
-<span class="co">##    control</span></code></pre>
-<pre><code><span class="co">## + finished create.label.from.metadata in 0.012 s</span></code></pre>
+<code class="sourceCode R"><span><span class="va">labs</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/create.label.html" class="external-link">create.label</a></span><span class="op">(</span>meta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>               label <span class="op">=</span> <span class="st">'study_condition'</span>,</span>
+<span>               case <span class="op">=</span> <span class="st">'cirrhosis'</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Label used as case:</span></span>
+<span><span class="co">##    cirrhosis</span></span>
+<span><span class="co">## Label used as control:</span></span>
+<span><span class="co">##    control</span></span></code></pre>
+<pre><code><span><span class="co">## + finished create.label.from.metadata in 0.009 s</span></span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sc.obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/siamcat.html" class="external-link">siamcat</a></span><span class="op">(</span>feat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span>,
-    label<span class="op">=</span><span class="va">labs</span>,
-    meta<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## + starting validate.data</span></code></pre>
-<pre><code><span class="co">## +++ checking overlap between labels and features</span></code></pre>
-<pre><code><span class="co">## + Keeping labels of 282 sample(s).</span></code></pre>
-<pre><code><span class="co">## +++ checking sample number per class</span></code></pre>
-<pre><code><span class="co">## +++ checking overlap between samples and metadata</span></code></pre>
-<pre><code><span class="co">## + finished validate.data in 0.057 s</span></code></pre>
+<code class="sourceCode R"><span><span class="va">sc.obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/siamcat.html" class="external-link">siamcat</a></span><span class="op">(</span>feat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span>,</span>
+<span>    label<span class="op">=</span><span class="va">labs</span>,</span>
+<span>    meta<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## + starting validate.data</span></span></code></pre>
+<pre><code><span><span class="co">## +++ checking overlap between labels and features</span></span></code></pre>
+<pre><code><span><span class="co">## + Keeping labels of 282 sample(s).</span></span></code></pre>
+<pre><code><span><span class="co">## +++ checking sample number per class</span></span></code></pre>
+<pre><code><span><span class="co">## +++ checking overlap between samples and metadata</span></span></code></pre>
+<pre><code><span><span class="co">## + finished validate.data in 0.044 s</span></span></code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/methods/show.html" class="external-link">show</a></span><span class="op">(</span><span class="va">sc.obj</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## siamcat-class object</span>
-<span class="co">## label()                Label object:         150 control and 132 cirrhosis samples</span>
-<span class="co">## </span>
-<span class="co">## contains phyloseq-class experiment-level object @phyloseq:</span>
-<span class="co">## phyloseq@otu_table()   OTU Table:            [ 697 taxa and 282 samples ]</span>
-<span class="co">## phyloseq@sam_data()    Sample Data:          [ 282 samples by 31 sample variables ]</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/methods/show.html" class="external-link">show</a></span><span class="op">(</span><span class="va">sc.obj</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## siamcat-class object</span></span>
+<span><span class="co">## label()                Label object:         150 control and 132 cirrhosis samples</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## contains phyloseq-class experiment-level object @phyloseq:</span></span>
+<span><span class="co">## phyloseq@otu_table()   OTU Table:            [ 697 taxa and 282 samples ]</span></span>
+<span><span class="co">## phyloseq@sam_data()    Sample Data:          [ 282 samples by 31 sample variables ]</span></span></code></pre>
 <p>Unsupervised filtering:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sc.obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/filter.features.html" class="external-link">filter.features</a></span><span class="op">(</span><span class="va">sc.obj</span>,
-    filter.method <span class="op">=</span> <span class="st">'abundance'</span>,
-    cutoff <span class="op">=</span> <span class="fl">0.001</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Features successfully filtered</span></code></pre>
+<code class="sourceCode R"><span><span class="va">sc.obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/filter.features.html" class="external-link">filter.features</a></span><span class="op">(</span><span class="va">sc.obj</span>,</span>
+<span>    filter.method <span class="op">=</span> <span class="st">'abundance'</span>,</span>
+<span>    cutoff <span class="op">=</span> <span class="fl">0.001</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Features successfully filtered</span></span></code></pre>
 <div class="section level3">
 <h3 id="association-testing">Association testing<a class="anchor" aria-label="anchor" href="#association-testing"></a>
 </h3>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sc.obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/check.associations.html" class="external-link">check.associations</a></span><span class="op">(</span>
-    <span class="va">sc.obj</span>,
-    sort.by <span class="op">=</span> <span class="st">'fc'</span>,
-    alpha <span class="op">=</span> <span class="fl">0.05</span>,
-    mult.corr <span class="op">=</span> <span class="st">"fdr"</span>,
-    detect.lim <span class="op">=</span> <span class="fl">10</span> <span class="op">^</span><span class="op">-</span><span class="fl">6</span>,
-    plot.type <span class="op">=</span> <span class="st">"quantile.box"</span>,
-    panels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fc"</span>, <span class="st">"prevalence"</span>, <span class="st">"auroc"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## ### WARNING: Not plotting to a pdf-file.</span>
-<span class="co">## ### The plot is optimized for landscape DIN-A4 (or similar) layout.</span>
-<span class="co">## ### Please make sure that your plotting region is large enough!!!</span>
-<span class="co">## ### Use at your own risk...</span></code></pre>
-<pre><code><span class="co">## Are you sure that you want to continue? (Yes/no/cancel)</span></code></pre>
+<code class="sourceCode R"><span><span class="va">sc.obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/check.associations.html" class="external-link">check.associations</a></span><span class="op">(</span></span>
+<span>    <span class="va">sc.obj</span>,</span>
+<span>    sort.by <span class="op">=</span> <span class="st">'fc'</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>    mult.corr <span class="op">=</span> <span class="st">"fdr"</span>,</span>
+<span>    detect.lim <span class="op">=</span> <span class="fl">10</span> <span class="op">^</span><span class="op">-</span><span class="fl">6</span>,</span>
+<span>    plot.type <span class="op">=</span> <span class="st">"quantile.box"</span>,</span>
+<span>    panels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fc"</span>, <span class="st">"prevalence"</span>, <span class="st">"auroc"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## ### WARNING: Not plotting to a pdf-file.</span></span>
+<span><span class="co">## ### The plot is optimized for landscape DIN-A4 (or similar) layout.</span></span>
+<span><span class="co">## ### Please make sure that your plotting region is large enough!!!</span></span>
+<span><span class="co">## ### Use at your own risk...</span></span></code></pre>
+<pre><code><span><span class="co">## Are you sure that you want to continue? (Yes/no/cancel)</span></span></code></pre>
 <p><img src="explorecirrhosis_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 </div>
@@ -521,7 +521,7 @@ vignette</a>.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>
