@@ -269,6 +269,12 @@ jobs:
           name: ${{ runner.os }}-biocversion-RELEASE_3_14-r-4.1-results
           path: check
 
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: name/app
+
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
