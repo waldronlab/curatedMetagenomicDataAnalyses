@@ -89,7 +89,7 @@ def read_params():
     add("-min", "--min", type=str, nargs="+", default=[], help="Use ':' ==> age:16 means minimum 16 in the columns age")
     add("-max", "--max", type=str, nargs="+", default=[], help="Use ':' ==> BMI:45 means maximum 45 in the columns BMI")
     add("-iqr", "--iqr", type=str, nargs="+", default=[], help="Use ':' ==> age:10 means asking at least 10 as IQR for age in this population")
-    add("-mul", "--multiple", type=int, default=-1, help="Upper bound of days from the baseline allowed (default -1 uses only baselines)")
+    add("-mul", "--multiple", type=int, default=-1, help="Upper bound of days from the baseline allowed (default -1 uses only baselines, while 0 uses all)")
     add("-cat", "--cat", type=str, nargs="+", default=[], help="Use ':' ==> study_condition:control means asking just controls")
     add("-ex", "--exclude", type=str, nargs="+", default=[], help="Works like --cat, but for exclusion (useful mixed with --search)")
     add("-search", "--search", type=str, nargs="+", default=[], help="Use ':' ==> search:study_condition:a:b:c:etc asks for a or b or c or etc in column 'study_condition'")
@@ -99,7 +99,7 @@ def read_params():
     add("-mm", "--minmin", type=str, default="0", help="Can have 2 shapes: gender:40 requires a minimum of 40 individuals in the less abundance sex "
 	", while just 40 requires a minimum of 40 individuals in total (This keyword is very important because many dataset are quite small for a meta-analysis)")
     add("-cf", "--cfd", type=str, nargs="+", default=[], help="Use words, such as: BMI age gender: this will simply exclude samples **without** these confounders")
-    add("-si", "--study_identifier", type=str, default="study_name", help="Name of the column identifing Dataset [default: dataset_name]")
+    add("-si", "--study_identifier", type=str, default="study_name", help="Name of the column identifing Dataset [default: study_name]")
     add("-v", "--verbose", action="store_true", help="Tell you what is adding and how big it is")
     add("--debug", action="store_true", help="Similar to verbose, but prints more stuff")
     return vars(p.parse_args())
@@ -150,7 +150,7 @@ def select(args):
                 min_ = int(ag[1])
                 if col in tabtab.index.tolist():
                     tabtab = tabtab.loc[ :, tabtab.loc[col]!="NA" ]
-                    tabtab = tabtab.loc[ :, tabtab.loc[col].astype(int)>=min_ ]
+                    tabtab = tabtab.loc[ :, tabtab.loc[col].astype(float).astype(int)>=min_ ]
                     if args["debug"]:
                         sys.stdout.write("\nMin ==> " + str(tabtab.shape) + "[" + study + "]") 
                 else:
@@ -223,6 +223,7 @@ def select(args):
 
 
 
+
         if args["multiple"] and (not isinstance(tabtab, np.ndarray)):
             if ("days_from_first_collection" in tabtab.index.tolist()) and (len(tabtab.loc["days_from_first_collection"].unique()) >1):
                 if args["multiple"] < 0.:
@@ -230,6 +231,7 @@ def select(args):
                     tabtab = tabtab.loc[ :, tabtab.loc["days_from_first_collection"] == 0.0 ]
 
                     tabtab = tabtab.T.drop_duplicates(["subject_id"], keep="first").T
+
                     if args["debug"]:
                         sys.stdout.write("\nDROP ==> " + str(tabtab.shape) + "[" + study + "]")
                         sys.stdout.write("\nMULT ==> " + str(tabtab.shape) + "[" + study + "]")
@@ -240,6 +242,7 @@ def select(args):
                 if args["multiple"] < 0.:
                     tabtab = tabtab.T.drop_duplicates(["subject_id"], keep="first").T
                     if args["debug"]:
+                        #exit(1)
                         sys.stdout.write("\nDROP ==> " + str(tabtab.shape) + "[" + study + "]")
 
                 else:
@@ -248,6 +251,12 @@ def select(args):
             if not tabtab.shape[1]:
                 tabtab = np.array([])
 
+        else:
+            if args["debug"]:
+                sys.stdout.write("\n!! NO-DROP ==> " + str(tabtab.shape) + "[" + study + "]")
+
+            if not tabtab.shape[1]:
+                tabtab = np.array([])
 
 
         if args["binary"] and (not isinstance(tabtab, np.ndarray)):
@@ -266,8 +275,10 @@ def select(args):
             for mp in args["min_perc"]:
                 col, perc = mp.split(":")
                 perc = float(perc)
+
                 if col in tabtab.index.tolist():
                     tabtab = tabtab.loc[ :, tabtab.loc[col]!="NA" ]
+
                     if tabtab.shape[1]:
                         tabtab = tabtab \
                                 if \
@@ -275,8 +286,15 @@ def select(args):
                             and (len(tabtab.loc[col].unique())>1)) \
                                 else \
                             np.array([])
+                    
+
                     else:
                         tabtab = np.array([])
+
+                    if args["debug"]:
+                        sys.stdout.write("\nMIN PERC ==> " + str(tabtab.shape) + "[" + study + "]")
+       
+
                 else:
                     tabtab = np.array([])
 
