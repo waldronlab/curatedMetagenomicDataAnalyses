@@ -70,6 +70,8 @@ def read_params( args ):
     add("-es", "--e_suff", type=str, default=["_es"], nargs="+")
  
     add("-qs", "--q_suff", type=str, default=["_Q"], nargs="+")
+
+    add("-ses", "--se_suff", type=str, default=["_SE"], nargs="+")
  
     #add("-pe", "--prevalence", type=str, default=[""], nargs="+")
 
@@ -90,11 +92,15 @@ def read_params( args ):
     add("-re", "--random_effect", type=str, nargs="+", default=["Effect-size"], help=\
         "Random/fixed effect model effect-size")
 
+
     add("-ci", "--confint", type=str, nargs="+", default=["Conf-int"], help=\
         "Random/fixed effect model confidence intervals")
 
     add("-rq", "--random_effect_q", type=str, nargs="+", default=["FDR-Q"], help=\
         "Random/fixed effect model Q-value")
+
+    add("-rs", "--random_effect_se", type=str, nargs="+", default=["RE_StdErro"], help=\
+	"Random/fixed effect model SERR")
 
     add("-cr", "--color_red", type=str, nargs="+", default=["goldenrod"], help=\
         "Color of the significant results and of the two important lines marking the desired thresholds")
@@ -134,6 +140,8 @@ def read_params( args ):
             " selected only in case they are different at the 3rd digimal digit")
  
     add("--shrink_names", type=str, default="|", help="Apply .split(\"<shrink-names>\") to the Y-axis (feature) names of the figure")
+
+    add("--size_on_err", action="store_true", help="Size the dots on the SE of the population")
 
     print(vars(p.parse_args()))
 
@@ -191,6 +199,9 @@ def parse_args_table(args, ij):
  
     single_effect_Qs = [ c for c in meta_analysis.columns.tolist() if \
         ((c.endswith( take_a_param( args["q_suff"], ij ) )) and (c != take_a_param( args["random_effect_q"], ij ) ))  ]
+  
+    single_std_errors = [ c for c in meta_analysis.columns.tolist() if \
+	((c.endswith( take_a_param( args["se_suff"], ij) )) and (c != take_a_param( args["random_effect_se"], ij) ))  ]
  
     if take_a_param( args["random_effect"], ij ) in single_effects:
         single_effects = single_effects.remove( take_a_param( args["random_effect"], ij ) )
@@ -203,8 +214,6 @@ def parse_args_table(args, ij):
 
     results = results.loc[ [ i for i in results.index.tolist() if ((len(single_effects) - results.loc[ i, single_effects ].tolist().count("NA")) \
         >= take_a_param( args["min_studies"], ij)) ], :]
-
-
 
     if filter_on != "NO_FILTER":
 
@@ -226,7 +235,6 @@ def parse_args_table(args, ij):
             (float(results.loc[i, take_a_param( args["confint"], ij) ].split(";")[0])*float(results.loc[i, take_a_param( args["confint"], ij)].split(";")[1])) \
             >0.0], :]
 
-
     results["abs"] = np.abs( results[ take_a_param( args["random_effect"], ij) ].values.astype(float) )
     results.sort_values( "abs", inplace=True, ascending=False )
 
@@ -239,9 +247,13 @@ def parse_args_table(args, ij):
     res_neg = results.loc[ negative, : ].sort_values( take_a_param( args["random_effect"], ij), ascending=True )
     results = res_pos.append(res_neg)
 
-    return [results, single_effects, single_effect_Qs, results.index.tolist( ), name]
-            
+    if args["shrink_names"]:
+       results.index = [i.split(args["shrink_names"])[-1] for i in results.index ]
 
+       #ax.set_yticklabels([str(x.get_text()).split(args["shrink_names"])[-1] for x in ax
+
+    return [results, single_effects, single_effect_Qs, single_std_errors, results.index.tolist( ), name]
+            
 
 
 def select_features(how, results):
@@ -266,20 +278,24 @@ def select_joint_top_features( args, results ):
         for name in effects:
             e = name[0]
             if \
-            (e.startswith("g__")) and \
-            (any([(x[0].startswith(e.replace("g__", "s__"))) for x in effects if (x[0]!=e) ])): # and \
-
-                effect = str(name[1])
-                spc_l = [ (x[0]) for x in effects if ( (x[0]!=e) and (x[0].startswith(e.replace("g__", "s__"))) ) ]
-                spc_e = [ (x[1]) for x in effects if ( (x[0]!=e) and (x[0].startswith(e.replace("g__", "s__"))) ) ]
+            (e.startswith("g__")) and (len([ x for x in effects if (x[0].startswith("s__") and x[0].replace("s__", "g__").startswith(e)) ]) == 1):
+            #(any([(x[0].startswith(e.replace("g__", "s__"))) for x in effects if (x[0]!=e) ])):  #and \
+            #(len([ x for x in effects if (x[0].startswith("s__") and x[0].replace("s__", "g__").startswith(e)) ]) == 1):
+ 
+            #    effect = str(name[1])
+            #    spc_l = [ (x[0]) for x in effects if ( (x[0]!=e) and (x[0].startswith(e.replace("g__", "s__"))) ) ]
+            #    spc_e = [ (x[1]) for x in effects if ( (x[0]!=e) and (x[0].startswith(e.replace("g__", "s__"))) ) ]
             
-                mapp = dict([(x,str(y)) for x,y in zip(spc_l, spc_e)])
-                for x in mapp:
-                    if mapp[x].split(".")[1][:3] == effect.split(".")[1][:3]:
+            #    mapp = dict([(x,str(y)) for x,y in zip(spc_l, spc_e)])
+            #    for x in mapp:
+            #        if mapp[x].split(".")[1][:3] == effect.split(".")[1][:3]:
                         to_rem.append( e )
 
     effects = [u for u in effects if (not u[0] in to_rem)]
     result_feats = [w[0] for w in sorted([x for x in effects[:args["imp"]]], key=lambda a : a[2])]
+
+    #if args["shrink_names"]:
+     #   result_feats = [x.split(args["shrink_names"])[-1] for x in result_feats]
 
     return result_feats
 
@@ -289,14 +305,13 @@ def select_joint_top_features( args, results ):
  
 def build_long_frame(args, analysis, ij, result_features, all_markers):
  
-    results, single_effects, single_effect_Qs, Feats__, name_of_this_one = tuple(analysis)
+    results, single_effects, single_effect_Qs, single_std_errors, Feats__, name_of_this_one = tuple(analysis)
 
-    Feats = result_features
-
+    Feats = result_features #[feat for feat in result_features if feat in results.index]
 
     take_a_param = lambda param, ij : param[ij] if len(param)>1 else param[0]
 
-    get = lambda df, index, column : 0.0 if (not index in df.index.tolist()) else df.loc[index, column]
+    get = lambda df, index, column : np.nan if (not index in df.index.tolist()) else df.loc[index, column]
 
     #print( len(list( it.chain.from_iterable( [ [ feature for e in range(len(single_effects)) if \
     #        str(get( results, feature, single_effects[e] ))!="NA"] for feature in Feats ] ) )) )
@@ -318,8 +333,9 @@ def build_long_frame(args, analysis, ij, result_features, all_markers):
             str(get(results, feature, e))!="NA"] for feature in Feats ] ) ),
         "q-values": list( it.chain.from_iterable( [ [ float(get( results, feature, e ))  for e in single_effect_Qs if \
             str(get(results, feature, e))!="NA"] for feature in Feats ] ) ),
-        } \
-        )
+	"std-errors": list( it.chain.from_iterable([ [ float(get( results, feature, e ))  for e in single_std_errors if \
+	    str(get(results, feature, e))!="NA"] for feature in Feats ] ))
+        } )
     
     if args["markers"]:
         if isinstance(all_markers, int):
@@ -340,7 +356,7 @@ def build_long_frame(args, analysis, ij, result_features, all_markers):
  
     ## confint = [ get(results, feature, take_a_param( args["confint"], ij) ).split(";") for feature in Feats ]
   
-    confint = [ (["0.0", "0.0"] if (not feature in results.index.tolist()) else \
+    confint = [ ([np.nan, np.nan] if (not feature in results.index.tolist()) else \
 	results.loc[feature, take_a_param( args["confint"], ij)].split(";")) \
 	for feature in Feats ]
 
@@ -397,20 +413,46 @@ def draw_figure(args, show):
             long_form_frame_singles, long_form_frame_effect, name_of, remaining_markers = build_long_frame(args, analysis, ij, result_features, -1 )
         else:
             long_form_frame_singles, long_form_frame_effect, name_of, remaining_markers = build_long_frame(args, analysis, ij, result_features, remaining_markers )
-    
- 
-        if not args["markers"]:
 
+
+        #long_form_frame_effect.to_csv("mia_nonna_%i.tsv" %ij, sep="\t", header=True, index=True)
+
+        #long_form_frame_singles.index = [(str(i)+k) for i,k in enumerate(long_form_frame_singles.index)]
+        #long_form_frame_singles.drop([i for i in long_form_frame_singles.index if \
+        #    (np.sum(long_form_frame_singles.loc[i, ["effect-size", "q-values"]].values.astype(float))==0.)], inplace=True)
+        #long_form_frame_singles.index = [k[1:] for k in long_form_frame_singles.index]
+
+        #print(long_form_frame_effect, "BEFORE")
+
+        #long_form_frame_effect.index = [(str(i)+k) for i,k in enumerate(long_form_frame_effect.index)]
+        #long_form_frame_effect.drop([i for i in long_form_frame_effect.index if \
+	#    (np.sum(long_form_frame_effect.loc[i, ["random-effect", "CI_low", "CI_upp"]].values.astype(float))==0.)], inplace=True)
+        #long_form_frame_effect.index = [k[1:] for k in long_form_frame_effect.index]
+
+        #rint(long_form_frame_effect, "AFTER")
+
+
+        if not args["markers"]:
             long_form_frame_singles["dot_is"] = "the_population_marker" #take_a_param(args["pop_marker"], ij)
-            strip_one = sns.scatterplot(\
-                x="effect-size", y="Feature", \
-                data=long_form_frame_singles, size="SG", \
-                sizes={"no": args["dotsize"]*8, "yes": args["dotsize"]*16}, \
-                palette={"yes": take_a_param(args["color_red"], ij), \
-                "no": take_a_param(args["color_blue"], ij)}, \
-                edgecolor="black", ax=ax, hue="SG", \
-                style="dot_is", \
-                markers={"the_population_marker": take_a_param(args["pop_marker"], ij)})
+
+            if not args["size_on_err"]:
+                strip_one = sns.scatterplot(\
+                    x="effect-size", y="Feature", \
+                    data=long_form_frame_singles, size="SG", \
+                    sizes={"no": args["dotsize"]*8, "yes": args["dotsize"]*16}, \
+                    palette={"yes": take_a_param(args["color_red"], ij), \
+                    "no": take_a_param(args["color_blue"], ij)}, \
+                    edgecolor="black", ax=ax, hue="SG", \
+                    style="dot_is", \
+                    markers={"the_population_marker": take_a_param(args["pop_marker"], ij)})
+            else:
+                strip_one = sns.scatterplot(\
+                    x="effect-size", y="Feature", \
+                    data=long_form_frame_singles, size="std-errors", \
+                    palette={"yes": take_a_param(args["color_red"], ij), \
+                    "no": take_a_param(args["color_blue"], ij)}, \
+                    edgecolor="black", ax=ax, hue="SG", \
+                    markers={"the_population_marker": take_a_param(args["pop_marker"], ij)})
 
         else:
             marker_of_this_population = dict([(p,m)\
@@ -424,14 +466,27 @@ def draw_figure(args, show):
                 markers += [ m ]
                 colors += [ "darkgrey" ]
 
+            #if not args["size_on_err"]:
+            #    print("SONO PALESEMENTE AFFANCULOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+ 
             strip_one = sns.scatterplot(\
-                x="effect-size", y="Feature", \
-                data=long_form_frame_singles, size="SG", \
-                sizes={"no": args["dotsize"]*8, "yes": args["dotsize"]*16}, \
-                palette={"yes": take_a_param(args["color_red"], ij), \
-                "no": take_a_param(args["color_blue"], ij)}, \
-                edgecolor="black", ax=ax, hue="SG", \
-                style="population", markers=marker_of_this_population)
+                    x="effect-size", y="Feature", \
+                    data=long_form_frame_singles, size="SG", \
+                    sizes={"no": args["dotsize"]*8, "yes": args["dotsize"]*16}, \
+                    palette={"yes": take_a_param(args["color_red"], ij), \
+                    "no": take_a_param(args["color_blue"], ij)}, \
+                    edgecolor="black", ax=ax, hue="SG", \
+                    style="population", markers=marker_of_this_population)
+
+            #else:
+            #    print(" SONOEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa")
+            #strip_one = sns.scatterplot(\
+            #        x="effect-size", y="Feature", \
+            #        data=long_form_frame_singles, size="std-errors", \
+            #        palette={"yes": take_a_param(args["color_red"], ij), \
+            #        "no": take_a_param(args["color_blue"], ij)}, \
+            #        edgecolor="black", ax=ax, hue="SG", \
+            #        markers=marker_of_this_population)
 
         if args["boxes"]:
             strip_b = sns.boxplot(\
@@ -533,8 +588,8 @@ def draw_figure(args, show):
     ax.set_xticklabels( [ ("%.2f" %n) for n in xticks_loc ], fontsize=24 )
 
     if args["shrink_names"]: 
-
-       ax.set_yticklabels([str(x.get_text()).split(args["shrink_names"])[-1] for x in ax.get_yticklabels()], fontsize=24)
+ 
+       #ax.set_yticklabels([str(x.get_text()).split(args["shrink_names"])[-1] for x in ax.get_yticklabels()], fontsize=24)
      
        for lab in ax.get_yticklabels():
            lab.set_style("italic")
