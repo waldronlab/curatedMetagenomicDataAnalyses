@@ -141,6 +141,8 @@ def select(args):
         tabtab.columns = [ (dt + "_" + c) for c,dt in zip(tabtab.columns.tolist(), tabtab.loc[args["study_identifier"]].tolist()) ]
         study = tabtab.loc[args["study_identifier"]].tolist()[0]
 
+        print(study)
+
 
 
         if args["min"] and (not isinstance(tabtab, np.ndarray)):
@@ -177,11 +179,11 @@ def select(args):
             for ct in args["cat"]:
                 ct = ct.split(":")
                 col = ct[0]
-                ctg = ct[1]
+                ctgs = ct[1:]
 
                 if col in tabtab.index.tolist():
                     tabtab = tabtab.loc[ :, tabtab.loc[col]!="NA" ]
-                    tabtab = tabtab.loc[ :, tabtab.loc[col]==ctg ]
+                    tabtab = tabtab.loc[ :, tabtab.loc[col].isin(ctgs) ]
                     if args["debug"]:
                         sys.stdout.write("\nCATG ==> " + str(tabtab.shape) + "[" + study + "]")
                 else:
@@ -245,8 +247,8 @@ def select(args):
                         #exit(1)
                         sys.stdout.write("\nDROP ==> " + str(tabtab.shape) + "[" + study + "]")
 
-                else:
-                    tabtab = np.array([])
+                #else:
+                #    tabtab = np.array([])
 
             if not tabtab.shape[1]:
                 tabtab = np.array([])
@@ -255,7 +257,7 @@ def select(args):
             if args["debug"]:
                 sys.stdout.write("\n!! NO-DROP ==> " + str(tabtab.shape) + "[" + study + "]")
 
-            if not tabtab.shape[1]:
+            if (not isinstance(tabtab, np.ndarray)) and (not tabtab.shape[1]):
                 tabtab = np.array([])
 
 
