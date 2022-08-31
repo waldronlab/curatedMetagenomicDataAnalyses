@@ -133,10 +133,10 @@ make sure the packages are installed.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://bioconductor.org/packages/scater/" class="external-link">scater</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Tazinho/snakecase" class="external-link">snakecase</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org" class="external-link">forcats</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/" class="external-link">forcats</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddsjoberg/gtsummary" class="external-link">gtsummary</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/microbiome/mia" class="external-link">mia</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -198,39 +198,39 @@ values are removed, and the first 10 remaining columns are selected. The
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="op">~</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">study_name</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##        study_name                            sample_id         subject_id</span></span>
-<span><span class="co">## 1   AsnicarF_2021                         SAMEA7045003  predict1_MTG_0150</span></span>
-<span><span class="co">## 2   DhakanDB_2019                              DHAK_HY            DHAK_HY</span></span>
-<span><span class="co">## 3        HMP_2012                            SRS013269 HMP_2012_159591683</span></span>
-<span><span class="co">## 4    MehtaRS_2018                     SID14494311_SF05        SID14494311</span></span>
-<span><span class="co">## 5  SchirmerM_2016                               G89008              HV380</span></span>
-<span><span class="co">## 6      ShaoY_2019 a3dccc0c-7ae6-11e9-a106-68b59976a384          B01265_ba</span></span>
-<span><span class="co">## 7   VincentC_2016                              MM043.2              MM043</span></span>
-<span><span class="co">## 8   YachidaS_2019                         SAMD00114964          sub_10818</span></span>
-<span><span class="co">## 9     ZeeviD_2015                         PNP_Main_375       PNP_Main_375</span></span>
-<span><span class="co">## 10   ZellerG_2014                   CCIS96387239ST-4-0             FR-626</span></span>
-<span><span class="co">##      body_site study_condition disease age_category country non_westernized</span></span>
-<span><span class="co">## 1        stool         control healthy        adult     GBR              no</span></span>
-<span><span class="co">## 2        stool         control healthy      newborn     IND              no</span></span>
-<span><span class="co">## 3  nasalcavity         control healthy        adult     USA              no</span></span>
-<span><span class="co">## 4        stool         control healthy        adult     USA              no</span></span>
-<span><span class="co">## 5        stool         control healthy        adult     NLD              no</span></span>
-<span><span class="co">## 6        stool         control healthy      newborn     GBR              no</span></span>
-<span><span class="co">## 7        stool         control healthy       senior     CAN              no</span></span>
-<span><span class="co">## 8        stool             CRC     CRC       senior     JPN              no</span></span>
-<span><span class="co">## 9        stool         control healthy        adult     ISR              no</span></span>
-<span><span class="co">## 10       stool         adenoma adenoma       senior     FRA              no</span></span>
-<span><span class="co">##    sequencing_platform</span></span>
-<span><span class="co">## 1      IlluminaNovaSeq</span></span>
-<span><span class="co">## 2      IlluminaNextSeq</span></span>
-<span><span class="co">## 3        IlluminaHiSeq</span></span>
-<span><span class="co">## 4        IlluminaHiSeq</span></span>
-<span><span class="co">## 5        IlluminaHiSeq</span></span>
-<span><span class="co">## 6        IlluminaHiSeq</span></span>
-<span><span class="co">## 7        IlluminaHiSeq</span></span>
-<span><span class="co">## 8        IlluminaHiSeq</span></span>
-<span><span class="co">## 9        IlluminaHiSeq</span></span>
-<span><span class="co">## 10       IlluminaHiSeq</span></span></code></pre>
+<pre><code><span><span class="co">##            study_name                               sample_id</span></span>
+<span><span class="co">## 1     HMP_2019_ibdmdb                                PSMA265D</span></span>
+<span><span class="co">## 2     HMP_2019_ibdmdb                                HSMA33JZ</span></span>
+<span><span class="co">## 3  LifeLinesDeep_2016        EGAR00001420570_9002000001371690</span></span>
+<span><span class="co">## 4            LiJ_2017                               nHF411719</span></span>
+<span><span class="co">## 5        MatsonV_2018                                  SAM_34</span></span>
+<span><span class="co">## 6        MehtaRS_2018                        SID20037920_SF05</span></span>
+<span><span class="co">## 7          ShaoY_2019 SID79eebf72-7ae6-11e9-a106-68b59976a384</span></span>
+<span><span class="co">## 8       VatanenT_2016                                  G78719</span></span>
+<span><span class="co">## 9       VatanenT_2016                                  G78747</span></span>
+<span><span class="co">## 10        VilaAV_2018            EGAR00001763562_1000IBD00393</span></span>
+<span><span class="co">##                subject_id body_site study_condition             disease</span></span>
+<span><span class="co">## 1                   P6018     stool         control             healthy</span></span>
+<span><span class="co">## 2                   H4030     stool             IBD                 IBD</span></span>
+<span><span class="co">## 3  sub_9002000001371690LL     stool         control             healthy</span></span>
+<span><span class="co">## 4               nHF411719     stool         control             healthy</span></span>
+<span><span class="co">## 5                 SAM_P34     stool        melanoma melanoma;metastases</span></span>
+<span><span class="co">## 6             SID20037920     stool         control             healthy</span></span>
+<span><span class="co">## 7               A01431_ba     stool         control             healthy</span></span>
+<span><span class="co">## 8                 E019187     stool          otitis              otitis</span></span>
+<span><span class="co">## 9                 P016574     stool         control             healthy</span></span>
+<span><span class="co">## 10       sub_1000IBD00393     stool             IBD                 IBD</span></span>
+<span><span class="co">##    age_category country non_westernized sequencing_platform</span></span>
+<span><span class="co">## 1     schoolage     USA              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 2     schoolage     USA              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 3         adult     NLD              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 4         adult     CHN              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 5         adult     USA              no     IlluminaNextSeq</span></span>
+<span><span class="co">## 6         adult     USA              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 7       newborn     GBR              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 8         child     FIN              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 9         child     RUS              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 10        adult     NLD              no       IlluminaHiSeq</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="finding-available-resources">Finding Available Resources<a class="anchor" aria-label="anchor" href="#finding-available-resources"></a>
@@ -490,12 +490,12 @@ table.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>diet <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_explicit_na.html" class="external-link">fct_explicit_na</a></span><span class="op">(</span><span class="va">diet</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename_with</a></span><span class="op">(</span><span class="va">to_title_case</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="kjbprgdwdw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="iutdvbqmar" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#kjbprgdwdw .gt_table {
+#iutdvbqmar .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -520,7 +520,7 @@ table.</p>
   border-left-color: #D3D3D3;
 }
 
-#kjbprgdwdw .gt_heading {
+#iutdvbqmar .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -532,7 +532,7 @@ table.</p>
   border-right-color: #D3D3D3;
 }
 
-#kjbprgdwdw .gt_title {
+#iutdvbqmar .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -544,7 +544,7 @@ table.</p>
   border-bottom-width: 0;
 }
 
-#kjbprgdwdw .gt_subtitle {
+#iutdvbqmar .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -556,13 +556,13 @@ table.</p>
   border-top-width: 0;
 }
 
-#kjbprgdwdw .gt_bottom_border {
+#iutdvbqmar .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#kjbprgdwdw .gt_col_headings {
+#iutdvbqmar .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -577,7 +577,7 @@ table.</p>
   border-right-color: #D3D3D3;
 }
 
-#kjbprgdwdw .gt_col_heading {
+#iutdvbqmar .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -597,7 +597,7 @@ table.</p>
   overflow-x: hidden;
 }
 
-#kjbprgdwdw .gt_column_spanner_outer {
+#iutdvbqmar .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -609,15 +609,15 @@ table.</p>
   padding-right: 4px;
 }
 
-#kjbprgdwdw .gt_column_spanner_outer:first-child {
+#iutdvbqmar .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kjbprgdwdw .gt_column_spanner_outer:last-child {
+#iutdvbqmar .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kjbprgdwdw .gt_column_spanner {
+#iutdvbqmar .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -629,7 +629,7 @@ table.</p>
   width: 100%;
 }
 
-#kjbprgdwdw .gt_group_heading {
+#iutdvbqmar .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -654,7 +654,7 @@ table.</p>
   vertical-align: middle;
 }
 
-#kjbprgdwdw .gt_empty_group_heading {
+#iutdvbqmar .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -669,15 +669,15 @@ table.</p>
   vertical-align: middle;
 }
 
-#kjbprgdwdw .gt_from_md > :first-child {
+#iutdvbqmar .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kjbprgdwdw .gt_from_md > :last-child {
+#iutdvbqmar .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kjbprgdwdw .gt_row {
+#iutdvbqmar .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -696,7 +696,7 @@ table.</p>
   overflow-x: hidden;
 }
 
-#kjbprgdwdw .gt_stub {
+#iutdvbqmar .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -709,7 +709,7 @@ table.</p>
   padding-right: 5px;
 }
 
-#kjbprgdwdw .gt_stub_row_group {
+#iutdvbqmar .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -723,11 +723,11 @@ table.</p>
   vertical-align: top;
 }
 
-#kjbprgdwdw .gt_row_group_first td {
+#iutdvbqmar .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#kjbprgdwdw .gt_summary_row {
+#iutdvbqmar .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -737,16 +737,16 @@ table.</p>
   padding-right: 5px;
 }
 
-#kjbprgdwdw .gt_first_summary_row {
+#iutdvbqmar .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#kjbprgdwdw .gt_first_summary_row.thick {
+#iutdvbqmar .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#kjbprgdwdw .gt_last_summary_row {
+#iutdvbqmar .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -756,7 +756,7 @@ table.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#kjbprgdwdw .gt_grand_summary_row {
+#iutdvbqmar .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -766,7 +766,7 @@ table.</p>
   padding-right: 5px;
 }
 
-#kjbprgdwdw .gt_first_grand_summary_row {
+#iutdvbqmar .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -776,11 +776,11 @@ table.</p>
   border-top-color: #D3D3D3;
 }
 
-#kjbprgdwdw .gt_striped {
+#iutdvbqmar .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#kjbprgdwdw .gt_table_body {
+#iutdvbqmar .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -789,7 +789,7 @@ table.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#kjbprgdwdw .gt_footnotes {
+#iutdvbqmar .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -803,7 +803,7 @@ table.</p>
   border-right-color: #D3D3D3;
 }
 
-#kjbprgdwdw .gt_footnote {
+#iutdvbqmar .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -812,7 +812,7 @@ table.</p>
   padding-right: 5px;
 }
 
-#kjbprgdwdw .gt_sourcenotes {
+#iutdvbqmar .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -826,7 +826,7 @@ table.</p>
   border-right-color: #D3D3D3;
 }
 
-#kjbprgdwdw .gt_sourcenote {
+#iutdvbqmar .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -834,78 +834,71 @@ table.</p>
   padding-right: 5px;
 }
 
-#kjbprgdwdw .gt_left {
+#iutdvbqmar .gt_left {
   text-align: left;
 }
 
-#kjbprgdwdw .gt_center {
+#iutdvbqmar .gt_center {
   text-align: center;
 }
 
-#kjbprgdwdw .gt_right {
+#iutdvbqmar .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kjbprgdwdw .gt_font_normal {
+#iutdvbqmar .gt_font_normal {
   font-weight: normal;
 }
 
-#kjbprgdwdw .gt_font_bold {
+#iutdvbqmar .gt_font_bold {
   font-weight: bold;
 }
 
-#kjbprgdwdw .gt_font_italic {
+#iutdvbqmar .gt_font_italic {
   font-style: italic;
 }
 
-#kjbprgdwdw .gt_super {
+#iutdvbqmar .gt_super {
   font-size: 65%;
 }
 
-#kjbprgdwdw .gt_two_val_uncert {
-  display: inline-block;
-  line-height: 1em;
-  text-align: right;
-  font-size: 60%;
-  vertical-align: -0.25em;
-  margin-left: 0.1em;
-}
-
-#kjbprgdwdw .gt_footnote_marks {
+#iutdvbqmar .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#kjbprgdwdw .gt_asterisk {
+#iutdvbqmar .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#kjbprgdwdw .gt_slash_mark {
-  font-size: 0.7em;
-  line-height: 0.7em;
-  vertical-align: 0.15em;
+#iutdvbqmar .gt_indent_1 {
+  text-indent: 5px;
 }
 
-#kjbprgdwdw .gt_fraction_numerator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: 0.45em;
+#iutdvbqmar .gt_indent_2 {
+  text-indent: 10px;
 }
 
-#kjbprgdwdw .gt_fraction_denominator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: -0.05em;
+#iutdvbqmar .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#iutdvbqmar .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#iutdvbqmar .gt_indent_5 {
+  text-indent: 25px;
 }
 </style>
 <table class="table gt_table">
 <thead class="gt_col_headings"><tr>
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col">
 <strong>N = 286</strong><sup class="gt_footnote_marks">1</sup>
 </th>
     </tr></thead>
