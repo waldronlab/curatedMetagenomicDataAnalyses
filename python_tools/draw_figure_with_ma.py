@@ -427,15 +427,10 @@ def draw_figure(args, show):
         #    (np.sum(long_form_frame_singles.loc[i, ["effect-size", "q-values"]].values.astype(float))==0.)], inplace=True)
         #long_form_frame_singles.index = [k[1:] for k in long_form_frame_singles.index]
 
-        #print(long_form_frame_effect, "BEFORE")
-
         #long_form_frame_effect.index = [(str(i)+k) for i,k in enumerate(long_form_frame_effect.index)]
         #long_form_frame_effect.drop([i for i in long_form_frame_effect.index if \
 	#    (np.sum(long_form_frame_effect.loc[i, ["random-effect", "CI_low", "CI_upp"]].values.astype(float))==0.)], inplace=True)
         #long_form_frame_effect.index = [k[1:] for k in long_form_frame_effect.index]
-
-        #rint(long_form_frame_effect, "AFTER")
-
 
         if not args["markers"]:
             long_form_frame_singles["dot_is"] = "the_population_marker" #take_a_param(args["pop_marker"], ij)
@@ -471,9 +466,6 @@ def draw_figure(args, show):
                 markers += [ m ]
                 colors += [ "darkgrey" ]
 
-            #if not args["size_on_err"]:
-            #    print("SONO PALESEMENTE AFFANCULOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
- 
             strip_one = sns.scatterplot(\
                     x="effect-size", y="Feature", \
                     data=long_form_frame_singles, size="SG", \
@@ -484,7 +476,6 @@ def draw_figure(args, show):
                     style="population", markers=marker_of_this_population)
 
             #else:
-            #    print(" SONOEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa")
             #strip_one = sns.scatterplot(\
             #        x="effect-size", y="Feature", \
             #        data=long_form_frame_singles, size="std-errors", \
