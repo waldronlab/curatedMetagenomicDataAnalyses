@@ -198,39 +198,39 @@ values are removed, and the first 10 remaining columns are selected. The
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="op">~</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">study_name</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##                study_name                            sample_id</span></span>
-<span><span class="co">## 1              FengQ_2015                            SID530177</span></span>
-<span><span class="co">## 2         HanniganGD_2017                             MG100195</span></span>
-<span><span class="co">## 3            MatsonV_2018                               SAM_07</span></span>
-<span><span class="co">## 4               QinN_2014                                LD-94</span></span>
-<span><span class="co">## 5  SankaranarayananK_2015                                 CA29</span></span>
-<span><span class="co">## 6              ShaoY_2019 e44cf730-7ae6-11e9-a106-68b59976a384</span></span>
-<span><span class="co">## 7           YachidaS_2019                         SAMD00114878</span></span>
-<span><span class="co">## 8           YachidaS_2019                         SAMD00165029</span></span>
-<span><span class="co">## 9           YachidaS_2019                         SAMD00114920</span></span>
-<span><span class="co">## 10           ZellerG_2014                   CCIS03473770ST-4-0</span></span>
-<span><span class="co">##             subject_id body_site study_condition             disease</span></span>
-<span><span class="co">## 1            SID530177     stool         control             healthy</span></span>
-<span><span class="co">## 2  HanniganGD_2017_A16     stool         adenoma             adenoma</span></span>
-<span><span class="co">## 3              SAM_P07     stool        melanoma melanoma;metastases</span></span>
-<span><span class="co">## 4                LD-94     stool       cirrhosis cirrhosis;hepatitis</span></span>
-<span><span class="co">## 5                 CA29     stool         control             healthy</span></span>
-<span><span class="co">## 6            C01758_ba     stool         control             healthy</span></span>
-<span><span class="co">## 7            sub_10674     stool             CRC                 CRC</span></span>
-<span><span class="co">## 8            sub_12276     stool         control             healthy</span></span>
-<span><span class="co">## 9            sub_10714     stool             CRC                 CRC</span></span>
-<span><span class="co">## 10              FR-192     stool         control             healthy</span></span>
-<span><span class="co">##    age_category country non_westernized sequencing_platform</span></span>
-<span><span class="co">## 1        senior     AUT              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 2         adult     CAN              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 3         adult     USA              no     IlluminaNextSeq</span></span>
-<span><span class="co">## 4         adult     CHN              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 5         adult     USA              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 6       newborn     GBR              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 7         adult     JPN              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 8         adult     JPN              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 9         adult     JPN              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 10        adult     FRA              no       IlluminaHiSeq</span></span></code></pre>
+<pre><code><span><span class="co">##            study_name                            sample_id</span></span>
+<span><span class="co">## 1       AsnicarF_2021                         SAMEA7045146</span></span>
+<span><span class="co">## 2       BackhedF_2015                           SID281_12M</span></span>
+<span><span class="co">## 3     HMP_2019_ibdmdb                           HSM5MD5K_P</span></span>
+<span><span class="co">## 4  LifeLinesDeep_2016     EGAR00001420974_9002000001474089</span></span>
+<span><span class="co">## 5      PehrssonE_2016                            SID030301</span></span>
+<span><span class="co">## 6      SchirmerM_2016                               G89012</span></span>
+<span><span class="co">## 7          ShaoY_2019 cc2f310e-7ae6-11e9-a106-68b59976a384</span></span>
+<span><span class="co">## 8       VatanenT_2016                               G78749</span></span>
+<span><span class="co">## 9            YuJ_2015                      SZAXPI015228-14</span></span>
+<span><span class="co">## 10        ZeeviD_2015                          PNP_Main_84</span></span>
+<span><span class="co">##                subject_id body_site study_condition        disease age_category</span></span>
+<span><span class="co">## 1       predict1_MTG_0293     stool         control        healthy        adult</span></span>
+<span><span class="co">## 2                  SID281     stool         control        healthy        child</span></span>
+<span><span class="co">## 3                   H4001     stool             IBD            IBD    schoolage</span></span>
+<span><span class="co">## 4  sub_9002000001474089LL     stool         control        healthy        adult</span></span>
+<span><span class="co">## 5                  SID3_3     stool         control        healthy    schoolage</span></span>
+<span><span class="co">## 6                   HV388     stool         control        healthy        adult</span></span>
+<span><span class="co">## 7               B02724_ba     stool         control        healthy      newborn</span></span>
+<span><span class="co">## 8                 P022130     stool  respiratoryinf respiratoryinf      newborn</span></span>
+<span><span class="co">## 9         SZAXPI015228-14     stool         control            T2D        adult</span></span>
+<span><span class="co">## 10            PNP_Main_84     stool         control        healthy        adult</span></span>
+<span><span class="co">##    country non_westernized sequencing_platform</span></span>
+<span><span class="co">## 1      GBR              no     IlluminaNovaSeq</span></span>
+<span><span class="co">## 2      SWE              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 3      USA              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 4      NLD              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 5      SLV             yes       IlluminaHiSeq</span></span>
+<span><span class="co">## 6      NLD              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 7      GBR              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 8      RUS              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 9      CHN              no       IlluminaHiSeq</span></span>
+<span><span class="co">## 10     ISR              no       IlluminaHiSeq</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="finding-available-resources">Finding Available Resources<a class="anchor" aria-label="anchor" href="#finding-available-resources"></a>
@@ -490,12 +490,12 @@ table.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>diet <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_explicit_na.html" class="external-link">fct_explicit_na</a></span><span class="op">(</span><span class="va">diet</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename_with</a></span><span class="op">(</span><span class="va">to_title_case</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="xyergovvug" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="zwirfdjxsy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xyergovvug .gt_table {
+#zwirfdjxsy .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -520,7 +520,7 @@ table.</p>
   border-left-color: #D3D3D3;
 }
 
-#xyergovvug .gt_heading {
+#zwirfdjxsy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -532,7 +532,7 @@ table.</p>
   border-right-color: #D3D3D3;
 }
 
-#xyergovvug .gt_title {
+#zwirfdjxsy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -544,7 +544,7 @@ table.</p>
   border-bottom-width: 0;
 }
 
-#xyergovvug .gt_subtitle {
+#zwirfdjxsy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -556,13 +556,13 @@ table.</p>
   border-top-width: 0;
 }
 
-#xyergovvug .gt_bottom_border {
+#zwirfdjxsy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xyergovvug .gt_col_headings {
+#zwirfdjxsy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -577,7 +577,7 @@ table.</p>
   border-right-color: #D3D3D3;
 }
 
-#xyergovvug .gt_col_heading {
+#zwirfdjxsy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -597,7 +597,7 @@ table.</p>
   overflow-x: hidden;
 }
 
-#xyergovvug .gt_column_spanner_outer {
+#zwirfdjxsy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -609,15 +609,15 @@ table.</p>
   padding-right: 4px;
 }
 
-#xyergovvug .gt_column_spanner_outer:first-child {
+#zwirfdjxsy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xyergovvug .gt_column_spanner_outer:last-child {
+#zwirfdjxsy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xyergovvug .gt_column_spanner {
+#zwirfdjxsy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -629,7 +629,7 @@ table.</p>
   width: 100%;
 }
 
-#xyergovvug .gt_group_heading {
+#zwirfdjxsy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -654,7 +654,7 @@ table.</p>
   vertical-align: middle;
 }
 
-#xyergovvug .gt_empty_group_heading {
+#zwirfdjxsy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -669,15 +669,15 @@ table.</p>
   vertical-align: middle;
 }
 
-#xyergovvug .gt_from_md > :first-child {
+#zwirfdjxsy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xyergovvug .gt_from_md > :last-child {
+#zwirfdjxsy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xyergovvug .gt_row {
+#zwirfdjxsy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -696,7 +696,7 @@ table.</p>
   overflow-x: hidden;
 }
 
-#xyergovvug .gt_stub {
+#zwirfdjxsy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -709,7 +709,7 @@ table.</p>
   padding-right: 5px;
 }
 
-#xyergovvug .gt_stub_row_group {
+#zwirfdjxsy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -723,11 +723,11 @@ table.</p>
   vertical-align: top;
 }
 
-#xyergovvug .gt_row_group_first td {
+#zwirfdjxsy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xyergovvug .gt_summary_row {
+#zwirfdjxsy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -737,16 +737,16 @@ table.</p>
   padding-right: 5px;
 }
 
-#xyergovvug .gt_first_summary_row {
+#zwirfdjxsy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xyergovvug .gt_first_summary_row.thick {
+#zwirfdjxsy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xyergovvug .gt_last_summary_row {
+#zwirfdjxsy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -756,7 +756,7 @@ table.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#xyergovvug .gt_grand_summary_row {
+#zwirfdjxsy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -766,7 +766,7 @@ table.</p>
   padding-right: 5px;
 }
 
-#xyergovvug .gt_first_grand_summary_row {
+#zwirfdjxsy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -776,11 +776,11 @@ table.</p>
   border-top-color: #D3D3D3;
 }
 
-#xyergovvug .gt_striped {
+#zwirfdjxsy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xyergovvug .gt_table_body {
+#zwirfdjxsy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -789,7 +789,7 @@ table.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#xyergovvug .gt_footnotes {
+#zwirfdjxsy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -803,7 +803,7 @@ table.</p>
   border-right-color: #D3D3D3;
 }
 
-#xyergovvug .gt_footnote {
+#zwirfdjxsy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -812,7 +812,7 @@ table.</p>
   padding-right: 5px;
 }
 
-#xyergovvug .gt_sourcenotes {
+#zwirfdjxsy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -826,7 +826,7 @@ table.</p>
   border-right-color: #D3D3D3;
 }
 
-#xyergovvug .gt_sourcenote {
+#zwirfdjxsy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -834,64 +834,64 @@ table.</p>
   padding-right: 5px;
 }
 
-#xyergovvug .gt_left {
+#zwirfdjxsy .gt_left {
   text-align: left;
 }
 
-#xyergovvug .gt_center {
+#zwirfdjxsy .gt_center {
   text-align: center;
 }
 
-#xyergovvug .gt_right {
+#zwirfdjxsy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xyergovvug .gt_font_normal {
+#zwirfdjxsy .gt_font_normal {
   font-weight: normal;
 }
 
-#xyergovvug .gt_font_bold {
+#zwirfdjxsy .gt_font_bold {
   font-weight: bold;
 }
 
-#xyergovvug .gt_font_italic {
+#zwirfdjxsy .gt_font_italic {
   font-style: italic;
 }
 
-#xyergovvug .gt_super {
+#zwirfdjxsy .gt_super {
   font-size: 65%;
 }
 
-#xyergovvug .gt_footnote_marks {
+#zwirfdjxsy .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#xyergovvug .gt_asterisk {
+#zwirfdjxsy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xyergovvug .gt_indent_1 {
+#zwirfdjxsy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xyergovvug .gt_indent_2 {
+#zwirfdjxsy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xyergovvug .gt_indent_3 {
+#zwirfdjxsy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xyergovvug .gt_indent_4 {
+#zwirfdjxsy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xyergovvug .gt_indent_5 {
+#zwirfdjxsy .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
