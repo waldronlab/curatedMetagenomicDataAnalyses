@@ -16,11 +16,11 @@ def read_params():
         "Metadata are detected with the FeatID arg.")
     add("groups", type=str, help="Determines on what the different of the groups is computed. "
         "NaN are excluded.")
-    add("-si", "--study_id", type=str, default="study_name", help="Study identifier")
+    add("-si", "--study_id", type=str, default="study_identifier", help="Study identifier")
     add("-z", "--feat_id", type=str, default="s__", help="A substring present in all the features. "
         "Default (s__) is the substring present in all metaphlan 3 microbial species.")
     add("-a", "--analysis", type=str, default="permanova", choices=["permanova", "anosim"])
-    add("-m", "--metric", type=str, default="braycurtis")
+    add("-m", "--metric", type=str, default="euclidean")
     add("-s", "--significance", type=float, default=0.05)
     return p.parse_args()
 

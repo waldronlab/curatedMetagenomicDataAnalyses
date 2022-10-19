@@ -98,7 +98,7 @@ def read_params( args ):
     add("-rq", "--random_effect_q", type=str, nargs="+", default=["FDR-Q"], help=\
         "Random/fixed effect model Q-value")
 
-    add("-rs", "--random_effect_se", type=str, nargs="+", default=["RE_StdErro"], help=\
+    add("-rs", "--random_effect_se", type=str, nargs="+", default=["RE_StdErr"], help=\
 	"Random/fixed effect model SERR")
 
     add("-cr", "--color_red", type=str, nargs="+", default=["goldenrod"], help=\

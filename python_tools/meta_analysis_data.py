@@ -227,9 +227,13 @@ def select(args):
 
 
         if args["multiple"] and (not isinstance(tabtab, np.ndarray)):
-            if ("days_from_first_collection" in tabtab.index.tolist()) and (len(tabtab.loc["days_from_first_collection"].unique()) >1):
+            if ("days_from_first_collection" in tabtab.index.tolist()) and \
+		(len(tabtab.loc["days_from_first_collection"].unique()) >1):
+
                 if args["multiple"] < 0.:
-                    tabtab.loc["days_from_first_collection"] = [ (0.0 if str(n)=="NA" else float(n)) for n in tabtab.loc["days_from_first_collection"].tolist() ]
+                    tabtab.loc["days_from_first_collection"] = [ (0.0 if str(n)=="NA" else float(n)) \
+			for n in tabtab.loc["days_from_first_collection"].tolist() ]
+
                     tabtab = tabtab.loc[ :, tabtab.loc["days_from_first_collection"] == 0.0 ]
 
                     tabtab = tabtab.T.drop_duplicates(["subject_id"], keep="first").T
