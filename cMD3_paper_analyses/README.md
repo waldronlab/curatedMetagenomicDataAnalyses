@@ -25,7 +25,7 @@ It is enough to CLONE IT IN THE SAME PLACE IN WHICH YOU ARE KEEPING THIS REPOSIT
 
 * [pandas](https://pandas.pydata.org/) >= 1.0.3
 * [scikit-learn](https://scikit-learn.org/stable/) >= 0.24.2
-* [statsmodels](https://www.statsmodels.org/stable/index.html) >= 1.11.1
+* [statsmodels](https://www.statsmodels.org/stable/index.html) >= 0.11.1
 * [scikit-bio](http://scikit-bio.org/) >= 0.5.6
 * [numpy](https://numpy.org/) >= 1.18.1
 * [scipy](https://scipy.org/) >= 1.4.1
