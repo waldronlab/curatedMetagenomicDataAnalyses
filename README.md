@@ -16,14 +16,14 @@ You need [Docker](https://docs.docker.com/get-docker/).
 
 First build the image:
 
-    docker build -t "waldronlab/curatedmetagenomicanalyses" .
+    docker pull "waldronlab/curatedmetagenomicanalyses"
 
 Then run a container based on the image with your password:
 
     docker run -d -p 80:8888 --name cma \
       waldronlab/curatedmetagenomicanalyses
 
-Visit `localhost` in your browser.
+Visit `localhost/lab` in your browser.
 
 ## Running locally without Docker
 
