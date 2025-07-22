@@ -2,6 +2,12 @@
  
 This folder contains final command lines used to produce analyses and figures of the paper "Meta-analysis of 20,533 human metagenomes defines an index of oral to gut microbial introgression and associations with age, sex, BMI, and diseases".
 
+## create a versioned conda environment
+
+```
+conda create -n cMD_analyses -c conda-forge python==3.7.0 pandas==1.0.3 scikit-learn==0.24.2 statsmodels==0.11.1 scipy=1.4.1 matplotlib==3.3.4 seaborn pingouin num2words numpy==1.18.1 scikit-bio==0.5.6 openssl==1.1.1w
+```
+
 ## ./all_command_lines.sh
 
 This bash wrapper contains all the analysis used to generate the paper's figures and text.
