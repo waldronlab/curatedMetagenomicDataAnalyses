@@ -17,7 +17,8 @@ Use either of those commands to download and extract the archive right away
 
 ```
 wget -qO- https://zenodo.org/records/15856813/files/cMD3_peper_analyses.tar.gz | tar -xzf -  
-# curl -L https://zenodo.org/records/15856813/files/cMD3_peper_analyses.tar.gz | tar -xzf -
+# alternative to wget:
+## curl -L https://zenodo.org/records/15856813/files/cMD3_peper_analyses.tar.gz | tar -xzf -
 rm cMD3_peper_analyses.tar.gz
 ```
 
