@@ -3,16 +3,6 @@
 mkdir -p images
 mkdir -p ML/ml_dis_rf/results
 
-# UNCOMPRESSING TABLES
-bzip2 -d clr_tables/*.tsv.bz2
-
-wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/sex_u_kegg.tsv.bz2 -O - | bunzip2 -qc > relative_abundances/sex_u_kegg.tsv
-wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/age-kegg_clr.tsv.bz2 -O - | bunzip2 -qc > clr_tables/age-kegg_clr.tsv
-wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/bmi-kegg_clr.tsv.bz2 -O - | bunzip2 -qc > clr_tables/bmi-kegg_clr.tsv
-wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/sex-kegg_clr.tsv.bz2 -O - | bunzip2 -qc > clr_tables/sex-kegg_clr.tsv
-wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/age-kegg_clr_substitution.tsv.bz2 -O - | bunzip2 -qc > relative_abundances/age-kegg_clr_substitution.tsv
-wget -q http://cmprod1.cibio.unitn.it/curatedMetagenomicDataAnalyses/bmi-kegg_clr_substitution.tsv.bz2 -O - | bunzip2 -qc > relative_abundances/bmi-kegg_clr_substitution.tsv
-  
 ## SECTION 1: SPECIES, GENUS, PWY, and KOs META-ANALYSIS ON SEX, AGE, and BMI
 python ../python_tools/metaanalyze.py clr_tables/sex-species_clr.tsv -z s__ -re -cc "0.0:1.0" --formula "gender + age + BMI + number_reads" 
 python ../python_tools/metaanalyze.py clr_tables/sex-genera_clr.tsv -z g__ -re -cc "0.0:1.0" --formula "gender + age + BMI + number_reads"  
@@ -31,12 +21,6 @@ python ../python_tools/metaanalyze.py clr_tables/bmi-kegg_clr_substitution.tsv -
  
 python ../python_tools/draw_figure_with_ma.py clr_tables/sex-species_clr_metaanalysis.tsv clr_tables/sex-genera_clr_metaanalysis.tsv --names SPC GN --outfile images/SPC_FIG2_meta_5precent_prevalence --how joint_top     -ps "Sex: male" -ns "Sex: female" --x_axis "Standardized mean difference" --y_axis "Microbial taxa" --title "Meta-analysis of sex-related microbial taxa" --a_single 0.2 --a_random 0.05 -re "RE_Effect"     -ci "RE_conf_int" -rq "RE_Effect_Qvalue" -es "_Effect" -qs "_Qvalue" -cbl black -cr darkgoldenrod -cb dodgerblue -il 0.20 --neg_max_rho 0.8 --pos_max_rho 0.8  --narrowed --boxes --imp 30 --narrowed --boxes --imp 30 --check_genera -ms 2
 
-python ../python_tools/draw_figure_with_ma.py clr_tables/sex-pathways_clr_metaanalysis.tsv --outfile images/PWY_FIG2_meta_supp1 --how first -ps "Sex: male" -ns "Sex: female" --x_axis "Standardized mean difference" --y_axis "Metabolic pathway" --title "Meta-analysis of sex-related metabolic pathways" --a_single 0.2 --a_random 0.05 -re "RE_Effect" -ci "RE_conf_int" -rq "RE_Effect_Qvalue" -es "_Effect" -qs "_Qvalue" -cbl black -cr darkgoldenrod -cb dodgerblue -il 0.20 --neg_max_rho 0.6 --pos_max_rho 0.6 --narrowed --boxes --imp 30 -ms 2 
-
-python ../python_tools/draw_figure_with_ma.py clr_tables/age-species_clr_metaanalysis.tsv clr_tables/age-genera_clr_metaanalysis.tsv --names SPC GN --outfile images/SPC_FIG3_meta_1_5precent_prevalence --how joint_top -ps "Older age" -ns "Younger age" --x_axis "Partial correlation with age" --y_axis "Microbial taxa" --title "Meta-analysis of age-associated microbial taxa" --a_single 0.2 --a_random 0.05 -re "RE_Correlation" -ci "RE_conf_int" -rq "RE_Correlation_Qvalue" -es "_Correlation" -qs "_Qvalue" -cbl black -cr darkgoldenrod -cb dodgerblue -il 0.10 --neg_max_rho 0.4 --pos_max_rho 0.6 --narrowed --boxes --imp 30 --check_genera
-    
-python ../python_tools/draw_figure_with_ma.py clr_tables/bmi-species_clr_metaanalysis.tsv clr_tables/bmi-genera_clr_metaanalysis.tsv --names SPC GN --outfile images/SPC_FIG3_meta_2_5precent_prevalence --how joint_top -ps "Higher BMI" -ns "Lower BMI" --x_axis "Partial correlation with BMI" --y_axis "Microbial taxa" --title "Meta-analysis of BMI-associated microbial taxa" --a_single 0.2 --a_random 0.05 -re "RE_Correlation" -ci "RE_conf_int" -rq "RE_Correlation_Qvalue" -es "_Correlation" -qs "_Qvalue" -cbl black -cr darkgoldenrod -cb dodgerblue -il 0.10 --neg_max_rho 0.4 --pos_max_rho 0.4 --narrowed --boxes --imp 30 --check_genera
-   
 python ../python_tools/draw_figure_with_ma.py clr_tables/age-pathways_clr_metaanalysis.tsv --outfile images/PWY_FIG3_meta_supp1 --how first -ps "Older age associated" -ns "Younger age associated" --x_axis "Partial correlation with age (yrs.)" --y_axis "Metabolic pathway" --title "Meta-analysis of age-associated metabolic pathways" --a_single 0.2 --a_random 0.05 -re "RE_Correlation" -ci "RE_conf_int" -rq "RE_Correlation_Qvalue" -es "_Correlation" -qs "_Qvalue" -cbl black -cr darkgoldenrod -cb dodgerblue -il 0.10 --neg_max_rho 0.4 --pos_max_rho 0.4 --narrowed --boxes --imp 30 -ms 2
     
 python ../python_tools/draw_figure_with_ma.py clr_tables/bmi-pathways_clr_metaanalysis.tsv --outfile images/PWY_FIG3_meta_supp2 --how first -ps "Higher BMI associated" -ns "Lower BMI associated" --x_axis "Partial correlation with BMI (kg/m^2)" --y_axis "Metabolic pathway" --title "Meta-analysis of BMI-associated metabolic pathways" --a_single 0.2 --a_random 0.05 -re "RE_Correlation" -ci "RE_conf_int" -rq "RE_Correlation_Qvalue" -es "_Correlation" -qs "_Qvalue" -cbl black -cr darkgoldenrod -cb dodgerblue -il 0.10 --neg_max_rho 0.4 --pos_max_rho 0.4 --narrowed --boxes --imp 30 -ms 2

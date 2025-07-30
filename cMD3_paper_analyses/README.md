@@ -5,7 +5,20 @@ This folder contains final command lines used to produce analyses and figures of
 ## create a versioned conda environment
 
 ```
-conda create -n cMD_analyses -c conda-forge python==3.7.0 pandas==1.0.3 scikit-learn==0.24.2 statsmodels==0.11.1 scipy=1.4.1 matplotlib==3.3.4 seaborn pingouin num2words numpy==1.18.1 scikit-bio==0.5.6 openssl==1.1.1w
+conda create -n cMD_analyses -f cMD_conda.env
+
+# generated with the following, more explicit code:
+# conda create -n cMD_analyses -c conda-forge python==3.7.0 pandas==1.0.3 scikit-learn==0.24.2 statsmodels==0.11.1 scipy=1.4.1 matplotlib==3.3.4 seaborn pingouin num2words numpy==1.18.1 scikit-bio==0.5.6 openssl==1.1.1w
+```
+
+## Download input data
+
+Use either of those commands to download and extract the archive right away
+
+```
+wget -qO- https://zenodo.org/records/15856813/files/cMD3_peper_analyses.tar.gz | tar -xzf -  
+# curl -L https://zenodo.org/records/15856813/files/cMD3_peper_analyses.tar.gz | tar -xzf -
+rm cMD3_peper_analyses.tar.gz
 ```
 
 ## ./all_command_lines.sh
