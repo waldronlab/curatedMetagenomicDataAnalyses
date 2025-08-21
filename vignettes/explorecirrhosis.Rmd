@@ -38,11 +38,11 @@ se <-
 ```{r}
 library(table1)
 df = data.frame(colData(se)[, 1:10])
-label(df$study_name) = "Study Name"
-label(df$body_site) = "Body site"
-label(df$study_condition) = "Study condition"
-label(df$antibiotics_current_use) = "Current Antibiotics Use"
-units(df$age) = "Years"
+table1::label(df$study_name) <- "Study Name"
+table1::label(df$body_site) <- "Body site"
+table1::label(df$study_condition) <- "Study condition"
+table1::label(df$antibiotics_current_use) <- "Current Antibiotics Use"
+units(df$age) <- "Years"
 ```
 
 ```{r}
@@ -102,10 +102,13 @@ sc.obj <- filter.features(sc.obj,
 ```{r}
 sc.obj <- check.associations(
     sc.obj,
-    sort.by = 'fc',
     alpha = 0.05,
-    mult.corr = "fdr",
-    detect.lim = 10 ^-6,
+    mult.corr = "fdr"
+)
+
+sc.obj <- association.plot(sc.obj,
+    sort.by = 'fc',
     plot.type = "quantile.box",
-    panels = c("fc", "prevalence", "auroc"))
+    panels = c("fc", "prevalence", "auroc")
+)
 ```
