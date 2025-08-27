@@ -1,8 +1,11 @@
 # curatedMetagenomicDataAnalyses main paper
  
 This folder contains final command lines used to produce analyses and figures of the paper "Meta-analysis of 20,533 human metagenomes defines an index of oral to gut microbial introgression and associations with age, sex, BMI, and diseases".
+An estimation of the time required to run each step is included in titles.
 
-## create a versioned conda environment
+## Software requirementscreate a versioned conda environment (time: ~ 5 min on a standard laptop)
+
+### Conda environment 
 
 ```
 conda create -n cMD_analyses -f cMD_conda.env
@@ -10,8 +13,24 @@ conda create -n cMD_analyses -f cMD_conda.env
 # generated with the following, more explicit code:
 # conda create -n cMD_analyses -c conda-forge python==3.7.0 pandas==1.0.3 scikit-learn==0.24.2 statsmodels==0.11.1 scipy=1.4.1 matplotlib==3.3.4 seaborn pingouin num2words numpy==1.18.1 scikit-bio==0.5.6 openssl==1.1.1w
 ```
+### metAML cloning
 
-## Download input data
+You need to have the [metAML](https://github.com/SegataLab/metaml/) tool in order to run the main machine learning analyses.
+It is enough to CLONE IT IN THE SAME PLACE IN WHICH YOU ARE KEEPING THIS REPOSITORY.
+
+``` 
+git clone git@github.com:SegataLab/metaml.git`
+```
+
+* [pandas](https://pandas.pydata.org/) >= 1.0.3
+* [scikit-learn](https://scikit-learn.org/stable/) >= 0.24.2
+* [statsmodels](https://www.statsmodels.org/stable/index.html) >= 0.11.1
+* [scikit-bio](http://scikit-bio.org/) >= 0.5.6
+* [numpy](https://numpy.org/) >= 1.18.1
+* [scipy](https://scipy.org/) >= 1.4.1
+* [matplotlib](https://matplotlib.org/) >= 3.3.4
+
+## Download input data (~ 930 MB, time: < 1 h)
 
 Use either of those commands to download and extract the archive right away
 
@@ -22,7 +41,7 @@ wget -qO- https://zenodo.org/records/15856813/files/cMD3_peper_analyses.tar.gz |
 rm cMD3_peper_analyses.tar.gz
 ```
 
-## ./all_command_lines.sh
+## ./all_command_lines.sh (time: 2-3 h on an standard laptop)
 
 This bash wrapper contains all the analysis used to generate the paper's figures and text.
 It is divided into 4 main sections, which correspond to the four main conceptual blocks that need adequate resources and time to be completed.
@@ -34,28 +53,13 @@ The four main blocks are:
 3. SECTION 3: MACHINE LEARNING ON DISEASES
 4. SECTION 4: ORAL INTROGRESSION ANALYSIS AND META-ANALYSIS
 
-### Requirements
-
-* [metAML](https://github.com/SegataLab/metaml/)
- 
-You need to have the metAML tool in order to run the main machine learning analyses.
-It is enough to CLONE IT IN THE SAME PLACE IN WHICH YOU ARE KEEPING THIS REPOSITORY.
- 
-	`git clone git@github.com:SegataLab/metaml.git`
-
-* [pandas](https://pandas.pydata.org/) >= 1.0.3
-* [scikit-learn](https://scikit-learn.org/stable/) >= 0.24.2
-* [statsmodels](https://www.statsmodels.org/stable/index.html) >= 0.11.1
-* [scikit-bio](http://scikit-bio.org/) >= 0.5.6
-* [numpy](https://numpy.org/) >= 1.18.1
-* [scipy](https://scipy.org/) >= 1.4.1
-* [matplotlib](https://matplotlib.org/) >= 3.3.4
-
 ### Getting Started
 
 Most of the meta-analysis used can be launched with the following script:
 
-    `python ../python_tools/metaanalyze.py -h`
+```
+python ../python_tools/metaanalyze.py -h
+```
 
 * This program is a caller for several types of microbiome-dedicated meta-analysese including several that are not used in the aforementioned paper.
 * Please feel free to contact paolo.manghi@unitn.it for curiosities and questions about these meta-analyses!
