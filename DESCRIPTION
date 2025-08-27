@@ -20,6 +20,8 @@ Imports:
     meta
 Suggests:
     ANCOMBC,
+    microbiome,
+    magick,
     BiocStyle,
     DT,
     forcats,
