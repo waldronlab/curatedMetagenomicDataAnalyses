@@ -14,7 +14,7 @@ env:
   has_RUnit: 'false'
   cache-version: 'cache-v1'
   run_docker: 'true'
-  run_cmdcheck: 'true' # <--- CHANGE: Set to true to actually run checks
+  run_cmdcheck: 'true'
   # Use ghcr.io for the GitHub Container Registry
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
@@ -25,9 +25,8 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
     container: ${{ matrix.config.cont }}
-    # <--- CHANGE: Add permissions for writing to ghcr.io and signing
     permissions:
-      contents: read
+      contents: write
       packages: write
       id-token: write
 
@@ -54,9 +53,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v3 
+        uses: docker/setup-buildx-action@v3
 
-      # R and pandoc are in the container, so these steps are skipped as intended.
       - name: Setup R from r-lib
         if: runner.os != 'Linux'
         uses: r-lib/actions/setup-r@v2
@@ -77,11 +75,10 @@ jobs:
         if: "!contains(github.event.head_commit.message, '/nocache') && runner.os == 'Linux' "
         uses: actions/cache@v4
         with:
-          path: /__w/_temp/Library # <--- CHANGE: Corrected path based on 'Set R Library' step
+          path: /__w/_temp/Library
           key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-RELEASE_3_21-r-4.5-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ env.cache-version }}-${{ runner.os }}-biocversion-RELEASE_3_21-r-4.5-
 
-      # Installation steps remain largely the same...
       - name: Install Linux system dependencies
         if: runner.os == 'Linux'
         run: |
@@ -144,9 +141,7 @@ jobs:
       - name: Deploy package with pkgdown
         if: github.ref == 'refs/heads/main' && env.run_pkgdown == 'true' && runner.os == 'Linux'
         run: |
-          # <--- FIX: Add repository to git's safe directories
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           Rscript -e "pkgdown::deploy_to_branch(new_process = FALSE)"
@@ -169,20 +164,19 @@ jobs:
 
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v5 
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
         id: build-and-push
-        uses: docker/build-push-action@v5 
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      # <--- CHANGE: Replaced manual cosign with dedicated actions
       - name: Install Cosign
         if: github.event_name != 'pull_request'
         uses: sigstore/cosign-installer@v3
