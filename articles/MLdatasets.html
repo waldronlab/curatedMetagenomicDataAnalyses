@@ -4,105 +4,66 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Create datasets for machine learning • curatedMetagenomicAnalyses</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Create datasets for machine learning">
-<meta property="og:description" content="curatedMetagenomicAnalyses">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Create datasets for machine learning">
 </head>
-<body data-spy="scroll" data-target="#toc">
-    
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">curatedMetagenomicAnalyses</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
-      </span>
-    </div>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">Home</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Analyses
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li class="dropdown-header">R Vignettes</li>
-    <li>
-      <a href="../articles/MLdatasets.html">Create datasets for machine learning</a>
-    </li>
-    <li>
-      <a href="../articles/explorecirrhosis.html">Exploration of the liver cirrhosis dataset</a>
-    </li>
-    <li>
-      <a href="../articles/identify_CRC_species.html">Colorectal cancer stool microbiome species prevalence (dynamic table)</a>
-    </li>
-    <li>
-      <a href="../articles/Age_metaanalysis_vignette.html">Meta-analysis of age-related microbial species using cMD3</a>
-    </li>
-    <li>
-      <a href="../articles/Sex_metaanalysis_vignette.html">Meta-analysis of sex-related microbial species using cMD3</a>
-    </li>
-    <li>
-      <a href="../articles/NUI-Galway-Metagenomics-Workshop.html">NUI Galway Metagenomics Workshop</a>
-    </li>
-    <li class="dropdown-header">Python Notebooks</li>
-    <li>
-      <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/sexContrastMicrobiomeAnalysis.ipynb">Sex-related differences in the human microbiome using cMD3 and Python3</a>
-    </li>
-    <li class="dropdown-header">Supplementary Materials</li>
-    <li>
-      <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/installation.ipynb">Installing Python dependencies in Linux (Python Notebook)</a>
-    </li>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
+    <a class="navbar-brand me-2" href="../index.html">curatedMetagenomicAnalyses</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="active nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-analyses" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Analyses</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-analyses">
+<li><h6 class="dropdown-header" data-toc-skip>R Vignettes</h6></li>
+    <li><a class="dropdown-item" href="../articles/MLdatasets.html">Create datasets for machine learning</a></li>
+    <li><a class="dropdown-item" href="../articles/explorecirrhosis.html">Exploration of the liver cirrhosis dataset</a></li>
+    <li><a class="dropdown-item" href="../articles/identify_CRC_species.html">Colorectal cancer stool microbiome species prevalence (dynamic table)</a></li>
+    <li><a class="dropdown-item" href="../articles/Age_metaanalysis_vignette.html">Meta-analysis of age-related microbial species using cMD3</a></li>
+    <li><a class="dropdown-item" href="../articles/Sex_metaanalysis_vignette.html">Meta-analysis of sex-related microbial species using cMD3</a></li>
+    <li><a class="dropdown-item" href="../articles/NUI-Galway-Metagenomics-Workshop.html">NUI Galway Metagenomics Workshop</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Python Notebooks</h6></li>
+    <li><a class="dropdown-item" href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/sexContrastMicrobiomeAnalysis.ipynb">Sex-related differences in the human microbiome using cMD3 and Python3</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Supplementary Materials</h6></li>
+    <li><a class="dropdown-item" href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/installation.ipynb">Installing Python dependencies in Linux (Python Notebook)</a></li>
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><a class="nav-link" href="https://github.com/waldronlab/curatedMetagenomicAnalyses"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Create datasets for machine learning</h1>
+
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+
+      <h1>Create datasets for machine learning</h1>
                         <h4 data-toc-skip class="author">Levi
 Waldron</h4>
             <address class="author_afil">
@@ -110,11 +71,10 @@ Waldron</h4>
 Policy<br><a class="author_email" href="mailto:#"></a><a href="mailto:levi.waldron@sph.cuny.edu" class="email">levi.waldron@sph.cuny.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">19 October 2022</h4>
+            <h4 data-toc-skip class="date">27 August 2025</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/HEAD/vignettes/MLdatasets.Rmd"><code>vignettes/MLdatasets.Rmd</code></a></small>
-      <div class="hidden name"><code>MLdatasets.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/MLdatasets.Rmd"><code>vignettes/MLdatasets.Rmd</code></a></small>
+      <div class="d-none name"><code>MLdatasets.Rmd</code></div>
     </div>
 
     
@@ -152,40 +112,44 @@ curatedMetagenomicData:</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">availablediseases</span></span></code></pre></div>
 <pre><code><span><span class="co">## .</span></span>
-<span><span class="co">##                   control                       IBD                       CRC </span></span>
-<span><span class="co">##                     14446                      2086                       702 </span></span>
-<span><span class="co">##            premature_born                       T2D                       IGT </span></span>
-<span><span class="co">##                       448                       332                       288 </span></span>
-<span><span class="co">##                      ACVD                   adenoma                 cirrhosis </span></span>
-<span><span class="co">##                       214                       209                       132 </span></span>
-<span><span class="co">##                       STH                    otitis              schizofrenia </span></span>
+<span><span class="co">##                   control                       IBD                       T2D </span></span>
+<span><span class="co">##                     15121                      2088                       882 </span></span>
+<span><span class="co">##                       CRC                       IGT            premature_born </span></span>
+<span><span class="co">##                       701                       563                       448 </span></span>
+<span><span class="co">##                  melanoma                       CAD                      ACVD </span></span>
+<span><span class="co">##                       315                       269                       214 </span></span>
+<span><span class="co">##                   adenoma                       FMT                 cirrhosis </span></span>
+<span><span class="co">##                       209                       149                       132 </span></span>
+<span><span class="co">##                       STH                    otitis             schizophrenia </span></span>
 <span><span class="co">##                       108                       107                       106 </span></span>
-<span><span class="co">##              hypertension                        AS                       T1D </span></span>
-<span><span class="co">##                        99                        97                        89 </span></span>
-<span><span class="co">##                  melanoma           acute_diarrhoea          pre-hypertension </span></span>
-<span><span class="co">##                        64                        56                        56 </span></span>
-<span><span class="co">##                    ME/CFS                  migraine                      STEC </span></span>
-<span><span class="co">##                        50                        49                        42 </span></span>
-<span><span class="co">##               fatty_liver                 psoriasis carcinoma_surgery_history </span></span>
-<span><span class="co">##                        41                        41                        40 </span></span>
-<span><span class="co">##                       FMT                        AD            cephalosporins </span></span>
+<span><span class="co">##              hypertension                        AS                        HF </span></span>
+<span><span class="co">##                        99                        97                        95 </span></span>
+<span><span class="co">##                       T1D           acute_diarrhoea          pre-hypertension </span></span>
+<span><span class="co">##                        89                        56                        56 </span></span>
+<span><span class="co">##                       CDI                    ME/CFS                  migraine </span></span>
+<span><span class="co">##                        53                        50                        49 </span></span>
+<span><span class="co">##                      STEC               fatty_liver                 psoriasis </span></span>
+<span><span class="co">##                        42                        41                        41 </span></span>
+<span><span class="co">## carcinoma_surgery_history                        AD            cephalosporins </span></span>
 <span><span class="co">##                        40                        38                        36 </span></span>
-<span><span class="co">##                       CDI                    asthma             periodontitis </span></span>
-<span><span class="co">##                        33                        24                        24 </span></span>
+<span><span class="co">##                        PD                    asthma             periodontitis </span></span>
+<span><span class="co">##                        31                        24                        24 </span></span>
 <span><span class="co">##                       SRP          peri-implantitis                        BD </span></span>
 <span><span class="co">##                        24                        23                        20 </span></span>
-<span><span class="co">##                 mucositis                bronchitis            respiratoryinf </span></span>
-<span><span class="co">##                        20                        18                        13 </span></span>
-<span><span class="co">##        metabolic_syndrome            pyelonephritis infectiousgastroenteritis </span></span>
-<span><span class="co">##                        10                         6                         5 </span></span>
+<span><span class="co">##                 mucositis                bronchitis   TKI_dependent_diarrhoea </span></span>
+<span><span class="co">##                        20                        18                        16 </span></span>
+<span><span class="co">##            respiratoryinf        metabolic_syndrome                     donor </span></span>
+<span><span class="co">##                        13                        10                         9 </span></span>
+<span><span class="co">##            pyelonephritis infectiousgastroenteritis                      MDRB </span></span>
+<span><span class="co">##                         6                         5                         5 </span></span>
 <span><span class="co">##                     fever                 pneumonia               tonsillitis </span></span>
 <span><span class="co">##                         3                         3                         3 </span></span>
 <span><span class="co">##                     cough             pyelonefritis                   skininf </span></span>
 <span><span class="co">##                         2                         2                         2 </span></span>
-<span><span class="co">##                stomatitis                  cystitis                        NK </span></span>
+<span><span class="co">##                stomatitis                  cystitis             salmonellosis </span></span>
 <span><span class="co">##                         2                         1                         1 </span></span>
-<span><span class="co">##             salmonellosis                    sepsis                   suspinf </span></span>
-<span><span class="co">##                         1                         1                         1</span></span></code></pre>
+<span><span class="co">##                    sepsis                   suspinf </span></span>
+<span><span class="co">##                         1                         1</span></span></code></pre>
 <p>And the number of studies they are found in:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">availablediseases</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
@@ -198,27 +162,34 @@ curatedMetagenomicData:</p>
 <span><span class="va">studies</span> <span class="op">&lt;-</span> <span class="va">studies</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">studies</span>, <span class="va">length</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">]</span> <span class="co">#available in more than one study</span></span>
 <span><span class="va">studies</span></span></code></pre></div>
 <pre><code><span><span class="co">## $IBD</span></span>
-<span><span class="co">## [1] "HallAB_2017"     "HMP_2019_ibdmdb" "IjazUZ_2017"     "LiJ_2014"       </span></span>
-<span><span class="co">## [5] "NielsenHB_2014"  "VilaAV_2018"    </span></span>
+<span><span class="co">## [1] "HallAB_2017"     "HMP_2019_ibdmdb" "IaniroG_2022"    "IjazUZ_2017"    </span></span>
+<span><span class="co">## [5] "LiJ_2014"        "NielsenHB_2014"  "VilaAV_2018"    </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $T2D</span></span>
+<span><span class="co">## [1] "HMP_2019_t2d"           "KarlssonFH_2013"        "LiJ_2014"              </span></span>
+<span><span class="co">## [4] "MetaCardis_2020_a"      "QinJ_2012"              "SankaranarayananK_2015"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $CRC</span></span>
 <span><span class="co">##  [1] "FengQ_2015"      "GuptaA_2019"     "HanniganGD_2017" "ThomasAM_2018a" </span></span>
 <span><span class="co">##  [5] "ThomasAM_2018b"  "ThomasAM_2019_c" "VogtmannE_2016"  "WirbelJ_2018"   </span></span>
 <span><span class="co">##  [9] "YachidaS_2019"   "YuJ_2015"        "ZellerG_2014"   </span></span>
 <span><span class="co">## </span></span>
+<span><span class="co">## $IGT</span></span>
+<span><span class="co">## [1] "HMP_2019_t2d"      "KarlssonFH_2013"   "MetaCardis_2020_a"</span></span>
+<span><span class="co">## </span></span>
 <span><span class="co">## $premature_born</span></span>
 <span><span class="co">## [1] "BrooksB_2017" "OlmMR_2017"  </span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## $T2D</span></span>
-<span><span class="co">## [1] "HMP_2019_t2d"           "KarlssonFH_2013"        "LiJ_2014"              </span></span>
-<span><span class="co">## [4] "QinJ_2012"              "SankaranarayananK_2015"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $IGT</span></span>
-<span><span class="co">## [1] "HMP_2019_t2d"    "KarlssonFH_2013"</span></span>
+<span><span class="co">## $melanoma</span></span>
+<span><span class="co">## [1] "FrankelAE_2017"       "GopalakrishnanV_2018" "LeeKA_2022"          </span></span>
+<span><span class="co">## [4] "MatsonV_2018"         "PetersBA_2019"        "WindTT_2020"         </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $adenoma</span></span>
 <span><span class="co">## [1] "FengQ_2015"      "HanniganGD_2017" "ThomasAM_2018a"  "YachidaS_2019"  </span></span>
 <span><span class="co">## [5] "ZellerG_2014"   </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $FMT</span></span>
+<span><span class="co">## [1] "IaniroG_2022" "LiSS_2016"   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $cirrhosis</span></span>
 <span><span class="co">## [1] "LoombaR_2017" "QinN_2014"   </span></span>
@@ -226,17 +197,17 @@ curatedMetagenomicData:</p>
 <span><span class="co">## $STH</span></span>
 <span><span class="co">## [1] "RosaBA_2018"  "RubelMA_2020"</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## $schizofrenia</span></span>
+<span><span class="co">## $schizophrenia</span></span>
 <span><span class="co">## [1] "Castro-NallarE_2015" "ZhuF_2020"          </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $T1D</span></span>
 <span><span class="co">## [1] "Heitz-BuschartA_2016" "KosticAD_2015"        "LiJ_2014"            </span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## $melanoma</span></span>
-<span><span class="co">## [1] "GopalakrishnanV_2018" "MatsonV_2018"        </span></span>
-<span><span class="co">## </span></span>
 <span><span class="co">## $acute_diarrhoea</span></span>
-<span><span class="co">## [1] "DavidLA_2015" "KieserS_2018"</span></span></code></pre>
+<span><span class="co">## [1] "DavidLA_2015" "KieserS_2018"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $CDI</span></span>
+<span><span class="co">## [1] "IaniroG_2022"  "VincentC_2016"</span></span></code></pre>
 <p>Each of these datasets has six data types associated with it; for
 example:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -276,13 +247,25 @@ example:</p>
 <span><span class="co">##                 study_condition</span></span>
 <span><span class="co">## study_name       control IBD</span></span>
 <span><span class="co">##   HallAB_2017         74 185</span></span>
+<span><span class="co">##   IaniroG_2022         3   3</span></span>
 <span><span class="co">##   IjazUZ_2017         38  56</span></span>
 <span><span class="co">##   LiJ_2014            10 140</span></span>
 <span><span class="co">##   NielsenHB_2014     248 148</span></span>
 <span><span class="co">##   VilaAV_2018          0 355</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##  </span></span>
-<span><span class="co">## [1] "Next study condition: CRC  /// Body site:  stool"</span></span>
+<span><span class="co">## </span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Next study condition: T2D  /// Body site:  stool"</span></span>
+<span><span class="co">##                         study_condition</span></span>
+<span><span class="co">## study_name               control T2D</span></span>
+<span><span class="co">##   HMP_2019_t2d                46  11</span></span>
+<span><span class="co">##   KarlssonFH_2013             43  53</span></span>
+<span><span class="co">##   LiJ_2014                    10  79</span></span>
+<span><span class="co">##   MetaCardis_2020_a          642 550</span></span>
+<span><span class="co">##   QinJ_2012                  174 170</span></span>
+<span><span class="co">##   SankaranarayananK_2015      18  19</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Next study condition: CRC  /// Body site:  stool"</span></span>
 <span><span class="co">##                  study_condition</span></span>
 <span><span class="co">## study_name        control CRC</span></span>
 <span><span class="co">##   FengQ_2015           61  46</span></span>
@@ -294,8 +277,16 @@ example:</p>
 <span><span class="co">##   VogtmannE_2016       52  52</span></span>
 <span><span class="co">##   WirbelJ_2018         65  60</span></span>
 <span><span class="co">##   YachidaS_2019       251 258</span></span>
-<span><span class="co">##   YuJ_2015             53  75</span></span>
+<span><span class="co">##   YuJ_2015             54  74</span></span>
 <span><span class="co">##   ZellerG_2014         61  53</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Next study condition: IGT  /// Body site:  stool"</span></span>
+<span><span class="co">##                    study_condition</span></span>
+<span><span class="co">## study_name          control IGT</span></span>
+<span><span class="co">##   HMP_2019_t2d           46 239</span></span>
+<span><span class="co">##   KarlssonFH_2013        43  49</span></span>
+<span><span class="co">##   MetaCardis_2020_a     642 275</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##  </span></span>
 <span><span class="co">## [1] "Next study condition: premature_born  /// Body site:  stool"     </span></span>
@@ -306,25 +297,19 @@ example:</p>
 <span><span class="co">##   BrooksB_2017       5            403</span></span>
 <span><span class="co">##   OlmMR_2017         0             45</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##  </span></span>
-<span><span class="co">## [1] "Next study condition: T2D  /// Body site:  stool"</span></span>
-<span><span class="co">##                         study_condition</span></span>
-<span><span class="co">## study_name               control T2D</span></span>
-<span><span class="co">##   HMP_2019_t2d                46  11</span></span>
-<span><span class="co">##   KarlssonFH_2013             43  53</span></span>
-<span><span class="co">##   LiJ_2014                    10  79</span></span>
-<span><span class="co">##   QinJ_2012                  174 170</span></span>
-<span><span class="co">##   SankaranarayananK_2015      18  19</span></span>
+<span><span class="co">## </span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Next study condition: melanoma  /// Body site:  stool"</span></span>
+<span><span class="co">##                       study_condition</span></span>
+<span><span class="co">## study_name             melanoma</span></span>
+<span><span class="co">##   FrankelAE_2017             39</span></span>
+<span><span class="co">##   GopalakrishnanV_2018       25</span></span>
+<span><span class="co">##   LeeKA_2022                165</span></span>
+<span><span class="co">##   MatsonV_2018               39</span></span>
+<span><span class="co">##   PetersBA_2019              27</span></span>
+<span><span class="co">##   WindTT_2020                20</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##  </span></span>
-<span><span class="co">## [1] "Next study condition: IGT  /// Body site:  stool"</span></span>
-<span><span class="co">##                  study_condition</span></span>
-<span><span class="co">## study_name        control IGT</span></span>
-<span><span class="co">##   HMP_2019_t2d         46 239</span></span>
-<span><span class="co">##   KarlssonFH_2013      43  49</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##  </span></span>
-<span><span class="co">## [1] "Next study condition: adenoma  /// Body site:  stool"</span></span>
+<span><span class="co">## </span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Next study condition: adenoma  /// Body site:  stool"</span></span>
 <span><span class="co">##                  study_condition</span></span>
 <span><span class="co">## study_name        adenoma control</span></span>
 <span><span class="co">##   FengQ_2015           47      61</span></span>
@@ -333,49 +318,56 @@ example:</p>
 <span><span class="co">##   YachidaS_2019        67     251</span></span>
 <span><span class="co">##   ZellerG_2014         42      61</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##  </span></span>
-<span><span class="co">## [1] "Next study condition: cirrhosis  /// Body site:  stool"</span></span>
+<span><span class="co">## </span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Next study condition: FMT  /// Body site:  stool"</span></span>
+<span><span class="co">##               study_condition</span></span>
+<span><span class="co">## study_name     control FMT</span></span>
+<span><span class="co">##   IaniroG_2022       3 109</span></span>
+<span><span class="co">##   LiSS_2016          5  40</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Next study condition: cirrhosis  /// Body site:  stool"</span></span>
 <span><span class="co">##               study_condition</span></span>
 <span><span class="co">## study_name     cirrhosis control</span></span>
 <span><span class="co">##   LoombaR_2017         9      36</span></span>
 <span><span class="co">##   QinN_2014          123     114</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##  </span></span>
-<span><span class="co">## [1] "Next study condition: STH  /// Body site:  stool"</span></span>
+<span><span class="co">## </span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Next study condition: STH  /// Body site:  stool"</span></span>
 <span><span class="co">##               study_condition</span></span>
 <span><span class="co">## study_name     control STH</span></span>
 <span><span class="co">##   RosaBA_2018        5  19</span></span>
 <span><span class="co">##   RubelMA_2020      86  89</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##  </span></span>
-<span><span class="co">## [1] "Next study condition: schizofrenia  /// Body site:  oralcavity"</span></span>
-<span><span class="co">## [2] "Next study condition: schizofrenia  /// Body site:  stool"     </span></span>
+<span><span class="co">## </span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Next study condition: schizophrenia  /// Body site:  oralcavity"</span></span>
+<span><span class="co">## [2] "Next study condition: schizophrenia  /// Body site:  stool"     </span></span>
 <span><span class="co">##                      study_condition</span></span>
-<span><span class="co">## study_name            control schizofrenia</span></span>
-<span><span class="co">##   Castro-NallarE_2015      16           16</span></span>
-<span><span class="co">##   ZhuF_2020                81           90</span></span>
+<span><span class="co">## study_name            control schizophrenia</span></span>
+<span><span class="co">##   Castro-NallarE_2015      16            16</span></span>
+<span><span class="co">##   ZhuF_2020                81            90</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##  </span></span>
-<span><span class="co">## [1] "Next study condition: T1D  /// Body site:  stool"</span></span>
+<span><span class="co">## </span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Next study condition: T1D  /// Body site:  stool"</span></span>
 <span><span class="co">##                       study_condition</span></span>
 <span><span class="co">## study_name             control T1D</span></span>
 <span><span class="co">##   Heitz-BuschartA_2016      26  27</span></span>
 <span><span class="co">##   KosticAD_2015             89  31</span></span>
 <span><span class="co">##   LiJ_2014                  10  31</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##  </span></span>
-<span><span class="co">## [1] "Next study condition: melanoma  /// Body site:  stool"</span></span>
-<span><span class="co">##                       study_condition</span></span>
-<span><span class="co">## study_name             melanoma</span></span>
-<span><span class="co">##   GopalakrishnanV_2018       25</span></span>
-<span><span class="co">##   MatsonV_2018               39</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##  </span></span>
-<span><span class="co">## [1] "Next study condition: acute_diarrhoea  /// Body site:  stool"</span></span>
+<span><span class="co">## </span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Next study condition: acute_diarrhoea  /// Body site:  stool"</span></span>
 <span><span class="co">##               study_condition</span></span>
 <span><span class="co">## study_name     acute_diarrhoea control</span></span>
 <span><span class="co">##   DavidLA_2015              38       9</span></span>
 <span><span class="co">##   KieserS_2018              18       9</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span></code></pre>
+<pre><code><span><span class="co">## [1] "Next study condition: CDI  /// Body site:  stool"</span></span>
+<span><span class="co">##                study_condition</span></span>
+<span><span class="co">## study_name      CDI control</span></span>
+<span><span class="co">##   IaniroG_2022   20       3</span></span>
+<span><span class="co">##   VincentC_2016  33     196</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## </span></span></code></pre>
 </div>
@@ -384,35 +376,26 @@ example:</p>
 </h2>
 <p>Download the .csv and .rda files directly from <a href="https://www.dropbox.com/sh/0t0nbhj9eqm3wkq/AACZIw42WA-uHjzo97bG5tE6a?dl=0" class="external-link uri">https://www.dropbox.com/sh/0t0nbhj9eqm3wkq/AACZIw42WA-uHjzo97bG5tE6a?dl=0</a></p>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
 </div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
-  
 
 
-  
+
 
   </body>
 </html>

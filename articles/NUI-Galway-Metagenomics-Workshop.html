@@ -4,105 +4,66 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>NUI Galway Metagenomics Workshop • curatedMetagenomicAnalyses</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="NUI Galway Metagenomics Workshop">
-<meta property="og:description" content="curatedMetagenomicAnalyses">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="NUI Galway Metagenomics Workshop">
 </head>
-<body data-spy="scroll" data-target="#toc">
-    
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">curatedMetagenomicAnalyses</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
-      </span>
-    </div>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">Home</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Analyses
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li class="dropdown-header">R Vignettes</li>
-    <li>
-      <a href="../articles/MLdatasets.html">Create datasets for machine learning</a>
-    </li>
-    <li>
-      <a href="../articles/explorecirrhosis.html">Exploration of the liver cirrhosis dataset</a>
-    </li>
-    <li>
-      <a href="../articles/identify_CRC_species.html">Colorectal cancer stool microbiome species prevalence (dynamic table)</a>
-    </li>
-    <li>
-      <a href="../articles/Age_metaanalysis_vignette.html">Meta-analysis of age-related microbial species using cMD3</a>
-    </li>
-    <li>
-      <a href="../articles/Sex_metaanalysis_vignette.html">Meta-analysis of sex-related microbial species using cMD3</a>
-    </li>
-    <li>
-      <a href="../articles/NUI-Galway-Metagenomics-Workshop.html">NUI Galway Metagenomics Workshop</a>
-    </li>
-    <li class="dropdown-header">Python Notebooks</li>
-    <li>
-      <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/sexContrastMicrobiomeAnalysis.ipynb">Sex-related differences in the human microbiome using cMD3 and Python3</a>
-    </li>
-    <li class="dropdown-header">Supplementary Materials</li>
-    <li>
-      <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/installation.ipynb">Installing Python dependencies in Linux (Python Notebook)</a>
-    </li>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
+    <a class="navbar-brand me-2" href="../index.html">curatedMetagenomicAnalyses</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="active nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-analyses" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Analyses</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-analyses">
+<li><h6 class="dropdown-header" data-toc-skip>R Vignettes</h6></li>
+    <li><a class="dropdown-item" href="../articles/MLdatasets.html">Create datasets for machine learning</a></li>
+    <li><a class="dropdown-item" href="../articles/explorecirrhosis.html">Exploration of the liver cirrhosis dataset</a></li>
+    <li><a class="dropdown-item" href="../articles/identify_CRC_species.html">Colorectal cancer stool microbiome species prevalence (dynamic table)</a></li>
+    <li><a class="dropdown-item" href="../articles/Age_metaanalysis_vignette.html">Meta-analysis of age-related microbial species using cMD3</a></li>
+    <li><a class="dropdown-item" href="../articles/Sex_metaanalysis_vignette.html">Meta-analysis of sex-related microbial species using cMD3</a></li>
+    <li><a class="dropdown-item" href="../articles/NUI-Galway-Metagenomics-Workshop.html">NUI Galway Metagenomics Workshop</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Python Notebooks</h6></li>
+    <li><a class="dropdown-item" href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/sexContrastMicrobiomeAnalysis.ipynb">Sex-related differences in the human microbiome using cMD3 and Python3</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Supplementary Materials</h6></li>
+    <li><a class="dropdown-item" href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/installation.ipynb">Installing Python dependencies in Linux (Python Notebook)</a></li>
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><a class="nav-link" href="https://github.com/waldronlab/curatedMetagenomicAnalyses"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>NUI Galway Metagenomics Workshop</h1>
+
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+
+      <h1>NUI Galway Metagenomics Workshop</h1>
                         <h4 data-toc-skip class="author">Lucas Schiffer,
 MPH</h4>
             <address class="author_afil">
@@ -113,9 +74,8 @@ U.S.A.<br><a class="author_email" href="mailto:#"></a><a href="mailto:schifferl@
                   
             <h4 data-toc-skip class="date">October 6, 2021</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/HEAD/vignettes/NUI-Galway-Metagenomics-Workshop.Rmd"><code>vignettes/NUI-Galway-Metagenomics-Workshop.Rmd</code></a></small>
-      <div class="hidden name"><code>NUI-Galway-Metagenomics-Workshop.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/waldronlab/curatedMetagenomicAnalyses/blob/main/vignettes/NUI-Galway-Metagenomics-Workshop.Rmd"><code>vignettes/NUI-Galway-Metagenomics-Workshop.Rmd</code></a></small>
+      <div class="d-none name"><code>NUI-Galway-Metagenomics-Workshop.Rmd</code></div>
     </div>
 
     
@@ -123,13 +83,11 @@ U.S.A.<br><a class="author_email" href="mailto:#"></a><a href="mailto:schifferl@
 <div class="section level2">
 <h2 id="r-packages-for-this-tutorial">R Packages for This Tutorial<a class="anchor" aria-label="anchor" href="#r-packages-for-this-tutorial"></a>
 </h2>
-<p>This tutorial demonstrates basic usage of <em><a href="https://bioconductor.org/packages/3.14/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>,
+<p>This tutorial demonstrates basic usage of <em><a href="https://bioconductor.org/packages/3.21/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>,
 prerequisite steps for analysis, estimation of alpha diversity, analysis
 of beta diversity, and differential abundance analysis. To make the
 tables and figures in this tutorial, a number of R packages are
-required, as follows. If you are using <a href="http://app.orchestra.cancerdatasci.org" class="external-link">app.orchestra.cancerdatasci.org</a>,
-these packages are already installed for you; if not, you’ll have to
-make sure the packages are installed.</p>
+required, as follows.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -141,14 +99,14 @@ make sure the packages are installed.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/microbiome/mia" class="external-link">mia</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://const-ae.github.io/ggsignif/" class="external-link">ggsignif</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/hrbrmstr/hrbrthemes" class="external-link">hrbrthemes</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vegandevs/vegan" class="external-link">vegan</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">hrbrthemes</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vegandevs.github.io/vegan/" class="external-link">vegan</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jlmelville/uwot" class="external-link">uwot</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FrederickHuangLin/ANCOMBC" class="external-link">ANCOMBC</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/slowkow/ggrepel" class="external-link">ggrepel</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggrepel.slowkow.com/" class="external-link">ggrepel</a></span><span class="op">)</span></span></code></pre></div>
 <p>With the requisite R packages loaded and a basic working knowledge of
 metagenomics analysis (as was covered in the workshop), you’re ready to
 begin. Just one last note, in most of the code chunks below messages
@@ -158,7 +116,7 @@ the R console.</p>
 <div class="section level2">
 <h2 id="using-curatedmetagenomicdata">Using curatedMetagenomicData<a class="anchor" aria-label="anchor" href="#using-curatedmetagenomicdata"></a>
 </h2>
-<p>First, let’s address what the <em><a href="https://bioconductor.org/packages/3.14/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
+<p>First, let’s address what the <em><a href="https://bioconductor.org/packages/3.21/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
 R/Bioconductor package is; here’s an brief description.</p>
 <blockquote>
 <p>The curatedMetagenomicData package provides standardized, curated
@@ -171,16 +129,16 @@ calculated with HUMAnN3. The manually curated sample metadata and
 standardized metagenomic data are available as
 (Tree)SummarizedExperiment objects.</p>
 </blockquote>
-<p>Be sure to refer to the <em><a href="https://bioconductor.org/packages/3.14/SummarizedExperiment/vignettes/SummarizedExperiment.html" class="external-link">SummarizedExperiment</a></em>
-and <em><a href="https://bioconductor.org/packages/3.14/TreeSummarizedExperiment/vignettes/Introduction_to_treeSummarizedExperiment.html" class="external-link">TreeSummarizedExperiment</a></em>
+<p>Be sure to refer to the <em><a href="https://bioconductor.org/packages/3.21/SummarizedExperiment/vignettes/SummarizedExperiment.html" class="external-link">SummarizedExperiment</a></em>
+and <em><a href="https://bioconductor.org/packages/3.21/TreeSummarizedExperiment/vignettes/Introduction_to_treeSummarizedExperiment.html" class="external-link">TreeSummarizedExperiment</a></em>
 vignettes if the data structures are unclear. There is also a reference
-website for <em><a href="https://bioconductor.org/packages/3.14/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
+website for <em><a href="https://bioconductor.org/packages/3.21/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
 at <a href="https://waldronlab.io/curatedMetagenomicData/" class="external-link">waldronlab.io/curatedMetagenomicData</a>,
 if you need it.</p>
 <div class="section level3">
 <h3 id="sample-metadata-exploration">Sample Metadata Exploration<a class="anchor" aria-label="anchor" href="#sample-metadata-exploration"></a>
 </h3>
-<p>Any metagenomic analysis that uses <em><a href="https://bioconductor.org/packages/3.14/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
+<p>Any metagenomic analysis that uses <em><a href="https://bioconductor.org/packages/3.21/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
 is likely to begin with an exploration of sample metadata
 (i.e. <code>sampleMetadata</code>). The <code>sampleMetadata</code>
 object is a <code>data.frame</code> in the package that contains sample
@@ -195,47 +153,47 @@ values are removed, and the first 10 remaining columns are selected. The
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sampleMetadata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="op">~</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="op">~</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">study_name</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##            study_name                            sample_id</span></span>
-<span><span class="co">## 1       AsnicarF_2021                         SAMEA7045146</span></span>
-<span><span class="co">## 2       BackhedF_2015                           SID281_12M</span></span>
-<span><span class="co">## 3     HMP_2019_ibdmdb                           HSM5MD5K_P</span></span>
-<span><span class="co">## 4  LifeLinesDeep_2016     EGAR00001420974_9002000001474089</span></span>
-<span><span class="co">## 5      PehrssonE_2016                            SID030301</span></span>
-<span><span class="co">## 6      SchirmerM_2016                               G89012</span></span>
-<span><span class="co">## 7          ShaoY_2019 cc2f310e-7ae6-11e9-a106-68b59976a384</span></span>
-<span><span class="co">## 8       VatanenT_2016                               G78749</span></span>
-<span><span class="co">## 9            YuJ_2015                      SZAXPI015228-14</span></span>
-<span><span class="co">## 10        ZeeviD_2015                          PNP_Main_84</span></span>
-<span><span class="co">##                subject_id body_site study_condition        disease age_category</span></span>
-<span><span class="co">## 1       predict1_MTG_0293     stool         control        healthy        adult</span></span>
-<span><span class="co">## 2                  SID281     stool         control        healthy        child</span></span>
-<span><span class="co">## 3                   H4001     stool             IBD            IBD    schoolage</span></span>
-<span><span class="co">## 4  sub_9002000001474089LL     stool         control        healthy        adult</span></span>
-<span><span class="co">## 5                  SID3_3     stool         control        healthy    schoolage</span></span>
-<span><span class="co">## 6                   HV388     stool         control        healthy        adult</span></span>
-<span><span class="co">## 7               B02724_ba     stool         control        healthy      newborn</span></span>
-<span><span class="co">## 8                 P022130     stool  respiratoryinf respiratoryinf      newborn</span></span>
-<span><span class="co">## 9         SZAXPI015228-14     stool         control            T2D        adult</span></span>
-<span><span class="co">## 10            PNP_Main_84     stool         control        healthy        adult</span></span>
-<span><span class="co">##    country non_westernized sequencing_platform</span></span>
-<span><span class="co">## 1      GBR              no     IlluminaNovaSeq</span></span>
-<span><span class="co">## 2      SWE              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 3      USA              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 4      NLD              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 5      SLV             yes       IlluminaHiSeq</span></span>
-<span><span class="co">## 6      NLD              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 7      GBR              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 8      RUS              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 9      CHN              no       IlluminaHiSeq</span></span>
-<span><span class="co">## 10     ISR              no       IlluminaHiSeq</span></span></code></pre>
+<pre><code><span><span class="co">##         study_name         sample_id        subject_id body_site</span></span>
+<span><span class="co">## 1    AsnicarF_2021      SAMEA7045315 predict1_MTG_0461     stool</span></span>
+<span><span class="co">## 2     BrooksB_2017      S2_011_011G1            S2_011     stool</span></span>
+<span><span class="co">## 3  HMP_2019_ibdmdb          CSM67UF5             C3011     stool</span></span>
+<span><span class="co">## 4  HMP_2019_ibdmdb          PSM6XBUO             P6010     stool</span></span>
+<span><span class="co">## 5        LiuW_2016        SRR3992974        SRR3992974     stool</span></span>
+<span><span class="co">## 6     MehtaRS_2018  SID50745639_SF07       SID50745639     stool</span></span>
+<span><span class="co">## 7        QinN_2014             LD-98             LD-98     stool</span></span>
+<span><span class="co">## 8      TettAJ_2016 SK_CT108OSR_t1M14    TettAJ_2016108      skin</span></span>
+<span><span class="co">## 9    VatanenT_2016            G78515           T012977     stool</span></span>
+<span><span class="co">## 10     ZeeviD_2015      PNP_Main_772      PNP_Main_772     stool</span></span>
+<span><span class="co">##    study_condition                     disease age_category country</span></span>
+<span><span class="co">## 1          control                     healthy        adult     GBR</span></span>
+<span><span class="co">## 2   premature_born              premature_born      newborn     USA</span></span>
+<span><span class="co">## 3              IBD                         IBD        adult     USA</span></span>
+<span><span class="co">## 4              IBD                         IBD        child     USA</span></span>
+<span><span class="co">## 5          control                     healthy        adult     MNG</span></span>
+<span><span class="co">## 6          control                     healthy        adult     USA</span></span>
+<span><span class="co">## 7        cirrhosis ascites;cirrhosis;hepatitis        adult     CHN</span></span>
+<span><span class="co">## 8        psoriasis                   psoriasis        adult     ITA</span></span>
+<span><span class="co">## 9          control                     healthy        child     EST</span></span>
+<span><span class="co">## 10         control                     healthy        adult     ISR</span></span>
+<span><span class="co">##    non_westernized sequencing_platform</span></span>
+<span><span class="co">## 1               no     IlluminaNovaSeq</span></span>
+<span><span class="co">## 2               no       IlluminaHiSeq</span></span>
+<span><span class="co">## 3               no       IlluminaHiSeq</span></span>
+<span><span class="co">## 4               no       IlluminaHiSeq</span></span>
+<span><span class="co">## 5               no       IlluminaHiSeq</span></span>
+<span><span class="co">## 6               no       IlluminaHiSeq</span></span>
+<span><span class="co">## 7               no       IlluminaHiSeq</span></span>
+<span><span class="co">## 8               no       IlluminaHiSeq</span></span>
+<span><span class="co">## 9               no       IlluminaHiSeq</span></span>
+<span><span class="co">## 10              no       IlluminaHiSeq</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="finding-available-resources">Finding Available Resources<a class="anchor" aria-label="anchor" href="#finding-available-resources"></a>
 </h3>
-<p>The resources available in <em><a href="https://bioconductor.org/packages/3.14/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
+<p>The resources available in <em><a href="https://bioconductor.org/packages/3.21/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
 are organized by <code>study_name</code> and can be discovered with the
 <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> function. When provided with a
 string, it will return the names of available resources. Each
@@ -286,11 +244,11 @@ there are two <code>AsnicarF</code> resources for the
 data. To do that you must provide another argument,
 <code>dryrun = FALSE</code>, to the
 <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> function. Doing so will download
-the matching resources from <em><a href="https://bioconductor.org/packages/3.14/ExperimentHub" class="external-link">ExperimentHub</a></em>
+the matching resources from <em><a href="https://bioconductor.org/packages/3.21/ExperimentHub" class="external-link">ExperimentHub</a></em>
 (or load them from the local cache). When <code>dryrun = FALSE</code>,
 <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> will always return a
-<code>list</code> of <em><a href="https://bioconductor.org/packages/3.14/SummarizedExperiment" class="external-link">SummarizedExperiment</a></em>
-and/or <em><a href="https://bioconductor.org/packages/3.14/TreeSummarizedExperiment" class="external-link">TreeSummarizedExperiment</a></em>
+<code>list</code> of <em><a href="https://bioconductor.org/packages/3.21/SummarizedExperiment" class="external-link">SummarizedExperiment</a></em>
+and/or <em><a href="https://bioconductor.org/packages/3.21/TreeSummarizedExperiment" class="external-link">TreeSummarizedExperiment</a></em>
 objects.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData</a></span><span class="op">(</span><span class="st">"AsnicarF.+.relative_abundance"</span>, dryrun <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
@@ -308,7 +266,7 @@ objects.</p>
 <span><span class="co">## rowData names(7): superkingdom phylum ... genus species</span></span>
 <span><span class="co">## colnames(24): MV_FEI1_t1Q14 MV_FEI2_t1Q14 ... MV_MIM5_t2M14</span></span>
 <span><span class="co">##   MV_MIM5_t3F15</span></span>
-<span><span class="co">## colData names(22): study_name subject_id ... lactating curator</span></span>
+<span><span class="co">## colData names(22): study_name subject_id ... pregnant lactating</span></span>
 <span><span class="co">## reducedDimNames(0):</span></span>
 <span><span class="co">## mainExpName: NULL</span></span>
 <span><span class="co">## altExpNames(0):</span></span>
@@ -330,7 +288,7 @@ objects.</p>
 <span><span class="co">##   k__Bacteria|p__Actinobacteria|c__Actinobacteria|o__Micrococcales|f__Brevibacteriaceae|g__Brevibacterium|s__Brevibacterium_aurantiacum</span></span>
 <span><span class="co">## rowData names(7): superkingdom phylum ... genus species</span></span>
 <span><span class="co">## colnames(1098): SAMEA7041133 SAMEA7041134 ... SAMEA7045952 SAMEA7045953</span></span>
-<span><span class="co">## colData names(22): study_name subject_id ... BMI family</span></span>
+<span><span class="co">## colData names(24): study_name subject_id ... BMI family</span></span>
 <span><span class="co">## reducedDimNames(0):</span></span>
 <span><span class="co">## mainExpName: NULL</span></span>
 <span><span class="co">## altExpNames(0):</span></span>
@@ -343,8 +301,8 @@ objects.</p>
 <h3 id="merging-data-across-studies">Merging Data Across Studies<a class="anchor" aria-label="anchor" href="#merging-data-across-studies"></a>
 </h3>
 <p>It can be useful to have the <code>list</code> elements returned by
-<code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> merged into a single <em><a href="https://bioconductor.org/packages/3.14/SummarizedExperiment" class="external-link">SummarizedExperiment</a></em>
-or <em><a href="https://bioconductor.org/packages/3.14/TreeSummarizedExperiment" class="external-link">TreeSummarizedExperiment</a></em>
+<code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> merged into a single <em><a href="https://bioconductor.org/packages/3.21/SummarizedExperiment" class="external-link">SummarizedExperiment</a></em>
+or <em><a href="https://bioconductor.org/packages/3.21/TreeSummarizedExperiment" class="external-link">TreeSummarizedExperiment</a></em>
 object. This is accomplished using the <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/mergeData.html" class="external-link">mergeData()</a></code> function
 – simply pipe (<code>|&gt;</code>) the output of
 <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/curatedMetagenomicData.html" class="external-link">curatedMetagenomicData()</a></code> to <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/mergeData.html" class="external-link">mergeData()</a></code> and a
@@ -365,7 +323,7 @@ single object will be returned.</p>
 <span><span class="co">## rowData names(7): superkingdom phylum ... genus species</span></span>
 <span><span class="co">## colnames(1122): MV_FEI1_t1Q14 MV_FEI2_t1Q14 ... SAMEA7045952</span></span>
 <span><span class="co">##   SAMEA7045953</span></span>
-<span><span class="co">## colData names(25): study_name subject_id ... BMI family</span></span>
+<span><span class="co">## colData names(26): study_name subject_id ... BMI family</span></span>
 <span><span class="co">## reducedDimNames(0):</span></span>
 <span><span class="co">## mainExpName: NULL</span></span>
 <span><span class="co">## altExpNames(0):</span></span>
@@ -377,7 +335,7 @@ single object will be returned.</p>
 <div class="section level3">
 <h3 id="returning-data-from-samples">Returning Data from Samples<a class="anchor" aria-label="anchor" href="#returning-data-from-samples"></a>
 </h3>
-<p>There is just one more function in the <em><a href="https://bioconductor.org/packages/3.14/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
+<p>There is just one more function in the <em><a href="https://bioconductor.org/packages/3.21/curatedMetagenomicData" class="external-link">curatedMetagenomicData</a></em>
 package to know about, <code><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/returnSamples.html" class="external-link">returnSamples()</a></code>. It is used when you
 want to return samples across studies that match a certain set of
 conditions. To return a specific set of samples, you first subset the
@@ -401,7 +359,7 @@ when requesting the <code>relative_abundance</code> data type.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">disease</span> <span class="op">==</span> <span class="st">"healthy"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&gt;=</span> <span class="fl">18</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">country</span>, <span class="st">"IRL|ITA"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="op">~</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="op">~</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/curatedMetagenomicData/man/returnSamples.html" class="external-link">returnSamples</a></span><span class="op">(</span><span class="st">"relative_abundance"</span>, counts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -414,7 +372,7 @@ using it for the rest of this tutorial.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">countryData</span></span></code></pre></div>
 <pre><code><span><span class="co">## class: TreeSummarizedExperiment </span></span>
-<span><span class="co">## dim: 906 286 </span></span>
+<span><span class="co">## dim: 906 281 </span></span>
 <span><span class="co">## metadata(0):</span></span>
 <span><span class="co">## assays(1): relative_abundance</span></span>
 <span><span class="co">## rownames(906):</span></span>
@@ -424,9 +382,9 @@ using it for the rest of this tutorial.</p>
 <span><span class="co">##   k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Clostridiaceae|g__Clostridium|s__Clostridium_sp_D5</span></span>
 <span><span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Lactobacillales|f__Lactobacillaceae|g__Lactobacillus|s__Lactobacillus_algidus</span></span>
 <span><span class="co">## rowData names(7): superkingdom phylum ... genus species</span></span>
-<span><span class="co">## colnames(286): SID01.BA.VG.2 SID01.BA.V_metag ... CRC_MR_SBJ83H_17</span></span>
+<span><span class="co">## colnames(281): SID01.BA.VG.2 SID01.BA.V_metag ... CRC_MR_SBJ83H_17</span></span>
 <span><span class="co">##   CRC_MR_SBJ84H_17</span></span>
-<span><span class="co">## colData names(32): study_name subject_id ... dyastolic_p systolic_p</span></span>
+<span><span class="co">## colData names(35): study_name subject_id ... dyastolic_p systolic_p</span></span>
 <span><span class="co">## reducedDimNames(0):</span></span>
 <span><span class="co">## mainExpName: NULL</span></span>
 <span><span class="co">## altExpNames(0):</span></span>
@@ -434,7 +392,7 @@ using it for the rest of this tutorial.</p>
 <span><span class="co">## rowTree: 1 phylo tree(s) (10430 leaves)</span></span>
 <span><span class="co">## colLinks: NULL</span></span>
 <span><span class="co">## colTree: NULL</span></span></code></pre>
-<p>As can be seen above, the first <code>assay</code> of the <em><a href="https://bioconductor.org/packages/3.14/TreeSummarizedExperiment" class="external-link">TreeSummarizedExperiment</a></em>
+<p>As can be seen above, the first <code>assay</code> of the <em><a href="https://bioconductor.org/packages/3.21/TreeSummarizedExperiment" class="external-link">TreeSummarizedExperiment</a></em>
 is named <code>relative_abundance</code>. This is usually of little
 consequence, but you will need to rename the assay to
 <code>counts</code> for the transformation in the next step; do so by
@@ -442,7 +400,7 @@ setting the <code>assayNames</code> as follows.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assayNames</a></span><span class="op">(</span><span class="va">countryData</span><span class="op">)</span> <span class="op">&lt;-</span></span>
 <span>  <span class="st">"counts"</span></span></code></pre></div>
-<p>Next, use <code><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts()</a></code> from the <em><a href="https://bioconductor.org/packages/3.14/scater" class="external-link">scater</a></em>
+<p>Next, use <code><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts()</a></code> from the <em><a href="https://bioconductor.org/packages/3.21/scater" class="external-link">scater</a></em>
 package to create a second assay <code>logcounts</code> that contains
 log-normalized species abundances.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
@@ -453,7 +411,7 @@ log-normalized species abundances.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">countryData</span></span></code></pre></div>
 <pre><code><span><span class="co">## class: TreeSummarizedExperiment </span></span>
-<span><span class="co">## dim: 906 286 </span></span>
+<span><span class="co">## dim: 906 281 </span></span>
 <span><span class="co">## metadata(0):</span></span>
 <span><span class="co">## assays(2): counts logcounts</span></span>
 <span><span class="co">## rownames(906):</span></span>
@@ -463,9 +421,9 @@ log-normalized species abundances.</p>
 <span><span class="co">##   k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Clostridiaceae|g__Clostridium|s__Clostridium_sp_D5</span></span>
 <span><span class="co">##   k__Bacteria|p__Firmicutes|c__Bacilli|o__Lactobacillales|f__Lactobacillaceae|g__Lactobacillus|s__Lactobacillus_algidus</span></span>
 <span><span class="co">## rowData names(7): superkingdom phylum ... genus species</span></span>
-<span><span class="co">## colnames(286): SID01.BA.VG.2 SID01.BA.V_metag ... CRC_MR_SBJ83H_17</span></span>
+<span><span class="co">## colnames(281): SID01.BA.VG.2 SID01.BA.V_metag ... CRC_MR_SBJ83H_17</span></span>
 <span><span class="co">##   CRC_MR_SBJ84H_17</span></span>
-<span><span class="co">## colData names(33): study_name subject_id ... systolic_p sizeFactor</span></span>
+<span><span class="co">## colData names(36): study_name subject_id ... systolic_p sizeFactor</span></span>
 <span><span class="co">## reducedDimNames(0):</span></span>
 <span><span class="co">## mainExpName: NULL</span></span>
 <span><span class="co">## altExpNames(0):</span></span>
@@ -490,14 +448,31 @@ table.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>diet <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_explicit_na.html" class="external-link">fct_explicit_na</a></span><span class="op">(</span><span class="va">diet</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename_with</a></span><span class="op">(</span><span class="va">to_title_case</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="zwirfdjxsy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<pre><code><span><span class="co">## Warning: There was 1 warning in `mutate()`.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> In argument: `gender = fct_explicit_na(gender)`.</span></span>
+<span><span class="co">## Caused by warning:</span></span>
+<span><span class="co">## <span style="color: #BBBB00;">!</span> `fct_explicit_na()` was deprecated in forcats 1.0.0.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please use `fct_na_value_to_level()` instead.</span></span></code></pre>
+<div id="exombwkkeu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#exombwkkeu table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#zwirfdjxsy .gt_table {
+#exombwkkeu thead, #exombwkkeu tbody, #exombwkkeu tfoot, #exombwkkeu tr, #exombwkkeu td, #exombwkkeu th {
+  border-style: none;
+}
+
+#exombwkkeu p {
+  margin: 0;
+  padding: 0;
+}
+
+#exombwkkeu .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -520,19 +495,12 @@ table.</p>
   border-left-color: #D3D3D3;
 }
 
-#zwirfdjxsy .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#exombwkkeu .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-#zwirfdjxsy .gt_title {
+#exombwkkeu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -544,25 +512,37 @@ table.</p>
   border-bottom-width: 0;
 }
 
-#zwirfdjxsy .gt_subtitle {
+#exombwkkeu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-#zwirfdjxsy .gt_bottom_border {
+#exombwkkeu .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#exombwkkeu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zwirfdjxsy .gt_col_headings {
+#exombwkkeu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -577,7 +557,7 @@ table.</p>
   border-right-color: #D3D3D3;
 }
 
-#zwirfdjxsy .gt_col_heading {
+#exombwkkeu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -597,7 +577,7 @@ table.</p>
   overflow-x: hidden;
 }
 
-#zwirfdjxsy .gt_column_spanner_outer {
+#exombwkkeu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -609,15 +589,15 @@ table.</p>
   padding-right: 4px;
 }
 
-#zwirfdjxsy .gt_column_spanner_outer:first-child {
+#exombwkkeu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zwirfdjxsy .gt_column_spanner_outer:last-child {
+#exombwkkeu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zwirfdjxsy .gt_column_spanner {
+#exombwkkeu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -629,7 +609,11 @@ table.</p>
   width: 100%;
 }
 
-#zwirfdjxsy .gt_group_heading {
+#exombwkkeu .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#exombwkkeu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -652,9 +636,10 @@ table.</p>
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
+  text-align: left;
 }
 
-#zwirfdjxsy .gt_empty_group_heading {
+#exombwkkeu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -669,15 +654,15 @@ table.</p>
   vertical-align: middle;
 }
 
-#zwirfdjxsy .gt_from_md > :first-child {
+#exombwkkeu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zwirfdjxsy .gt_from_md > :last-child {
+#exombwkkeu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zwirfdjxsy .gt_row {
+#exombwkkeu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -696,7 +681,7 @@ table.</p>
   overflow-x: hidden;
 }
 
-#zwirfdjxsy .gt_stub {
+#exombwkkeu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -709,7 +694,7 @@ table.</p>
   padding-right: 5px;
 }
 
-#zwirfdjxsy .gt_stub_row_group {
+#exombwkkeu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -723,11 +708,15 @@ table.</p>
   vertical-align: top;
 }
 
-#zwirfdjxsy .gt_row_group_first td {
+#exombwkkeu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zwirfdjxsy .gt_summary_row {
+#exombwkkeu .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#exombwkkeu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -737,16 +726,16 @@ table.</p>
   padding-right: 5px;
 }
 
-#zwirfdjxsy .gt_first_summary_row {
+#exombwkkeu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zwirfdjxsy .gt_first_summary_row.thick {
+#exombwkkeu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zwirfdjxsy .gt_last_summary_row {
+#exombwkkeu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -756,7 +745,7 @@ table.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#zwirfdjxsy .gt_grand_summary_row {
+#exombwkkeu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -766,7 +755,7 @@ table.</p>
   padding-right: 5px;
 }
 
-#zwirfdjxsy .gt_first_grand_summary_row {
+#exombwkkeu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -776,11 +765,21 @@ table.</p>
   border-top-color: #D3D3D3;
 }
 
-#zwirfdjxsy .gt_striped {
+#exombwkkeu .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#exombwkkeu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zwirfdjxsy .gt_table_body {
+#exombwkkeu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -789,7 +788,7 @@ table.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#zwirfdjxsy .gt_footnotes {
+#exombwkkeu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -803,30 +802,8 @@ table.</p>
   border-right-color: #D3D3D3;
 }
 
-#zwirfdjxsy .gt_footnote {
+#exombwkkeu .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#zwirfdjxsy .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#zwirfdjxsy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -834,191 +811,222 @@ table.</p>
   padding-right: 5px;
 }
 
-#zwirfdjxsy .gt_left {
+#exombwkkeu .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#exombwkkeu .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#exombwkkeu .gt_left {
   text-align: left;
 }
 
-#zwirfdjxsy .gt_center {
+#exombwkkeu .gt_center {
   text-align: center;
 }
 
-#zwirfdjxsy .gt_right {
+#exombwkkeu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zwirfdjxsy .gt_font_normal {
+#exombwkkeu .gt_font_normal {
   font-weight: normal;
 }
 
-#zwirfdjxsy .gt_font_bold {
+#exombwkkeu .gt_font_bold {
   font-weight: bold;
 }
 
-#zwirfdjxsy .gt_font_italic {
+#exombwkkeu .gt_font_italic {
   font-style: italic;
 }
 
-#zwirfdjxsy .gt_super {
+#exombwkkeu .gt_super {
   font-size: 65%;
 }
 
-#zwirfdjxsy .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+#exombwkkeu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
-#zwirfdjxsy .gt_asterisk {
+#exombwkkeu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zwirfdjxsy .gt_indent_1 {
+#exombwkkeu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zwirfdjxsy .gt_indent_2 {
+#exombwkkeu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zwirfdjxsy .gt_indent_3 {
+#exombwkkeu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zwirfdjxsy .gt_indent_4 {
+#exombwkkeu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zwirfdjxsy .gt_indent_5 {
+#exombwkkeu .gt_indent_5 {
   text-indent: 25px;
 }
+
+#exombwkkeu .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#exombwkkeu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
 </style>
-<table class="table gt_table">
-<thead class="gt_col_headings"><tr>
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col">
-<strong>N = 286</strong><sup class="gt_footnote_marks">1</sup>
+<table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label"><span class="gt_from_md"><strong>Characteristic</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_0">
+<span class="gt_from_md"><strong>N = 281</strong></span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
 </th>
     </tr></thead>
 <tbody class="gt_table_body">
 <tr>
-<td class="gt_row gt_left">Study Name</td>
-<td class="gt_row gt_center"></td>
+<td headers="label" class="gt_row gt_left">Study Name</td>
+<td headers="stat_0" class="gt_row gt_center"><br></td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    DeFilippisF_2019</td>
-<td class="gt_row gt_center">97 (34%)</td>
+<td headers="label" class="gt_row gt_left">    DeFilippisF_2019</td>
+<td headers="stat_0" class="gt_row gt_center">93 (33%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    FerrettiP_2018</td>
-<td class="gt_row gt_center">20 (7.0%)</td>
+<td headers="label" class="gt_row gt_left">    FerrettiP_2018</td>
+<td headers="stat_0" class="gt_row gt_center">19 (6.8%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    KeohaneDM_2020</td>
-<td class="gt_row gt_center">117 (41%)</td>
+<td headers="label" class="gt_row gt_left">    KeohaneDM_2020</td>
+<td headers="stat_0" class="gt_row gt_center">117 (42%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    RampelliS_2015</td>
-<td class="gt_row gt_center">11 (3.8%)</td>
+<td headers="label" class="gt_row gt_left">    RampelliS_2015</td>
+<td headers="stat_0" class="gt_row gt_center">11 (3.9%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    ThomasAM_2018a</td>
-<td class="gt_row gt_center">14 (4.9%)</td>
+<td headers="label" class="gt_row gt_left">    ThomasAM_2018a</td>
+<td headers="stat_0" class="gt_row gt_center">14 (5.0%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    ThomasAM_2018b</td>
-<td class="gt_row gt_center">27 (9.4%)</td>
+<td headers="label" class="gt_row gt_left">    ThomasAM_2018b</td>
+<td headers="stat_0" class="gt_row gt_center">27 (9.6%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">Age</td>
-<td class="gt_row gt_center">39 (31, 52)</td>
+<td headers="label" class="gt_row gt_left">Age</td>
+<td headers="stat_0" class="gt_row gt_center">39 (31, 52)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">Gender</td>
-<td class="gt_row gt_center"></td>
+<td headers="label" class="gt_row gt_left">Gender</td>
+<td headers="stat_0" class="gt_row gt_center"><br></td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    Female</td>
-<td class="gt_row gt_center">140 (49%)</td>
+<td headers="label" class="gt_row gt_left">    Female</td>
+<td headers="stat_0" class="gt_row gt_center">157 (56%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    Male</td>
-<td class="gt_row gt_center">126 (44%)</td>
+<td headers="label" class="gt_row gt_left">    Male</td>
+<td headers="stat_0" class="gt_row gt_center">123 (44%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    (Missing)</td>
-<td class="gt_row gt_center">20 (7.0%)</td>
+<td headers="label" class="gt_row gt_left">    (Missing)</td>
+<td headers="stat_0" class="gt_row gt_center">1 (0.4%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">Country</td>
-<td class="gt_row gt_center"></td>
+<td headers="label" class="gt_row gt_left">Country</td>
+<td headers="stat_0" class="gt_row gt_center"><br></td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    IRL</td>
-<td class="gt_row gt_center">117 (41%)</td>
+<td headers="label" class="gt_row gt_left">    IRL</td>
+<td headers="stat_0" class="gt_row gt_center">117 (42%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    ITA</td>
-<td class="gt_row gt_center">169 (59%)</td>
+<td headers="label" class="gt_row gt_left">    ITA</td>
+<td headers="stat_0" class="gt_row gt_center">164 (58%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">Sequencing Platform</td>
-<td class="gt_row gt_center"></td>
+<td headers="label" class="gt_row gt_left">Sequencing Platform</td>
+<td headers="stat_0" class="gt_row gt_center"><br></td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    IlluminaHiSeq</td>
-<td class="gt_row gt_center">189 (66%)</td>
+<td headers="label" class="gt_row gt_left">    IlluminaHiSeq</td>
+<td headers="stat_0" class="gt_row gt_center">188 (67%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    IlluminaNextSeq</td>
-<td class="gt_row gt_center">97 (34%)</td>
+<td headers="label" class="gt_row gt_left">    IlluminaNextSeq</td>
+<td headers="stat_0" class="gt_row gt_center">93 (33%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">Curator</td>
-<td class="gt_row gt_center"></td>
+<td headers="label" class="gt_row gt_left">Curator</td>
+<td headers="stat_0" class="gt_row gt_center"><br></td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    Francesca DeFilippis, Edoardo Pasolli</td>
-<td class="gt_row gt_center">97 (34%)</td>
+<td headers="label" class="gt_row gt_left">    Francesca DeFilippis, Edoardo Pasolli</td>
+<td headers="stat_0" class="gt_row gt_center">93 (33%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    Pamela Ferretti</td>
-<td class="gt_row gt_center">20 (7.0%)</td>
+<td headers="label" class="gt_row gt_left">    Paolo Manghi</td>
+<td headers="stat_0" class="gt_row gt_center">155 (55%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    Paolo Manghi</td>
-<td class="gt_row gt_center">155 (54%)</td>
+<td headers="label" class="gt_row gt_left">    Paolo Manghi, Marisa Metzger</td>
+<td headers="stat_0" class="gt_row gt_center">14 (5.0%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    Paolo Manghi, Marisa Metzger</td>
-<td class="gt_row gt_center">14 (4.9%)</td>
+<td headers="label" class="gt_row gt_left">    Paolo Manghi, Pamela Ferretti</td>
+<td headers="stat_0" class="gt_row gt_center">19 (6.8%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">Diet</td>
-<td class="gt_row gt_center"></td>
+<td headers="label" class="gt_row gt_left">Diet</td>
+<td headers="stat_0" class="gt_row gt_center"><br></td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    Omnivore</td>
-<td class="gt_row gt_center">23 (8.0%)</td>
+<td headers="label" class="gt_row gt_left">    Omnivore</td>
+<td headers="stat_0" class="gt_row gt_center">21 (7.5%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    Vegan</td>
-<td class="gt_row gt_center">36 (13%)</td>
+<td headers="label" class="gt_row gt_left">    Vegan</td>
+<td headers="stat_0" class="gt_row gt_center">36 (13%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    Vegetarian</td>
-<td class="gt_row gt_center">38 (13%)</td>
+<td headers="label" class="gt_row gt_left">    Vegetarian</td>
+<td headers="stat_0" class="gt_row gt_center">36 (13%)</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">    (Missing)</td>
-<td class="gt_row gt_center">189 (66%)</td>
+<td headers="label" class="gt_row gt_left">    (Missing)</td>
+<td headers="stat_0" class="gt_row gt_center">188 (67%)</td>
 </tr>
 </tbody>
 <tfoot class="gt_footnotes"><tr>
 <td class="gt_footnote" colspan="2">
-<sup class="gt_footnote_marks">1</sup> n (%); Median (IQR)</td>
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span class="gt_from_md">n (%); Median (Q1, Q3)</span>
+</td>
     </tr></tfoot>
 </table>
 </div>
@@ -1030,16 +1038,16 @@ table.</p>
 sample; the Shannon index (H’) is probably the most widely used measure.
 It accounts for both richness (i.e. how many types of bacteria are
 present) and evenness (i.e. how equal the proportions of types is); it
-is assessed below using the <code><a href="https://rdrr.io/pkg/mia/man/estimateDiversity.html" class="external-link">estimateDiversity()</a></code> function
-from the <em><a href="https://bioconductor.org/packages/3.14/mia" class="external-link">mia</a></em> package.
-Then, the <code><a href="https://rdrr.io/pkg/scater/man/plotColData.html" class="external-link">plotColData()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.14/scater" class="external-link">scater</a></em>
+is assessed below using the <code><a href="https://rdrr.io/pkg/mia/man/addAlpha.html" class="external-link">addAlpha()</a></code> function from the
+<em><a href="https://bioconductor.org/packages/3.21/mia" class="external-link">mia</a></em>
+package. Then, the <code><a href="https://rdrr.io/pkg/scater/man/plotColData.html" class="external-link">plotColData()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.21/scater" class="external-link">scater</a></em>
 package is used to generate a basic <em><a href="https://CRAN.R-project.org/package=ggplot2" class="external-link">ggplot2</a></em> plot,
 which is stylized further using the <em><a href="https://CRAN.R-project.org/package=ggsignif" class="external-link">ggsignif</a></em> and
 <em><a href="https://CRAN.R-project.org/package=hrbrthemes" class="external-link">hrbrthemes</a></em>
 packages.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">countryData</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/mia/man/estimateDiversity.html" class="external-link">estimateDiversity</a></span><span class="op">(</span>abund_values <span class="op">=</span> <span class="st">"logcounts"</span>, index <span class="op">=</span> <span class="st">"shannon"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/mia/man/addAlpha.html" class="external-link">addAlpha</a></span><span class="op">(</span>abund_values <span class="op">=</span> <span class="st">"logcounts"</span>, index <span class="op">=</span> <span class="st">"shannon"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotColData.html" class="external-link">plotColData</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"country"</span>, y <span class="op">=</span> <span class="st">"shannon"</span>, colour_by <span class="op">=</span> <span class="st">"country"</span>, shape_by <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://const-ae.github.io/ggsignif/reference/stat_signif.html" class="external-link">geom_signif</a></span><span class="op">(</span>comparisons <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IRL"</span>, <span class="st">"ITA"</span><span class="op">)</span><span class="op">)</span>, test <span class="op">=</span> <span class="st">"t.test"</span>, map_signif_level <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
@@ -1049,13 +1057,13 @@ packages.</p>
 <span>    y <span class="op">=</span> <span class="st">"Alpha Diversity (H')"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_none.html" class="external-link">guide_none</a></span><span class="op">(</span><span class="op">)</span>, shape <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_none.html" class="external-link">guide_none</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/hrbrthemes/man/theme_ipsum_rc.html" class="external-link">theme_ipsum_rc</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="NUI-Galway-Metagenomics-Workshop_files/figure-html/unnamed-chunk-13-1.png" alt="Alpha Diversity by Country. Alpha Diversity of stool samples from healthy adults, as measured by the Shannon index (H'), is significantly $(Pr(T &lt; t) &lt; 0.001)$ lower among Irish samples, as compared to Italian samples." width="768"><p class="caption">
 Alpha Diversity by Country. Alpha Diversity of stool samples from
 healthy adults, as measured by the Shannon index (H’), is significantly
-<span class="math inline">\((Pr(T &lt; t) &lt; 0.001)\)</span> lower
-among Irish samples, as compared to Italian samples.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>P</mi><mi>r</mi><mo stretchy="false" form="prefix">(</mo><mi>T</mi><mo>&lt;</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>&lt;</mo><mn>0.001</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(Pr(T &lt; t) &lt; 0.001)</annotation></semantics></math>
+lower among Irish samples, as compared to Italian samples.
 </p>
 </div>
 </div>
@@ -1065,13 +1073,15 @@ among Irish samples, as compared to Italian samples.
 <p>Beta diversity is a measurement of between sample variation that is
 usually qualitatively assessed using a low-dimensional embedding;
 classically this has been done in metagenomics with a principal
-coordinates analysis (PCoA) of Bray-Curtis dissimilarity.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This is done below
-using the <code><a href="https://rdrr.io/pkg/scater/man/runMDS.html" class="external-link">runMDS()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.14/scater" class="external-link">scater</a></em>
+coordinates analysis (PCoA) of Bray-Curtis dissimilarity.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Bray-Curtis dissimilarity is not a metric distance and
+does not satisfy the triangle inequality, but it is generally accepted
+in metagenomics.&lt;/p&gt;"><sup>1</sup></a> This is done below
+using the <code><a href="https://rdrr.io/pkg/scater/man/runMDS.html" class="external-link">runMDS()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.21/scater" class="external-link">scater</a></em>
 package with the <code>vegdist</code> function from the <em><a href="https://CRAN.R-project.org/package=vegan" class="external-link">vegan</a></em> package.
-The <code><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.14/scater" class="external-link">scater</a></em>
+The <code><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.21/scater" class="external-link">scater</a></em>
 package is used to generate a basic <em><a href="https://CRAN.R-project.org/package=ggplot2" class="external-link">ggplot2</a></em> plot,
 which is styled further.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">countryData</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runMDS.html" class="external-link">runMDS</a></span><span class="op">(</span>FUN <span class="op">=</span> <span class="va">vegdist</span>, method <span class="op">=</span> <span class="st">"bray"</span>, exprs_values <span class="op">=</span> <span class="st">"logcounts"</span>, name <span class="op">=</span> <span class="st">"BrayCurtis"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim</a></span><span class="op">(</span><span class="st">"BrayCurtis"</span>, colour_by <span class="op">=</span> <span class="st">"country"</span>, shape_by <span class="op">=</span> <span class="st">"country"</span>, text_by <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1082,7 +1092,7 @@ which is styled further.</p>
 <span>    y <span class="op">=</span> <span class="st">"PCo 2"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_none.html" class="external-link">guide_none</a></span><span class="op">(</span><span class="op">)</span>, shape <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_none.html" class="external-link">guide_none</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/hrbrthemes/man/theme_ipsum_rc.html" class="external-link">theme_ipsum_rc</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="NUI-Galway-Metagenomics-Workshop_files/figure-html/unnamed-chunk-14-1.png" alt="Beta Diversity by Country, Bray-Curtis PCoA. The first two principal coordinates demonstrate good seperation of Irish and Italian stool samples from healthy adults, suggesting differences in gut microbial composition between the two populations." width="768"><p class="caption">
 Beta Diversity by Country, Bray-Curtis PCoA. The first two principal
@@ -1093,11 +1103,13 @@ composition between the two populations.
 </div>
 <p>To address the issue of using principal coordinates analysis (PCoA)
 with a dissimilarity, beta diversity can be assessed using the UMAP
-(Uniform Manifold Approximation and Projection) algorithm instead.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> The
-<code><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.14/scater" class="external-link">scater</a></em>
+(Uniform Manifold Approximation and Projection) algorithm instead.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;McInnes, L., Healy, J. &amp;amp; Melville, J. UMAP: Uniform
+Manifold Approximation and Projection for Dimension Reduction. &lt;em&gt;arXiv
+[stat.ML]&lt;/em&gt; (2018)&lt;/p&gt;"><sup>2</sup></a> The
+<code><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.21/scater" class="external-link">scater</a></em>
 package is used below; otherwise, the syntax is largely the same as
 above.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">countryData</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP</a></span><span class="op">(</span>exprs_values <span class="op">=</span> <span class="st">"logcounts"</span>, name <span class="op">=</span> <span class="st">"UMAP"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim</a></span><span class="op">(</span><span class="st">"UMAP"</span>, colour_by <span class="op">=</span> <span class="st">"country"</span>, shape_by <span class="op">=</span> <span class="st">"country"</span>, text_by <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1108,7 +1120,7 @@ above.</p>
 <span>    y <span class="op">=</span> <span class="st">"UMAP 2"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_none.html" class="external-link">guide_none</a></span><span class="op">(</span><span class="op">)</span>, shape <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_none.html" class="external-link">guide_none</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/hrbrthemes/man/theme_ipsum_rc.html" class="external-link">theme_ipsum_rc</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="NUI-Galway-Metagenomics-Workshop_files/figure-html/unnamed-chunk-15-1.png" alt="Beta Diversity by Country, UMAP Embedding. The two-dimensional UMAP embedding demonstrates good seperation of Irish and Italian stool samples from healthy adults, suggesting differences in gut microbial composition between the two populations." width="768"><p class="caption">
 Beta Diversity by Country, UMAP Embedding. The two-dimensional UMAP
@@ -1124,37 +1136,37 @@ composition between the two populations.
 <p>Where beta diversity embeddings suggest there are features that
 separate Irish and Italian stool samples from healthy adults, you might
 like to know which are most differentially abundance. To assess this the
-<em><a href="https://bioconductor.org/packages/3.14/ANCOMBC" class="external-link">ANCOMBC</a></em>
+<em><a href="https://bioconductor.org/packages/3.21/ANCOMBC" class="external-link">ANCOMBC</a></em>
 package has a metagenomics-specific additive log-ratio model for the
 task. However, the <code><a href="https://rdrr.io/pkg/ANCOMBC/man/ancombc.html" class="external-link">ancombc()</a></code> function requires a
 <code>phyloseq</code> class objects – one can be created using the
-<code><a href="https://rdrr.io/pkg/mia/man/makePhyloseqFromTreeSummarizedExperiment.html" class="external-link">makePhyloseqFromTreeSummarizedExperiment()</a></code> function from
-the <em><a href="https://bioconductor.org/packages/3.14/mia" class="external-link">mia</a></em> package,
+<code><a href="https://rdrr.io/pkg/mia/man/deprecate.html" class="external-link">makePhyloseqFromTreeSummarizedExperiment()</a></code> function from
+the <em><a href="https://bioconductor.org/packages/3.21/mia" class="external-link">mia</a></em> package,
 as shown below.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ancombcResults</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/mia/man/makePhyloseqFromTreeSummarizedExperiment.html" class="external-link">makePhyloseqFromTreeSummarizedExperiment</a></span><span class="op">(</span><span class="va">countryData</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ANCOMBC/man/ancombc.html" class="external-link">ancombc</a></span><span class="op">(</span><span class="st">"country"</span><span class="op">)</span></span></code></pre></div>
-<p>The results of the <em><a href="https://bioconductor.org/packages/3.14/ANCOMBC" class="external-link">ANCOMBC</a></em>
+<span>  <span class="fu">mia</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mia/man/convertFromPhyloseq.html" class="external-link">convertToPhyloseq</a></span><span class="op">(</span><span class="va">countryData</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ANCOMBC/man/ancombc.html" class="external-link">ancombc</a></span><span class="op">(</span>formula<span class="op">=</span><span class="st">"country"</span>, group<span class="op">=</span><span class="st">"country"</span><span class="op">)</span></span></code></pre></div>
+<p>The results of the <em><a href="https://bioconductor.org/packages/3.21/ANCOMBC" class="external-link">ANCOMBC</a></em>
 model are in a strange <code>list</code> structure and have to be
 coerced into a <code>data.frame</code> before they can be displayed; the
-<code><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_cols()</a></code> function from the <em><a href="https://CRAN.R-project.org/package=dplyr" class="external-link">dplyr</a></em> package
+<code><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols()</a></code> function from the <em><a href="https://CRAN.R-project.org/package=dplyr" class="external-link">dplyr</a></em> package
 is used below.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ancombcTable</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">ancombcResults</span><span class="op">[[</span><span class="st">"res"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p>Yet, the column names of the results table are missing and have to be
-assigned, as shown below.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">ancombcTable</span><span class="op">)</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ancombcResults</span><span class="op">[[</span><span class="st">"res"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Extract the results for the country coefficient (countryITA)</span></span>
+<span><span class="va">ancombcTable</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  beta <span class="op">=</span> <span class="va">ancombcResults</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">lfc</span><span class="op">$</span><span class="va">countryITA</span>,</span>
+<span>  se <span class="op">=</span> <span class="va">ancombcResults</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">se</span><span class="op">$</span><span class="va">countryITA</span>,</span>
+<span>  p_val <span class="op">=</span> <span class="va">ancombcResults</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">p_val</span><span class="op">$</span><span class="va">countryITA</span>,</span>
+<span>  q_val <span class="op">=</span> <span class="va">ancombcResults</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">q_val</span><span class="op">$</span><span class="va">countryITA</span>,</span>
+<span>  row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">ancombcResults</span><span class="op">$</span><span class="va">feature_table</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The row names of the results table are big long strings of microbial
 taxonomies that will need some editing if they are to be displayed
 nicely. the <code><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column()</a></code> function from the <em><a href="https://CRAN.R-project.org/package=tibble" class="external-link">tibble</a></em> package
 is used below to turn them into a column so they can be edited.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ancombcTable</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="va">ancombcTable</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ancombcTable</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="va">ancombcTable</span><span class="op">)</span></span></code></pre></div>
 <p>Before the row names are split into 7 pieces, the names of columns
 that each piece will be assigned to are created below.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
@@ -1167,8 +1179,8 @@ shown below.</p>
 <code class="sourceCode R"><span><span class="va">ancombcTable</span><span class="op">[[</span><span class="st">"rowname"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">ancombcTable</span>, <span class="va">rowname</span>, <span class="va">rankNames</span>, sep <span class="op">=</span> <span class="st">"\\|"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">rankNames</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span>.fns <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html" class="external-link">str_remove_all</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">".__"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span>.fns <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace_all</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">"_"</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html" class="external-link">str_remove_all</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">".__"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace_all</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">"_"</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">Species</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">label</span><span class="op">)</span></span></code></pre></div>
 <p>Once the results table is in good shape, it can be filtered to
@@ -1184,7 +1196,7 @@ displaying the results table.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">rowname</span>, <span class="va">beta</span>, <span class="va">se</span>, <span class="va">p_val</span>, <span class="va">q_val</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">beta</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">column_to_rownames</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span>.fns <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">.x</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, .fns <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">.x</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>beta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">beta</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>beta <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace</a></span><span class="op">(</span><span class="va">beta</span>, <span class="st">" "</span>, <span class="st">"&amp;nbsp;"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>p_val <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">p_val</span> <span class="op">==</span> <span class="fl">0</span>, <span class="st">"&lt; 0.001"</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">p_val</span>, nsmall <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1208,336 +1220,329 @@ displaying the results table.</p>
 <tbody>
 <tr class="odd">
 <td align="left">Catenibacterium mitsuokai</td>
-<td align="center">-8.689</td>
-<td align="center">0.618</td>
+<td align="center">-8.872</td>
+<td align="center">0.615</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Holdemanella biformis</td>
-<td align="center">-8.007</td>
-<td align="center">0.575</td>
+<td align="center">-8.159</td>
+<td align="center">0.574</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Eubacterium sp CAG 180</td>
-<td align="center">-7.361</td>
-<td align="center">0.687</td>
+<td align="center">-7.331</td>
+<td align="center">0.694</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Bacteroides dorei</td>
-<td align="center"> 6.364</td>
-<td align="center">0.551</td>
+<td align="center"> 6.269</td>
+<td align="center">0.558</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Lactobacillus ruminis</td>
-<td align="center">-6.029</td>
+<td align="center">-6.088</td>
 <td align="center">0.562</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Phascolarctobacterium succinatutens</td>
-<td align="center">-5.947</td>
-<td align="center">0.706</td>
+<td align="center">-5.970</td>
+<td align="center">0.712</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
-<td align="left">Alistipes putredinis</td>
-<td align="center"> 5.733</td>
-<td align="center">0.622</td>
+<td align="left">Ruminococcus torques</td>
+<td align="center">-5.703</td>
+<td align="center">0.450</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
-<td align="left">Ruminococcus torques</td>
-<td align="center">-5.591</td>
-<td align="center">0.442</td>
+<td align="left">Alistipes putredinis</td>
+<td align="center"> 5.690</td>
+<td align="center">0.624</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Eubacterium hallii</td>
-<td align="center">-5.245</td>
-<td align="center">0.437</td>
+<td align="center">-5.384</td>
+<td align="center">0.444</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Bifidobacterium angulatum</td>
-<td align="center">-5.185</td>
-<td align="center">0.550</td>
+<td align="center">-5.301</td>
+<td align="center">0.549</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Prevotella sp CAG 279</td>
-<td align="center">-5.093</td>
-<td align="center">0.626</td>
+<td align="center">-5.122</td>
+<td align="center">0.630</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
-<td align="left">Lawsonibacter asaccharolyticus</td>
-<td align="center"> 4.976</td>
-<td align="center">0.408</td>
-<td align="center">&lt; 0.001</td>
-<td align="center">&lt; 0.001</td>
-</tr>
-<tr class="odd">
 <td align="left">Dorea formicigenerans</td>
-<td align="center">-4.855</td>
-<td align="center">0.366</td>
-<td align="center">&lt; 0.001</td>
-<td align="center">&lt; 0.001</td>
-</tr>
-<tr class="even">
-<td align="left">Prevotella sp 885</td>
-<td align="center">-4.646</td>
-<td align="center">0.588</td>
+<td align="center">-4.970</td>
+<td align="center">0.374</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
+<td align="left">Lawsonibacter asaccharolyticus</td>
+<td align="center"> 4.946</td>
+<td align="center">0.413</td>
+<td align="center">&lt; 0.001</td>
+<td align="center">&lt; 0.001</td>
+</tr>
+<tr class="even">
 <td align="left">Methanobrevibacter smithii</td>
-<td align="center">-4.514</td>
-<td align="center">0.642</td>
+<td align="center">-4.735</td>
+<td align="center">0.640</td>
+<td align="center">&lt; 0.001</td>
+<td align="center">&lt; 0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">Prevotella sp 885</td>
+<td align="center">-4.697</td>
+<td align="center">0.590</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Coprococcus comes</td>
-<td align="center">-4.476</td>
-<td align="center">0.417</td>
-<td align="center">&lt; 0.001</td>
-<td align="center">&lt; 0.001</td>
-</tr>
-<tr class="odd">
-<td align="left">Slackia isoflavoniconvertens</td>
-<td align="center">-4.356</td>
-<td align="center">0.581</td>
-<td align="center">&lt; 0.001</td>
-<td align="center">&lt; 0.001</td>
-</tr>
-<tr class="even">
-<td align="left">Roseburia intestinalis</td>
-<td align="center">-4.332</td>
-<td align="center">0.559</td>
+<td align="center">-4.589</td>
+<td align="center">0.424</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Oscillibacter sp CAG 241</td>
-<td align="center">-4.328</td>
-<td align="center">0.540</td>
+<td align="center">-4.478</td>
+<td align="center">0.546</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
-<td align="left">Ruminococcus callidus</td>
-<td align="center">-4.294</td>
-<td align="center">0.517</td>
+<td align="left">Roseburia intestinalis</td>
+<td align="center">-4.462</td>
+<td align="center">0.566</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
+<td align="left">Slackia isoflavoniconvertens</td>
+<td align="center">-4.422</td>
+<td align="center">0.586</td>
+<td align="center">&lt; 0.001</td>
+<td align="center">&lt; 0.001</td>
+</tr>
+<tr class="even">
 <td align="left">Eubacterium ramulus</td>
-<td align="center">-4.224</td>
-<td align="center">0.489</td>
+<td align="center">-4.376</td>
+<td align="center">0.495</td>
+<td align="center">&lt; 0.001</td>
+<td align="center">&lt; 0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">Ruminococcus callidus</td>
+<td align="center">-4.366</td>
+<td align="center">0.519</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Coprococcus catus</td>
-<td align="center">-4.206</td>
-<td align="center">0.421</td>
+<td align="center">-4.316</td>
+<td align="center">0.429</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Intestinibacter bartlettii</td>
-<td align="center">-4.007</td>
-<td align="center">0.534</td>
+<td align="center">-4.227</td>
+<td align="center">0.536</td>
+<td align="center">&lt; 0.001</td>
+<td align="center">&lt; 0.001</td>
+</tr>
+<tr class="even">
+<td align="left">Eubacterium sp CAG 251</td>
+<td align="center">-3.925</td>
+<td align="center">0.657</td>
+<td align="center">&lt; 0.001</td>
+<td align="center">&lt; 0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">Dorea longicatena</td>
+<td align="center">-3.896</td>
+<td align="center">0.332</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Alistipes finegoldii</td>
-<td align="center"> 3.849</td>
-<td align="center">0.544</td>
-<td align="center">&lt; 0.001</td>
-<td align="center">&lt; 0.001</td>
-</tr>
-<tr class="odd">
-<td align="left">Eubacterium sp CAG 251</td>
-<td align="center">-3.826</td>
-<td align="center">0.652</td>
-<td align="center">&lt; 0.001</td>
-<td align="center">&lt; 0.001</td>
-</tr>
-<tr class="even">
-<td align="left">Dorea longicatena</td>
-<td align="center">-3.811</td>
-<td align="center">0.327</td>
+<td align="center"> 3.819</td>
+<td align="center">0.547</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Prevotella sp AM42 24</td>
-<td align="center">-3.567</td>
-<td align="center">0.560</td>
+<td align="center">-3.603</td>
+<td align="center">0.563</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Roseburia faecis</td>
-<td align="center">-3.483</td>
-<td align="center">0.491</td>
+<td align="center">-3.573</td>
+<td align="center">0.497</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Firmicutes bacterium CAG 170</td>
-<td align="center">-3.393</td>
-<td align="center">0.577</td>
+<td align="center">-3.390</td>
+<td align="center">0.582</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Bacteroides plebeius</td>
-<td align="center"> 3.353</td>
-<td align="center">0.522</td>
+<td align="center"> 3.291</td>
+<td align="center">0.529</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Alistipes shahii</td>
-<td align="center"> 3.259</td>
-<td align="center">0.532</td>
+<td align="center"> 3.248</td>
+<td align="center">0.535</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Bacteroides eggerthii</td>
-<td align="center"> 3.212</td>
-<td align="center">0.477</td>
+<td align="center"> 3.135</td>
+<td align="center">0.483</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
-<td align="left">Butyricimonas virosa</td>
-<td align="center"> 3.171</td>
-<td align="center">0.457</td>
-<td align="center">&lt; 0.001</td>
-<td align="center">&lt; 0.001</td>
-</tr>
-<tr class="even">
 <td align="left">Parasutterella excrementihominis</td>
-<td align="center"> 3.167</td>
-<td align="center">0.477</td>
-<td align="center">&lt; 0.001</td>
-<td align="center">&lt; 0.001</td>
-</tr>
-<tr class="odd">
-<td align="left">Parabacteroides distasonis</td>
-<td align="center"> 3.114</td>
-<td align="center">0.529</td>
-<td align="center">&lt; 0.001</td>
-<td align="center">&lt; 0.001</td>
-</tr>
-<tr class="even">
-<td align="left">Alistipes indistinctus</td>
-<td align="center"> 3.074</td>
-<td align="center">0.516</td>
-<td align="center">&lt; 0.001</td>
-<td align="center">&lt; 0.001</td>
-</tr>
-<tr class="odd">
-<td align="left">Eubacterium rectale</td>
-<td align="center">-3.044</td>
-<td align="center">0.410</td>
+<td align="center"> 3.117</td>
+<td align="center">0.485</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Blautia wexlerae</td>
-<td align="center">-3.029</td>
-<td align="center">0.428</td>
+<td align="center">-3.111</td>
+<td align="center">0.434</td>
+<td align="center">&lt; 0.001</td>
+<td align="center">&lt; 0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">Eubacterium rectale</td>
+<td align="center">-3.084</td>
+<td align="center">0.413</td>
+<td align="center">&lt; 0.001</td>
+<td align="center">&lt; 0.001</td>
+</tr>
+<tr class="even">
+<td align="left">Parabacteroides distasonis</td>
+<td align="center"> 3.069</td>
+<td align="center">0.530</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Clostridium disporicum</td>
-<td align="center">-2.965</td>
-<td align="center">0.441</td>
+<td align="center">-3.037</td>
+<td align="center">0.443</td>
+<td align="center">&lt; 0.001</td>
+<td align="center">&lt; 0.001</td>
+</tr>
+<tr class="even">
+<td align="left">Butyricimonas virosa</td>
+<td align="center"> 3.035</td>
+<td align="center">0.462</td>
+<td align="center">&lt; 0.001</td>
+<td align="center">&lt; 0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">Alistipes indistinctus</td>
+<td align="center"> 2.945</td>
+<td align="center">0.522</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Anaerostipes hadrus</td>
-<td align="center">-2.797</td>
-<td align="center">0.457</td>
+<td align="center">-2.895</td>
+<td align="center">0.463</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Bacteroides sp CAG 530</td>
-<td align="center">-2.790</td>
-<td align="center">0.411</td>
+<td align="center">-2.847</td>
+<td align="center">0.413</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Blautia obeum</td>
-<td align="center">-2.751</td>
-<td align="center">0.405</td>
+<td align="center">-2.833</td>
+<td align="center">0.410</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Intestinimonas butyriciproducens</td>
-<td align="center"> 2.642</td>
-<td align="center">0.465</td>
+<td align="center"> 2.698</td>
+<td align="center">0.469</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Roseburia inulinivorans</td>
-<td align="center">-2.535</td>
-<td align="center">0.365</td>
+<td align="center">-2.586</td>
+<td align="center">0.369</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td align="left">Prevotella stercorea</td>
-<td align="center">-2.525</td>
-<td align="center">0.457</td>
+<td align="center">-2.571</td>
+<td align="center">0.460</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="even">
 <td align="left">Collinsella aerofaciens</td>
-<td align="center">-2.333</td>
-<td align="center">0.322</td>
+<td align="center">-2.364</td>
+<td align="center">0.323</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
 </tr>
 <tr class="odd">
-<td align="left">Butyricimonas synergistica</td>
-<td align="center"> 2.311</td>
-<td align="center">0.411</td>
-<td align="center">&lt; 0.001</td>
-<td align="center">&lt; 0.001</td>
-</tr>
-<tr class="even">
 <td align="left">Fusicatenibacter saccharivorans</td>
-<td align="center">-1.539</td>
+<td align="center">-1.571</td>
 <td align="center">0.274</td>
 <td align="center">&lt; 0.001</td>
 <td align="center">&lt; 0.001</td>
@@ -1567,7 +1572,7 @@ denoted by the dotted lines.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="st">"dotted"</span>, yintercept <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="st">"dotted"</span>, xintercept <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="st">"dotted"</span>, xintercept <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html" class="external-link">geom_label_repel</a></span><span class="op">(</span>min.segment.length <span class="op">=</span> <span class="fl">0</span>, force <span class="op">=</span> <span class="fl">10</span>, max.overlaps <span class="op">=</span> <span class="fl">20</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggrepel.slowkow.com/reference/geom_text_repel.html" class="external-link">geom_label_repel</a></span><span class="op">(</span>min.segment.length <span class="op">=</span> <span class="fl">0</span>, force <span class="op">=</span> <span class="fl">10</span>, max.overlaps <span class="op">=</span> <span class="fl">20</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Significance vs. Effect Size, ANCOM-BC"</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"Stool Samples of Healthy Adults"</span>,</span>
@@ -1575,9 +1580,9 @@ denoted by the dotted lines.</p>
 <span>    y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="op">-</span><span class="op">~</span><span class="va">log</span><span class="op">[</span><span class="fl">10</span><span class="op">]</span><span class="op">~</span><span class="va">Q</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_none.html" class="external-link">guide_none</a></span><span class="op">(</span><span class="op">)</span>, shape <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_none.html" class="external-link">guide_none</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/hrbrthemes/man/theme_ipsum_rc.html" class="external-link">theme_ipsum_rc</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="NUI-Galway-Metagenomics-Workshop_files/figure-html/unnamed-chunk-23-1.png" alt="Volcano Plot of Differentially Abundance Bacterial Species. In the model and the figure, Irish samples are the reference group such that bacterial species in blue at the left are significantly more abundant in Irish samples and those in yellow at the right are significantly more abundant in Italian samples." width="912"><p class="caption">
+<img src="NUI-Galway-Metagenomics-Workshop_files/figure-html/unnamed-chunk-22-1.png" alt="Volcano Plot of Differentially Abundance Bacterial Species. In the model and the figure, Irish samples are the reference group such that bacterial species in blue at the left are significantly more abundant in Irish samples and those in yellow at the right are significantly more abundant in Italian samples." width="912"><p class="caption">
 Volcano Plot of Differentially Abundance Bacterial Species. In the model
 and the figure, Irish samples are the reference group such that
 bacterial species in blue at the left are significantly more abundant in
@@ -1590,46 +1595,27 @@ biformis</em> to see what condition(s) it is associated with and then
 explore differences between the two countries using <a href="https://vizhub.healthdata.org/gbd-compare/" class="external-link">GBD Compare</a>
 visualizations.</p>
 </div>
-<div class="footnotes footnotes-end-of-document">
-<hr>
-<ol>
-<li id="fn1"><p>Bray-Curtis dissimilarity is not a metric distance and
-does not satisfy the triangle inequality, but it is generally accepted
-in metagenomics.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>McInnes, L., Healy, J. &amp; Melville, J. UMAP: Uniform
-Manifold Approximation and Projection for Dimension Reduction. <em>arXiv
-[stat.ML]</em> (2018)<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-</ol>
-</div>
-  </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by Levi Waldron, Paolo Manghi, Davide Galzato, Lucas Schiffer, Jennifer Wokaty.</p>
 </div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
-  
 
 
-  
+
 
   </body>
 </html>
