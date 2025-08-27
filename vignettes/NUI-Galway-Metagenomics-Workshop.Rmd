@@ -214,8 +214,8 @@ Where beta diversity embeddings suggest there are features that separate Irish a
 
 ```{r, message = FALSE, warning = FALSE}
 ancombcResults <-
-  makePhyloseqFromTreeSummarizedExperiment(countryData) |>
-  ancombc(formula = "country")
+  mia::convertToPhyloseq(countryData) |>
+  ancombc(formula="country", group="country")
 ```
 
 The results of the `r BiocStyle::Biocpkg("ANCOMBC")` model are in a strange `list` structure and have to be coerced into a `data.frame` before they can be displayed; the `bind_cols()` function from the `r BiocStyle::CRANpkg("dplyr")` package is used below.
@@ -234,8 +234,7 @@ ancombcTable <- data.frame(
 The row names of the results table are big long strings of microbial taxonomies that will need some editing if they are to be displayed nicely. the `rownames_to_column()` function from the `r BiocStyle::CRANpkg("tibble")` package is used below to turn them into a column so they can be edited.
 
 ```{r, message = FALSE}
-ancombcTable <-
-  rownames_to_column(ancombcTable)
+ancombcTable <- rownames_to_column(ancombcTable)
 ```
 
 Before the row names are split into 7 pieces, the names of columns that each piece will be assigned to are created below.
