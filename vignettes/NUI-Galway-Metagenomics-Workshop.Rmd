@@ -17,7 +17,7 @@ vignette: >
 
 # R Packages for This Tutorial
 
-This tutorial demonstrates basic usage of `r BiocStyle::Biocpkg("curatedMetagenomicData")`, prerequisite steps for analysis, estimation of alpha diversity, analysis of beta diversity, and differential abundance analysis. To make the tables and figures in this tutorial, a number of R packages are required, as follows. If you are using [app.orchestra.cancerdatasci.org](http://app.orchestra.cancerdatasci.org), these packages are already installed for you; if not, you'll have to make sure the packages are installed.
+This tutorial demonstrates basic usage of `r BiocStyle::Biocpkg("curatedMetagenomicData")`, prerequisite steps for analysis, estimation of alpha diversity, analysis of beta diversity, and differential abundance analysis. To make the tables and figures in this tutorial, a number of R packages are required, as follows. 
 
 ```{r, message = FALSE}
 library(curatedMetagenomicData)
@@ -153,11 +153,11 @@ colData(countryData) |>
 
 # Estimating Alpha Diversity
 
-Alpha diversity estimation seeks to quantify variation within a sample; the Shannon index (H') is probably the most widely used measure. It accounts for both richness (i.e. how many types of bacteria are present) and evenness (i.e. how equal the proportions of types is); it is assessed below using the `estimateDiversity()` function from the `r BiocStyle::Biocpkg("mia")` package. Then, the `plotColData()` function from the `r BiocStyle::Biocpkg("scater")` package is used to generate a basic `r BiocStyle::CRANpkg("ggplot2")` plot, which is stylized further using the `r BiocStyle::CRANpkg("ggsignif")` and `r BiocStyle::CRANpkg("hrbrthemes")` packages.
+Alpha diversity estimation seeks to quantify variation within a sample; the Shannon index (H') is probably the most widely used measure. It accounts for both richness (i.e. how many types of bacteria are present) and evenness (i.e. how equal the proportions of types is); it is assessed below using the `addAlpha()` function from the `r BiocStyle::Biocpkg("mia")` package. Then, the `plotColData()` function from the `r BiocStyle::Biocpkg("scater")` package is used to generate a basic `r BiocStyle::CRANpkg("ggplot2")` plot, which is stylized further using the `r BiocStyle::CRANpkg("ggsignif")` and `r BiocStyle::CRANpkg("hrbrthemes")` packages.
 
 ```{r, fig.width = 8, fig.height = 8, fig.cap = "Alpha Diversity by Country. Alpha Diversity of stool samples from healthy adults, as measured by the Shannon index (H'), is significantly $(Pr(T < t) < 0.001)$ lower among Irish samples, as compared to Italian samples."}
 countryData |>
-  estimateDiversity(abund_values = "logcounts", index = "shannon") |>
+  addAlpha(abund_values = "logcounts", index = "shannon") |>
   plotColData(x = "country", y = "shannon", colour_by = "country", shape_by = "country") +
   geom_signif(comparisons = list(c("IRL", "ITA")), test = "t.test", map_signif_level = TRUE) +
   labs(
@@ -167,7 +167,7 @@ countryData |>
     y = "Alpha Diversity (H')"
   ) +
   guides(color = guide_none(), shape = guide_none()) +
-  theme_ipsum_rc()
+  theme_minimal()
 ```
 
 # Analysis of Beta Diversity
@@ -187,7 +187,7 @@ countryData |>
     y = "PCo 2"
   ) +
   guides(color = guide_none(), shape = guide_none()) +
-  theme_ipsum_rc()
+  theme_minimal()
 ```
 
 To address the issue of using principal coordinates analysis (PCoA) with a dissimilarity, beta diversity can be assessed using the UMAP (Uniform Manifold Approximation and Projection) algorithm instead.[^2] The `runUMAP()` function from the `r BiocStyle::Biocpkg("scater")` package is used below; otherwise, the syntax is largely the same as above.
@@ -205,7 +205,7 @@ countryData |>
     y = "UMAP 2"
   ) +
   guides(color = guide_none(), shape = guide_none()) +
-  theme_ipsum_rc()
+  theme_minimal()
 ```
 
 # Modeling Bacteria by Country
@@ -221,21 +221,14 @@ ancombcResults <-
 The results of the `r BiocStyle::Biocpkg("ANCOMBC")` model are in a strange `list` structure and have to be coerced into a `data.frame` before they can be displayed; the `bind_cols()` function from the `r BiocStyle::CRANpkg("dplyr")` package is used below.
 
 ```{r, message = FALSE}
-ancombcTable <-
-  bind_cols(ancombcResults[["res"]])
-
-
-
-```
-
-Yet, the row and column names of the results table are missing and have to be assigned, as shown below. We also select the columns that have the values we're interested in (beta, se, p, and q).
-
-```{r, message = FALSE}
-rownames(ancombcTable) <- ancombcTable[,1]
-cols <- c(3, 6, 12, 15)
-ancombcTable <- ancombcTable[,cols]
-
-colnames(ancombcTable) <- c("beta", "se", "p_val", "q_val")
+# Extract the results for the country coefficient (countryITA)
+ancombcTable <- data.frame(
+  beta = ancombcResults$res$lfc$countryITA,
+  se = ancombcResults$res$se$countryITA,
+  p_val = ancombcResults$res$p_val$countryITA,
+  q_val = ancombcResults$res$q_val$countryITA,
+  row.names = rownames(ancombcResults$feature_table)
+)
 ```
 
 The row names of the results table are big long strings of microbial taxonomies that will need some editing if they are to be displayed nicely. the `rownames_to_column()` function from the `r BiocStyle::CRANpkg("tibble")` package is used below to turn them into a column so they can be edited.
@@ -249,7 +242,6 @@ Before the row names are split into 7 pieces, the names of columns that each pie
 ```{r, message = FALSE}
 rankNames <-
   c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
-
 ```
 
 The row names of the results table are then transformed using `r BiocStyle::CRANpkg("tidyr")`, `r BiocStyle::CRANpkg("dplyr")`, and `r BiocStyle::CRANpkg("stringr")`, as shown below.
@@ -258,8 +250,8 @@ The row names of the results table are then transformed using `r BiocStyle::CRAN
 ancombcTable[["rowname"]] <-
   separate(ancombcTable, rowname, rankNames, sep = "\\|") |>
   select(all_of(rankNames)) |>
-  mutate(across(.fns = ~ str_remove_all(.x, ".__"))) |>
-  mutate(across(.fns = ~ str_replace_all(.x, "_", " "))) |>
+  mutate(across(everything(), ~ str_remove_all(.x, ".__"))) |>
+  mutate(across(everything(), ~ str_replace_all(.x, "_", " "))) |>
   mutate(label = Species) |>
   pull(label)
 ```
@@ -272,7 +264,7 @@ filter(ancombcTable, abs(beta) > 1) |>
   select(rowname, beta, se, p_val, q_val) |>
   arrange(-abs(beta)) |>
   column_to_rownames() |>
-  mutate(across(.fns = ~ round(.x, digits = 3))) |>
+  mutate(across(everything(), .fns = ~ round(.x, digits = 3))) |>
   mutate(beta = format(beta)) |>
   mutate(beta = str_replace(beta, " ", "&nbsp;")) |>
   mutate(p_val = if_else(p_val == 0, "< 0.001", format(p_val, nsmall = 3))) |>
@@ -303,7 +295,7 @@ ancombcTable |>
     y = expression(-~log[10]~Q)
   ) +
   guides(color = guide_none(), shape = guide_none()) +
-  theme_ipsum_rc()
+  theme_minimal()
 ```
 
 As a bonus, do a Google or a PubMed search for *Holdemanella biformis* to see what condition(s) it is associated with and then explore differences between the two countries using [GBD Compare](https://vizhub.healthdata.org/gbd-compare/) visualizations.
