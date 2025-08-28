@@ -14,7 +14,7 @@ You need [Docker](https://docs.docker.com/get-docker/).
 
 First build the image:
 
-    docker pull "waldronlab/curatedmetagenomicanalyses"
+    docker pull ghcr.io/waldronlab/curatedmetagenomicanalyses:latest
 
 Then run a container based on the image with your password:
 
