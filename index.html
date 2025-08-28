@@ -76,7 +76,7 @@
 <h3 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h3>
 <p>First build the image:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>docker pull <span class="st">"waldronlab/curatedmetagenomicanalyses"</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>docker pull ghcr.io<span class="sc">/</span>waldronlab<span class="sc">/</span>curatedmetagenomicanalyses<span class="sc">:</span>latest</span></code></pre></div>
 <p>Then run a container based on the image with your password:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>docker run <span class="sc">-</span>d <span class="sc">-</span>p <span class="dv">80</span><span class="sc">:</span><span class="dv">8888</span> <span class="sc">--</span>name cma \</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  waldronlab<span class="sc">/</span>curatedmetagenomicanalyses</span></code></pre></div>
