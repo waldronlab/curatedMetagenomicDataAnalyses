@@ -2,6 +2,9 @@ FROM bioconductor/bioconductor_docker:RELEASE_3_21
 
 LABEL name="waldronlab/curatedMetagenomicAnalyses"
 
+# Add the local bin directory to the PATH to ensure jupyter is found
+ENV PATH="/root/.local/bin:${PATH}"
+
 # For additional options in Jupyter-Server-Proxy
 ENV RSESSION_PROXY_RSTUDIO_1_4="True"
 
