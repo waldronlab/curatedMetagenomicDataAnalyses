@@ -5,7 +5,7 @@ on:
   push:
   pull_request:
 
-name: R-CMD-check-bioc & Docker-build
+name: R-CMD-check-bioc
 
 env:
   has_testthat: 'false'
@@ -143,56 +143,3 @@ jobs:
         with:
           name: ${{ runner.os }}-biocversion-RELEASE_3_21-r-4.5-results
           path: check
-
-  build-push-docker:
-    name: Build and Push Docker image
-    runs-on: ubuntu-latest
-    needs: build-check
-    # Only run this job on pushes to the main branch
-    if: github.ref == 'refs/heads/main'
-    permissions:
-      packages: write # Needed to push to GHCR
-      id-token: write # Needed for cosign to sign the image
-
-    env:
-      # Use ghcr.io for the GitHub Container Registry
-      REGISTRY: ghcr.io
-      # github.repository as <account>/<repo>
-      IMAGE_NAME: ${{ github.repository }}
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}
-
-      - name: Build and push Docker image
-        id: build-and-push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Install Cosign
-        uses: sigstore/cosign-installer@v3
-
-      - name: Sign the published Docker image
-        run: cosign sign --yes ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
-        env:
-            COSIGN_EXPERIMENTAL: 1
