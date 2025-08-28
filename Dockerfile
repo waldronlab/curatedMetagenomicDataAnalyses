@@ -5,23 +5,15 @@ LABEL name="waldronlab/curatedMetagenomicAnalyses"
 # For additional options in Jupyter-Server-Proxy
 ENV RSESSION_PROXY_RSTUDIO_1_4="True"
 
-# --- Optimized Caching ---
-# Copy only the system installation script first. This layer will only be
-# rebuilt if install.sh itself changes.
+# Copy both installation scripts
 COPY scripts/install.sh /tmp/install.sh
-RUN bash /tmp/install.sh \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
-
-# Copy the R installation script next. This layer is cached as long as
-# install.R doesn't change.
 COPY scripts/install.R /tmp/install.R
-RUN R -f /tmp/install.R \
-  && rm -f /tmp/install.R # Clean up the script after use
 
-# By separating the installations, a change to install.R no longer
-# requires re-running the system dependencies from install.sh.
-# The original Dockerfile is also fine, this is just an optimization.
+# Run both scripts in the same layer to ensure consistency
+RUN bash /tmp/install.sh \
+  && R -f /tmp/install.R \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/install.sh /tmp/install.R
 
 USER waldronlab
 WORKDIR /home/waldronlab
