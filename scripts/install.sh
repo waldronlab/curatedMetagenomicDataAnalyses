@@ -8,8 +8,13 @@ apt-get update
 apt-get install -y --no-install-recommends npm nodejs libzmq3-dev
 npm install -g configurable-http-proxy
 rm -rf ~/.npm
-python3 -m pip install jupyterlab jupyter-server-proxy jupyter-rsession-proxy
 
+RUN python3 -m venv /env
+ENV PATH="/env/bin:$PATH"
+RUN pip install --upgrade pip
+
+python3 -m pip install jupyterlab jupyter-server-proxy jupyter-rsession-proxy jupyter_client jupyter_core
+  
 # Install Python analysis dependencies
 apt-get install -y --no-install-recommends python3-skbio python-skbio-doc
 python3 -m pip install pandas \
