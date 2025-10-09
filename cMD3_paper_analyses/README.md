@@ -30,14 +30,14 @@ git clone git@github.com:SegataLab/metaml.git`
 * [scipy](https://scipy.org/) >= 1.4.1
 * [matplotlib](https://matplotlib.org/) >= 3.3.4
 
-## Download input data (~ 930 MB, time: < 1 h)
+## Download input data (~ 600 MB, time: < 1 h)
 
 Use either of those commands to download and extract the archive right away
 
 ```
-wget -qO- https://zenodo.org/records/15856813/files/cMD3_peper_analyses.tar.gz | tar -xzf -  
+wget -qO- https://zenodo.org/records/17308780/files/InputData.tar.bz2 | tar -xjf -  
 # alternative to wget:
-## curl -L https://zenodo.org/records/15856813/files/cMD3_peper_analyses.tar.gz | tar -xzf -
+## curl -L https://zenodo.org/records/17308780/files/InputData.tar.bz2 | tar -xjf -
 rm cMD3_peper_analyses.tar.gz
 ```
 
