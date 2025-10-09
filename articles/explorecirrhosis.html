@@ -108,19 +108,22 @@ Waldron</h4>
 <span><span class="co">##   k__Bacteria|p__Synergistetes|c__Synergistia|o__Synergistales|f__Synergistaceae|g__Cloacibacillus|s__Cloacibacillus_evryensis</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/benjaminrich/table1" class="external-link">table1</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Registered S3 method overwritten by 'table1':</span></span>
+<span><span class="co">##   method    from</span></span>
+<span><span class="co">##   [.indexed plyr</span></span></code></pre>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## Attaching package: 'table1'</span></span></code></pre>
 <pre><code><span><span class="co">## The following objects are masked from 'package:base':</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##     units, units&lt;-</span></span></code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu">table1</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html" class="external-link">label</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">study_name</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Study Name"</span></span>
 <span><span class="fu">table1</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html" class="external-link">label</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">body_site</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Body site"</span></span>
 <span><span class="fu">table1</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html" class="external-link">label</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">study_condition</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Study condition"</span></span>
 <span><span class="fu">table1</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html" class="external-link">label</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">antibiotics_current_use</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Current Antibiotics Use"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/table1/man/units.html" class="external-link">units</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">age</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Years"</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/table1/man/table1.html" class="external-link">table1</a></span><span class="op">(</span><span class="op">~</span> <span class="va">.</span> <span class="op">-</span>  <span class="va">subject_id</span> <span class="op">|</span> <span class="va">study_name</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <div class="Rtable1"><table class="table Rtable1">
 <thead><tr>
@@ -131,7 +134,7 @@ Waldron</h4>
 </tr></thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Body site</td>
+<td class="rowlabel firstrow"><span class="varlabel">Body site</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -143,7 +146,7 @@ Waldron</h4>
 <td class="lastrow">282 (100%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Current Antibiotics Use</td>
+<td class="rowlabel firstrow"><span class="varlabel">Current Antibiotics Use</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -161,7 +164,7 @@ Waldron</h4>
 <td class="lastrow">45 (16.0%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Study condition</td>
+<td class="rowlabel firstrow"><span class="varlabel">Study condition</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -179,7 +182,7 @@ Waldron</h4>
 <td class="lastrow">150 (53.2%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">disease</td>
+<td class="rowlabel firstrow"><span class="varlabel">disease</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -251,7 +254,7 @@ Waldron</h4>
 <td class="lastrow">1 (0.4%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">age (Years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">age<span class="varunits"> (Years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -275,7 +278,7 @@ Waldron</h4>
 <td class="lastrow">45 (16.0%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">age_category</td>
+<td class="rowlabel firstrow"><span class="varlabel">age_category</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -299,7 +302,7 @@ Waldron</h4>
 <td class="lastrow">1 (0.4%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">gender</td>
+<td class="rowlabel firstrow"><span class="varlabel">gender</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -323,7 +326,7 @@ Waldron</h4>
 <td class="lastrow">45 (16.0%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">country</td>
+<td class="rowlabel firstrow"><span class="varlabel">country</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -345,7 +348,7 @@ Waldron</h4>
 <p>There seems to be strong correlation between study condition and
 current antibiotics use, raising questions of causality direction in
 these predictions:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">study_condition</span>, <span class="va">df</span><span class="op">$</span><span class="va">antibiotics_current_use</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##            </span></span>
 <span><span class="co">##              no</span></span>
@@ -356,12 +359,12 @@ these predictions:</p>
 <h2 id="compositionality">Compositionality<a class="anchor" aria-label="anchor" href="#compositionality"></a>
 </h2>
 <p>Many, but not all, columns add up to 100%:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/MatrixGenerics/man/rowSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
 <span><span class="co">##   97.04   99.98  100.00   99.92  100.00  100.00</span></span></code></pre>
 <p>The observation with minimum sum of relative abundances is:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/MatrixGenerics/man/rowSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## DataFrame with 1 row and 31 columns</span></span>
 <span><span class="co">##       study_name  subject_id   body_site antibiotics_current_use</span></span>
@@ -396,11 +399,11 @@ unimportant for most purposes.</p>
 </h2>
 <p>From the <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/SIAMCAT/inst/doc/SIAMCAT_vignette.html" class="external-link">SIAMCAT
 vignette</a>.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"SIAMCAT"</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"SIAMCAT"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SIAMCAT</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">labs</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/create.label.html" class="external-link">create.label</a></span><span class="op">(</span>meta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>               label <span class="op">=</span> <span class="st">'study_condition'</span>,</span>
@@ -409,8 +412,8 @@ vignette</a>.</p>
 <span><span class="co">##    cirrhosis</span></span>
 <span><span class="co">## Label used as control:</span></span>
 <span><span class="co">##    control</span></span></code></pre>
-<pre><code><span><span class="co">## + finished create.label.from.metadata in 0.021 s</span></span></code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## + finished create.label.from.metadata in 0.02 s</span></span></code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sc.obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/siamcat.html" class="external-link">siamcat</a></span><span class="op">(</span>feat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span>,</span>
 <span>    label<span class="op">=</span><span class="va">labs</span>,</span>
 <span>    meta<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -419,8 +422,8 @@ vignette</a>.</p>
 <pre><code><span><span class="co">## + Keeping labels of 282 sample(s).</span></span></code></pre>
 <pre><code><span><span class="co">## +++ checking sample number per class</span></span></code></pre>
 <pre><code><span><span class="co">## +++ checking overlap between samples and metadata</span></span></code></pre>
-<pre><code><span><span class="co">## + finished validate.data in 0.023 s</span></span></code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## + finished validate.data in 0.059 s</span></span></code></pre>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/methods/show.html" class="external-link">show</a></span><span class="op">(</span><span class="va">sc.obj</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## siamcat-class object</span></span>
 <span><span class="co">## label()                Label object:         150 control and 132 cirrhosis samples</span></span>
@@ -429,7 +432,7 @@ vignette</a>.</p>
 <span><span class="co">## phyloseq@otu_table()   OTU Table:            [ 697 taxa and 282 samples ]</span></span>
 <span><span class="co">## phyloseq@sam_data()    Sample Data:          [ 282 samples by 31 sample variables ]</span></span></code></pre>
 <p>Unsupervised filtering:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sc.obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/filter.features.html" class="external-link">filter.features</a></span><span class="op">(</span><span class="va">sc.obj</span>,</span>
 <span>    filter.method <span class="op">=</span> <span class="st">'abundance'</span>,</span>
 <span>    cutoff <span class="op">=</span> <span class="fl">0.001</span><span class="op">)</span></span></code></pre></div>
@@ -437,7 +440,7 @@ vignette</a>.</p>
 <div class="section level3">
 <h3 id="association-testing">Association testing<a class="anchor" aria-label="anchor" href="#association-testing"></a>
 </h3>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sc.obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SIAMCAT/man/check.associations.html" class="external-link">check.associations</a></span><span class="op">(</span></span>
 <span>    <span class="va">sc.obj</span>,</span>
 <span>    alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
