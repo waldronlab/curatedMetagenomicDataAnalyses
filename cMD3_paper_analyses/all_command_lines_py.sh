@@ -108,9 +108,10 @@ python ../figure4_complete_ml.py
 cd ..
 
 ## SECTION 4: ORAL INTROGRESSION ANALYSIS AND META-ANALYSIS
-cd oral_introgression
+cd oral_enrichment
 
-python oral_introgression.py Oral_Richness ## DISEASES
-python oral_introgression.py Oral_Entropy
-python oral_introgression.py Oral_Richness -la age -tm AGE -dt tables/usable_for_age_species.tsv
-python oral_introgression.py Oral_Richness -la BMI -tm REG -dt tables/usable_for_BMI_species.tsv
+python 01-estimate_oral_enrichment.py
+python 02-oral_enrichment.py Oral_Richness -osp 0.01
+
+python 03-superframe_to_stats.py figures_data/panelC_data.tsv figures_data/panelC_stats.tsv
+python 03-superframe_to_stats.py figures_data/panelD_data.tsv figures_data/panelD_stats.tsv
