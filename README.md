@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15856813.svg)](https://doi.org/10.5281/zenodo.15856813)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17308780.svg)](https://doi.org/10.5281/zenodo.17308780)
 
 # curatedMetagenomicDataAnalyses
 
