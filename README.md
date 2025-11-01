@@ -1,4 +1,7 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17308780.svg)](https://doi.org/10.5281/zenodo.17308780)
+| Resource             | DOI Badge                                                                                                     |
+| -------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Data                 | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17308780.svg)](https://doi.org/10.5281/zenodo.17308780)    |
+| Analyses (this repo) | [![DOI](https://zenodo.org/badge/360929608.svg)](https://doi.org/10.5281/zenodo.17498250)                     |
 
 # curatedMetagenomicDataAnalyses
 
