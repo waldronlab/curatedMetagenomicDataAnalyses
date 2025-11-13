@@ -31,7 +31,7 @@ python ../python_tools/draw_figure_with_ma.py clr_tables/age-kegg_clr_substituti
      
 python ../python_tools/draw_figure_with_ma.py clr_tables/bmi-kegg_clr_substitution_metaanalysis.tsv --outfile images/KOS_FIG3_meta_supp4 --how first -ps "Higher BMI associated" -ns "Lower BMI associated" --x_axis "Partial correlation with BMI (kg/m^2)" --y_axis "" --title "Meta-analysis of BMI-associated KOs" --a_single 0.2 --a_random 0.05 -re "RE_Correlation" -ci "RE_conf_int" -rq "RE_Correlation_Qvalue" -es "_Correlation" -qs "_Qvalue" -cbl black -cr darkgoldenrod -cb dodgerblue -il 0.10 --neg_max_rho 0.4 --pos_max_rho 0.4 --narrowed --boxes --imp 30 -ms 2
 
-## SECTION 1.1 - SENSITIVITY ANALYSIS CLR vs asin(sqrt(relative abundance))
+## SECTION 1.1 - SENSITIVITY/ROBUSTNESS ANALYSIS CLR vs asin(sqrt(relative abundance))
 
 cd robustness\ arcsin\ vs\ clr/
 bash do_the_figures.sh
