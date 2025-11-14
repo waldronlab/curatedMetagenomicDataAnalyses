@@ -77,11 +77,20 @@ if __name__ == '__main__':
             fit_reg=True,
             scatter=True
         )
+        
+        # add diagonal
+        x_min, x_max = ax.get_xlim()
+        y_min, y_max = ax.get_ylim()
+        min_val = min(x_min, y_min)
+        max_val = max(x_max, y_max)
+        ax.plot([min_val, max_val], [min_val, max_val], color='red', linestyle='-', label='y=x')        
 
+        # Calculate spearman's correlations
         rho, rhop = sts.spearmanr(frame[f'clr_{col_set[0]}'], frame[f'arc_{col_set[0]}'])
-        rho_x, rhop_x = sts.pearsonr(frame[f'clr_{col_set[0]}'], frame[f'arc_{col_set[0]}'])
+        # rho_x, rhop_x = sts.pearsonr(frame[f'clr_{col_set[0]}'], frame[f'arc_{col_set[0]}'])
 
-        ax.set_title(f"{col} r={rho:.2f}({rhop:.2e}) / {rho_x:.2f}({rhop_x:.2e})")
+        ax.set_title(f"{col} r={rho:.2f}({rhop:.2e})")
+        # ax.set_title(f"{col} r={rho:.2f}({rhop:.2e}) / {rho_x:.2f}({rhop_x:.2e})")
         ax.set_xlabel("CLR-derived effect size")
         ax.set_ylabel("Arcsin sqrt-derived effect size")
 
