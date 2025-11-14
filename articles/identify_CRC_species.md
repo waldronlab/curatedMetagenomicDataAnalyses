@@ -92,7 +92,7 @@ sessioninfo::session_info()
     ##  collate  en_US.UTF-8
     ##  ctype    en_US.UTF-8
     ##  tz       UTC
-    ##  date     2025-11-13
+    ##  date     2025-11-14
     ##  pandoc   3.8.2.1 @ /usr/bin/ (via rmarkdown)
     ##  quarto   1.7.32 @ /usr/local/bin/quarto
     ## 
@@ -137,7 +137,7 @@ sessioninfo::session_info()
     ##  DelayedArray               0.34.1  2025-04-17 [1] Bioconductor 3.21 (R 4.5.1)
     ##  DelayedMatrixStats         1.30.0  2025-04-15 [1] Bioconductor 3.21 (R 4.5.1)
     ##  desc                       1.4.3   2023-12-10 [2] RSPM (R 4.5.0)
-    ##  digest                     0.6.37  2024-08-19 [2] RSPM (R 4.5.0)
+    ##  digest                     0.6.38  2025-11-12 [2] RSPM (R 4.5.0)
     ##  DirichletMultinomial       1.50.0  2025-04-15 [1] Bioconductor 3.21 (R 4.5.1)
     ##  dplyr                    * 1.1.4   2023-11-17 [1] RSPM (R 4.5.0)
     ##  DT                       * 0.34.0  2025-09-02 [1] RSPM (R 4.5.0)
@@ -208,7 +208,7 @@ sessioninfo::session_info()
     ##  Rcpp                       1.1.0   2025-07-02 [2] RSPM (R 4.5.0)
     ##  readr                      2.1.5   2024-01-10 [1] RSPM (R 4.5.0)
     ##  readxl                     1.4.5   2025-03-07 [1] RSPM (R 4.5.0)
-    ##  reshape2                   1.4.4   2020-04-09 [1] RSPM (R 4.5.0)
+    ##  reshape2                   1.4.5   2025-11-12 [1] RSPM (R 4.5.0)
     ##  rlang                      1.1.6   2025-04-11 [2] RSPM (R 4.5.0)
     ##  rmarkdown                  2.30    2025-09-28 [2] RSPM (R 4.5.0)
     ##  RSQLite                    2.4.4   2025-11-10 [1] RSPM (R 4.5.0)
