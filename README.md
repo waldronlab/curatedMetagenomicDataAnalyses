@@ -1,4 +1,4 @@
-| Resource               | DOI Badge                                                                                                         |
+| Resource               | link                                                                                                         |
 | ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | Data                   | |[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17567900.svg)](https://doi.org/10.5281/zenodo.17567900)      |
 | Analyses               | [This Repo](https://github.com/waldronlab/curatedMetagenomicDataAnalyses/tree/main/cMD3_paper_analyses)           |
