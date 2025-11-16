@@ -1,7 +1,8 @@
-| Resource             | DOI Badge                                                                                                     |
-| -------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Data                 | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17308780.svg)](https://doi.org/10.5281/zenodo.17308780)    |
-| Analyses (this repo) | [![DOI](https://zenodo.org/badge/360929608.svg)](https://doi.org/10.5281/zenodo.17498250)                     |
+| Resource               | DOI Badge                                                                                                         |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Data                   | |[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17567900.svg)](https://doi.org/10.5281/zenodo.17567900)      |
+| Analyses               | [This Repo](https://github.com/waldronlab/curatedMetagenomicDataAnalyses/tree/main/cMD3_paper_analyses)           |
+| CuratedMetagenomicData | [View in Bioconductor](https://bioconductor.org/packages/release/data/experiment/html/curatedMetagenomicData.html)|
 
 # curatedMetagenomicDataAnalyses
 
