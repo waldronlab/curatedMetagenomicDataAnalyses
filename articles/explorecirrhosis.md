@@ -159,7 +159,7 @@ labs <-
     ## Label used as control:
     ##    control
 
-    ## + finished create.label.from.metadata in 0.022 s
+    ## + finished create.label.from.metadata in 0.021 s
 
 ``` r
 
@@ -178,7 +178,7 @@ sc.obj <- siamcat(feat=assay(se)/100,
 
     ## +++ checking overlap between samples and metadata
 
-    ## + finished validate.data in 0.062 s
+    ## + finished validate.data in 0.06 s
 
 ``` r
 
